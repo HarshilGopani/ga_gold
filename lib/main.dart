@@ -75,7 +75,6 @@ class MyApp extends StatelessWidget {
         getPages: AppPages.pages,
         initialRoute: Routes.splashScreen,
         translations: TranslationsFile(),
-        navigatorKey: Get.key,
         enableLog: true,
       ),
     );

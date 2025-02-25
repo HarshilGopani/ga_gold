@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ga_gold/app/app.dart';
 
+// ignore: must_be_immutable
 class AppbarWidgets extends StatelessWidget implements PreferredSizeWidget {
   AppbarWidgets({
     super.key,
@@ -49,6 +50,7 @@ class AppbarWidgets extends StatelessWidget implements PreferredSizeWidget {
       ),
       titleSpacing: Dimens.zero,
       title: Text(
+        textAlign: TextAlign.center,
         title,
         style: Styles.appColorW90020,
       ),

@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Downloads/ga_gold-main/android/app/.cxx/Debug/285b1q5m/x86/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Downloads/ga_gold-main/android/app/.cxx/Debug/285b1q5m/x86/CMakeFiles/rebuild_cache.dir

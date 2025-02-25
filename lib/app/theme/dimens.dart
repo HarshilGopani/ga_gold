@@ -148,6 +148,8 @@ abstract class Dimens {
   static double twoHundredSixtyEight = 268;
   static double twoHundredEighty = 280;
   static double twoHundredNintyOne = 291;
+  static double twoHundredNinety = 290;
+
   static double twoHundredNintyTwo = 292;
   static double threeHundred = 300;
   static double threeHundredOne = 301;
@@ -291,11 +293,15 @@ abstract class Dimens {
 
   static EdgeInsets edgeInsetsLeft10 = EdgeInsets.only(left: ten);
   static EdgeInsets edgeInsetsLeft20 = EdgeInsets.only(left: twenty);
+  static EdgeInsets edgeInsetsLeft4 = EdgeInsets.only(left: four);
 
-  static EdgeInsets edgeInsetsTopt10 = EdgeInsets.only(top: ten);
+
+  static EdgeInsets edgeInsetsTop10 = EdgeInsets.only(top: ten);
 
   static EdgeInsets edgeInsetsTop20 = EdgeInsets.only(top: twenty);
-
+static EdgeInsets edgeInsetsTop60 = EdgeInsets.only(
+    top: sixty,
+  );
   static EdgeInsets edgeInsetsBottom30 = EdgeInsets.only(bottom: thirty);
   static EdgeInsets edgeInsetsBottom10 = EdgeInsets.only(bottom: ten);
 
@@ -323,6 +329,10 @@ abstract class Dimens {
     sixteen,
     ten,
   );
+  static EdgeInsets edgeInsets20_20 = EdgeInsets.symmetric(
+    horizontal: Dimens.twenty,
+    // vertical: Dimens.twenty,
+  );
 
   static EdgeInsets edgeInsets15_15_15_0 = EdgeInsets.fromLTRB(
     fifteen,
@@ -337,6 +347,12 @@ abstract class Dimens {
     fifteen,
   );
 
+static EdgeInsets edgeInsets10_0_10_10 = EdgeInsets.fromLTRB(
+    ten,
+    zero,
+    ten,
+    ten,
+  );
   static EdgeInsets edgeInsets16_20_16_20 = EdgeInsets.fromLTRB(
     sixteen,
     twenty,
@@ -405,6 +421,12 @@ abstract class Dimens {
     twenty,
   );
 
+static EdgeInsets edgeInsets30_30_30_20 = EdgeInsets.only(
+    left: thirty,
+    top: thirty,
+    right: thirty,
+    bottom: twenty,
+  );
   static EdgeInsets edgeInsets16_0_16_0 = EdgeInsets.fromLTRB(
     sixteen,
     zero,
