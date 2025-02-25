@@ -1,8 +1,9 @@
-import 'package:ga_gold/app/app.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ga_gold/app/app.dart';
 
+// ignore: must_be_immutable
 class UploadWidgets extends StatelessWidget {
   final String txt;
   final String? svgPicture;
@@ -42,7 +43,7 @@ class UploadWidgets extends StatelessWidget {
               Center(
                 child: Text(
                   txt,
-                  style: Styles.txtFieldColorPoppinsW90016,
+                  style: Styles.txtFieldColormontserratW90016,
                 ),
               ),
             ],

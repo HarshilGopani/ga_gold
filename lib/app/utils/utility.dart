@@ -130,6 +130,13 @@ abstract class Utility {
     return true;
   }
 
+  static String getFormatedDateTime(int datea) {
+    var date = DateTime.fromMillisecondsSinceEpoch(datea);
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
+  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
   /// Returns true if the internet connection is available.
   static Future<bool> isNetworkAvailable() async =>
       await InternetConnectionChecker().hasConnection;

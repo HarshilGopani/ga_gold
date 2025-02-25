@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/data/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/data/helpers/helpers.dart';
 import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';

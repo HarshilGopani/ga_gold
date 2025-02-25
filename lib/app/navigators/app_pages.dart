@@ -1,6 +1,8 @@
 import 'package:ga_gold/app/pages/authScreen/screens/screen.dart';
+import 'package:ga_gold/app/pages/order_screen/order_page.dart';
 import 'package:get/get.dart';
-import 'package:ga_gold/app/pages/pages.dart';
+
+import '../app.dart';
 
 part 'app_routes.dart';
 
@@ -38,10 +40,53 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage<MobileNumberVerification>(
-      name: _Paths.mobileNumberVerificationScreen,
+      name: _Paths.numberVerifyScreen,
       transitionDuration: transitionDuration,
       page: MobileNumberVerification.new,
       binding: AuthBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<HomeScreen>(
+      name: _Paths.homeScreen,
+      transitionDuration: transitionDuration,
+      page: HomeScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<BottomBarScreen>(
+      name: _Paths.bottomBarScreen,
+      transitionDuration: transitionDuration,
+      page: BottomBarScreen.new,
+      binding: BottomBarBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ShoppingCartScreen>(
+      name: _Paths.shoppingCartScreen,
+      transitionDuration: transitionDuration,
+      page: ShoppingCartScreen.new,
+      binding: ShoppingCartBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<ShowFullScareenImage>(
+      name: _Paths.showFullScareenImage,
+      transitionDuration: transitionDuration,
+      page: ShowFullScareenImage.new,
+      // binding: RepairBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<WishlistScreen>(
+      name: _Paths.wishlistScreen,
+      transitionDuration: transitionDuration,
+      page: WishlistScreen.new,
+      binding: HomeBinding(),
+      transition: Transition.fadeIn,
+    ),
+
+    GetPage<OrderScreen>(
+      name: _Paths.orderHistoryScreen,
+      transitionDuration: transitionDuration,
+      page: OrderScreen.new,
+      binding: ProfileBinding(),
       transition: Transition.fadeIn,
     ),
   ];

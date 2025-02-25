@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:ga_gold/app/app.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
+// ignore: must_be_immutable
 class CustomInternationalPhoneFild extends StatelessWidget {
   CustomInternationalPhoneFild({
     super.key,
@@ -47,7 +48,7 @@ class CustomInternationalPhoneFild extends StatelessWidget {
                       Text(
                         "*",
                         textAlign: TextAlign.start,
-                        style: Styles.redColor40014,
+                        style: Styles.redColor70016,
                       )
                     ],
                   )
@@ -72,7 +73,7 @@ class CustomInternationalPhoneFild extends StatelessWidget {
             setSelectorButtonAsPrefixIcon: true,
             trailingSpace: false,
           ),
-          selectorTextStyle: Styles.blackColorPoppinsW60014,
+          selectorTextStyle: Styles.blackColormontserratW60014,
           textAlign: TextAlign.start,
           keyboardType: const TextInputType.numberWithOptions(
             signed: false,
@@ -116,7 +117,7 @@ class CustomInternationalPhoneFild extends StatelessWidget {
               ),
             ),
             hintText: hintText,
-            hintStyle: Styles.txtFieldColorPoppinsW40014,
+            hintStyle: Styles.txtFieldColormontserratW40014,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
                 Dimens.five,
