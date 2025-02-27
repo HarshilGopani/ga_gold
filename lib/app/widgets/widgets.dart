@@ -6,3 +6,4 @@ export 'show_full_img_scareen.dart';
 export 'upload_widgets.dart';
 export 'appbar_widgets.dart';
 export 'custom_product.dart';
+export 'custom_stepper.dart';

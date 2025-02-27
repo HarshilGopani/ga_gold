@@ -66,11 +66,11 @@ class LoginScreen extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Forgot your log in details?  ',
+                          text: 'forgot_your_log'.tr,
                           style: Styles.black50012,
                         ),
                         TextSpan(
-                          text: 'Get help logging in. ',
+                          text: 'get_help_logging_in'.tr,
                           style: Styles.lightYellow40012,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
@@ -87,11 +87,11 @@ class LoginScreen extends StatelessWidget {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Don’t have an account? ',
+                          text: 'dont_have_an_account'.tr,
                           style: Styles.black50012,
                         ),
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'sign_up'.tr,
                           style: Styles.lightYellow40012,
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {

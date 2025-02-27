@@ -1,6 +1,8 @@
-import 'package:ga_gold/app/pages/order_screen/order_page.dart';
-import 'package:ga_gold/domain/usecases/order_usecases.dart';
 import 'package:get/get.dart';
+
+import '../../../domain/domain.dart';
+import '../../app.dart';
+
 
 class OrderBinding extends Bindings {
   @override

@@ -13,6 +13,16 @@ class ForgetPasswordView extends StatelessWidget {
     return GetBuilder<AuthController>(
       builder: (controller) => Scaffold(
         backgroundColor: ColorsValue.whiteColor,
+        bottomNavigationBar: Align(
+          alignment: Alignment.bottomCenter,
+          child: CustomButton(
+            height: Dimens.fourtyFive,
+            text: StringConstants.recover_password,
+            onTap: () {
+              if (controller.forgotPassFormkey.currentState!.validate()) {}
+            },
+          ),
+        ),
         body: SafeArea(
           child: Form(
             key: controller.forgotPassFormkey,
@@ -43,7 +53,9 @@ class ForgetPasswordView extends StatelessWidget {
                           StringConstants.enter_email_set_pass,
                           style: Styles.black40016,
                         ),
-                        Dimens.boxHeight40,
+                        SizedBox(
+                          height: Get.height * .04,
+                        ),
                         CustomTextFormField(
                           text: StringConstants.email,
                           hintText: StringConstants.enter_email,
@@ -58,20 +70,6 @@ class ForgetPasswordView extends StatelessWidget {
                             }
                             return null;
                           },
-                        ),
-                        const Spacer(),
-                        Expanded(
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: CustomButton(
-                              height: Dimens.fourtyFive,
-                              text: StringConstants.recover_password,
-                              onTap: () {
-                                if (controller.forgotPassFormkey.currentState!
-                                    .validate()) {}
-                              },
-                            ),
-                          ),
                         ),
                         Dimens.boxHeight10,
                       ],

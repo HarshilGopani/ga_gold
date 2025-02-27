@@ -1,8 +1,8 @@
 // coverage:ignore-file
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:ga_gold/app/app.dart';
+import 'package:get/get.dart';
 
 class TranslationsFile extends Translations {
   /// List of locales used in the application
@@ -15,7 +15,22 @@ class TranslationsFile extends Translations {
         'en': {
           'appName': StringConstants.appName,
           'login_now': 'Hey, Login Now',
+          'login': 'Login',
+          'forgot_your_log': "Forgot your log in details?  ",
+          'get_help_logging_in': "Get help logging in. ",
+          'dont_have_an_account': "Don’t have an account? ",
+          "sign_up": "Sign up",
           'cart': 'Cart',
+          "get_started": "Get Started",
+          "verify_your_identity": "Verify Your Identity",
+          "already_have_an_account": "Already Have An Account? ",
+          "log_in": "Log In",
+          'user_name': "User Name",
+          'enter_user_name': "Enter User name",
+          'password': "Password",
+          'enter_password': "Enter password",
+          "your_mobile_number_approval":
+              'Your mobile number +91 ******3515 has gone to admin for approval.',
           'weight': 'Weight',
           'remove': 'Remove',
           'total_product': 'Total Products :',
@@ -91,12 +106,11 @@ class TranslationsFile extends Translations {
           'wishlist': 'Wishlist',
           'sort_by': 'Sort By',
           'out_of_stock': 'Out Of Stock',
-          'upload_visiting_card' :'Upload Visiting Card',
-          'upload_front_side':"Upload\n Front side",
-          "upload_back_side":"Upload\n Back side",
-          "buyer_type":"Buyer Type",
-          "select_type":"Select Type",
-          
+          'upload_visiting_card': 'Upload Visiting Card',
+          'upload_front_side': "Upload\n Front side",
+          "upload_back_side": "Upload\n Back side",
+          "buyer_type": "Buyer Type",
+          "select_type": "Select Type",
         },
       };
 }

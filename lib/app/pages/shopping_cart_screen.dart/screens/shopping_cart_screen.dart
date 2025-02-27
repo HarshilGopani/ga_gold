@@ -31,12 +31,13 @@ class ShoppingCartScreen extends StatelessWidget {
       // },
       builder: (controller) {
         return Scaffold(
-          backgroundColor: ColorsValue.appColor,
+          backgroundColor: ColorsValue.whiteColor,
           appBar: AppbarWidgets(
             onTapBack: () {
               Get.back();
             },
             title: 'cart'.tr,
+            isCenter: true,
             isVisible: Get.arguments ?? false ? true : false,
           ),
           bottomNavigationBar: controller.cartList.isNotEmpty
@@ -75,191 +76,251 @@ class ShoppingCartScreen extends StatelessWidget {
                                 padding: Dimens.edgeInsets20_10_20_10,
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: ColorsValue.colorEEEAEA,
+                                    color: ColorsValue.colorDFDFDF,
                                     borderRadius: BorderRadius.circular(
                                       Dimens.five,
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: Dimens.edgeInsets10,
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Container(
-                                          height: Dimens.eighty,
-                                          width: Dimens.eighty,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              Dimens.five,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: Dimens.edgeInsets10
+                                            .copyWith(bottom: 5),
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: Dimens.eighty,
+                                              width: Dimens.eighty,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  Dimens.five,
+                                                ),
+                                                color: Colors.white,
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  Dimens.five,
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      item.product?.image ?? "",
+                                                  fit: BoxFit.cover,
+                                                  placeholder: (context, url) {
+                                                    return Image.asset(
+                                                        AssetConstants
+                                                            .placeholder,
+                                                        fit: BoxFit.cover);
+                                                  },
+                                                  errorWidget:
+                                                      (context, url, error) {
+                                                    return Image.asset(
+                                                        AssetConstants
+                                                            .placeholder,
+                                                        fit: BoxFit.cover);
+                                                  },
+                                                ),
+                                              ),
                                             ),
-                                            color: Colors.white,
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(
-                                              Dimens.five,
-                                            ),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  item.product?.image ?? "",
-                                              fit: BoxFit.cover,
-                                              placeholder: (context, url) {
-                                                return Image.asset(
-                                                    AssetConstants.placeholder,
-                                                    fit: BoxFit.cover);
-                                              },
-                                              errorWidget:
-                                                  (context, url, error) {
-                                                return Image.asset(
-                                                    AssetConstants.placeholder,
-                                                    fit: BoxFit.cover);
-                                              },
-                                            ),
-                                          ),
-                                        ),
-                                        Dimens.boxWidth10,
-                                        Flexible(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
+                                            Dimens.boxWidth10,
+                                            Flexible(
+                                              child: Column(
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
                                                 children: [
-                                                  Column(
+                                                  Row(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
-                                                      Text(
-                                                        'Diamond Ring',
-                                                        style: Styles
-                                                            .color212121W70012,
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            children: [
+                                                              Text(
+                                                                'Diamond Ring',
+                                                                style: Styles
+                                                                    .color212121W70012,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          Dimens.boxHeight5,
+                                                          Text(
+                                                            "${'weight'.tr} : \n${item.product?.weight}",
+                                                            style: Styles
+                                                                .color9C9C9CW50010,
+                                                          ),
+                                                        ],
                                                       ),
-                                                      Dimens.boxHeight5,
+                                                      InkWell(
+                                                        onTap: () {
+                                                          // controller
+                                                          //     .postCartProductRemove(
+                                                          //         item);
+                                                        },
+                                                        child: Row(
+                                                          children: [
+                                                            SvgPicture.asset(
+                                                              AssetConstants
+                                                                  .ic_delete,
+                                                            ),
+                                                            Dimens.boxWidth10,
+                                                            Text(
+                                                              'remove'.tr,
+                                                              style: Styles
+                                                                  .color212121W70010,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  Dimens.boxHeight5,
+                                                  Row(
+                                                    children: [
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          if (controller
+                                                                  .cartList[
+                                                                      index]
+                                                                  .quantity >
+                                                              0) {
+                                                            controller
+                                                                .cartList[index]
+                                                                .quantity--;
+                                                          }
+                                                          controller.update();
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                              Dimens.ten,
+                                                            ),
+                                                          ),
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            AssetConstants
+                                                                .ic_minus_cart,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Dimens.boxWidth10,
                                                       Text(
-                                                        "${'weight'.tr} : ${item.product?.weight}",
+                                                        controller
+                                                            .cartList[index]
+                                                            .quantity
+                                                            .toString(),
                                                         style: Styles
-                                                            .color9C9C9CW50010,
+                                                            .appColor70010,
+                                                      ),
+                                                      Dimens.boxWidth10,
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          controller
+                                                              .cartList[index]
+                                                              .quantity++;
+                                                          controller.update();
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        Dimens
+                                                                            .ten),
+                                                          ),
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            colorFilter:
+                                                                ColorFilter
+                                                                    .mode(
+                                                              ColorsValue
+                                                                  .redColor,
+                                                              BlendMode.darken,
+                                                            ),
+                                                            AssetConstants
+                                                                .ic_plus_cart,
+                                                          ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      // controller
-                                                      //     .postCartProductRemove(
-                                                      //         item);
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          AssetConstants
-                                                              .ic_delete,
-                                                        ),
-                                                        Dimens.boxWidth10,
-                                                        Text(
-                                                          'remove'.tr,
-                                                          style: Styles
-                                                              .color212121W70010,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  )
+                                                  Dimens.boxHeight5,
                                                 ],
                                               ),
-                                              Dimens.boxHeight5,
-                                              Row(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      if (controller
-                                                              .cartList[index]
-                                                              .quantity >
-                                                          0) {
-                                                        controller
-                                                            .cartList[index]
-                                                            .quantity--;
-                                                      }
-                                                      controller.update();
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      AssetConstants.ic_minus,
-                                                    ),
-                                                  ),
-                                                  Dimens.boxWidth10,
-                                                  Text(
-                                                    controller.cartList[index]
-                                                        .quantity
-                                                        .toString(),
-                                                    style: Styles.appColor70010,
-                                                  ),
-                                                  Dimens.boxWidth10,
-                                                  InkWell(
-                                                    onTap: () {
-                                                      controller.cartList[index]
-                                                          .quantity++;
-                                                      controller.update();
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      AssetConstants.ic_plus,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Dimens.boxHeight5,
-                                              if (item.description?.isEmpty ??
-                                                  false) ...[
-                                                InkWell(
-                                                  onTap: () {
-                                                    // controller
-                                                    //     .showProductDescription(
-                                                    //         context,
-                                                    //         item,
-                                                    //         index);
-                                                  },
-                                                  child: Container(
-                                                    width: double.maxFinite,
-                                                    padding: Dimens
-                                                        .edgeInsets6_4_6_4,
-                                                    decoration: BoxDecoration(
-                                                      color: ColorsValue
-                                                          .colorD9D9D9,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                        Dimens.five,
-                                                      ),
-                                                    ),
-                                                    child: Text(
-                                                      'Add Remark',
-                                                      style: Styles
-                                                          .colorA7A7A750010,
-                                                    ),
-                                                  ),
-                                                )
-                                              ] else ...[
-                                                Text(
-                                                  item.description ?? "",
-                                                  maxLines: 3,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style:
-                                                      Styles.colorA7A7A750010,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      if (item.description?.isEmpty ??
+                                          false) ...[
+                                        Container(
+                                          constraints:
+                                              BoxConstraints(minWidth: 270),
+                                          child: InkWell(
+                                            onTap: () {},
+                                            child: Container(
+                                              width: double.maxFinite,
+                                              padding: Dimens.edgeInsets6_4_6_4,
+                                              decoration: BoxDecoration(
+                                                color: ColorsValue.colorD9D9D9,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  Dimens.five,
                                                 ),
-                                              ]
-                                            ],
+                                              ),
+                                              child: Text(
+                                                'Add Remark',
+                                                style: Styles.colorA7A7A750010,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ] else ...[
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 10),
+                                          child: Container(
+                                            constraints:
+                                                BoxConstraints(minWidth: 270),
+                                            decoration: BoxDecoration(
+                                              color: ColorsValue.textfildBorder,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Padding(
+                                              padding: Dimens.edgeInsets6,
+                                              child: Text(
+                                                item.description ?? "",
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Styles.color6474860016,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ],
-                                    ),
+                                      Dimens.boxHeight10,
+                                    ],
                                   ),
                                 ),
                               );
                             },
-                          )
+                          ),
                         ],
                       ),
                     )
@@ -270,7 +331,9 @@ class ShoppingCartScreen extends StatelessWidget {
                       ),
                     )
               : Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    color: Color(ColorsValue.lightPrimary),
+                  ),
                 ),
         );
       },

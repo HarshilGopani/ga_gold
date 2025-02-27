@@ -1,5 +1,4 @@
 import 'package:ga_gold/app/pages/authScreen/screens/screen.dart';
-import 'package:ga_gold/app/pages/order_screen/order_page.dart';
 import 'package:get/get.dart';
 
 import '../app.dart';
@@ -40,7 +39,7 @@ class AppPages {
       transition: Transition.fadeIn,
     ),
     GetPage<MobileNumberVerification>(
-      name: _Paths.numberVerifyScreen,
+      name: _Paths.mobileNumberVerificationScreen,
       transitionDuration: transitionDuration,
       page: MobileNumberVerification.new,
       binding: AuthBinding(),
@@ -71,7 +70,7 @@ class AppPages {
       name: _Paths.showFullScareenImage,
       transitionDuration: transitionDuration,
       page: ShowFullScareenImage.new,
-      // binding: RepairBinding(),
+      binding: RepairBinding(),
       transition: Transition.fadeIn,
     ),
     GetPage<WishlistScreen>(
@@ -81,12 +80,32 @@ class AppPages {
       binding: HomeBinding(),
       transition: Transition.fadeIn,
     ),
-
+    GetPage<SampleOrderHistoryScreen>(
+      name: _Paths.sampleOrderHistoryScreen,
+      transitionDuration: transitionDuration,
+      page: SampleOrderHistoryScreen.new,
+      binding: RepairBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<RepairOrderHistoryScreen>(
+      name: _Paths.repairOrderHistoryScreen,
+      transitionDuration: transitionDuration,
+      page: RepairOrderHistoryScreen.new,
+      binding: RepairBinding(),
+      transition: Transition.fadeIn,
+    ),
     GetPage<OrderScreen>(
-      name: _Paths.orderHistoryScreen,
+      name: _Paths.orderScreen,
       transitionDuration: transitionDuration,
       page: OrderScreen.new,
-      binding: ProfileBinding(),
+      binding: OrderBinding(),
+      transition: Transition.fadeIn,
+    ),
+    GetPage<OrderDetalisScreen>(
+      name: _Paths.orderDetailScreen,
+      transitionDuration: transitionDuration,
+      page: OrderDetalisScreen.new,
+      binding: OrderBinding(),
       transition: Transition.fadeIn,
     ),
   ];

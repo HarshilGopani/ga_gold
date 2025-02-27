@@ -12,23 +12,23 @@ class MobileNumberVerification extends StatelessWidget {
         backgroundColor: ColorsValue.primaryColor,
         body: Scaffold(
           bottomNavigationBar: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            padding: Dimens.edgeInsets20_30,
             child: CustomButton(
-              text: "Get Started",
+              text: "get_started".tr,
               onTap: () {
                 RouteManagement.goToBottomBarView();
               },
-              height: 50,
-              backgroundColor: Colors.blueAccent,
+              height: Dimens.fifty,
+              backgroundColor: ColorsValue.blueColor,
               radius: BorderRadius.circular(10),
               style: TextStyle(
-                  color: Colors.white,
+                  color: ColorsValue.whiteColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 16),
             ),
           ),
           body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: Dimens.edgeInsets16,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -37,13 +37,14 @@ class MobileNumberVerification extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     AssetConstants.mobileVarificationImage,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 SizedBox(
                   height: Get.height * .2,
                 ),
                 Text(
-                  "Verify Your Identity",
+                  "verify_your_identity".tr,
                   textAlign: TextAlign.start,
                   style: TextStyle(
                     fontSize: 22,
@@ -53,7 +54,7 @@ class MobileNumberVerification extends StatelessWidget {
                 ),
                 Dimens.boxHeight8,
                 Text(
-                  "Your mobile number +91 ******3515 has gone to admin for approval.",
+                  "your_mobile_number_approval".tr,
                   textAlign: TextAlign.start,
                   style: TextStyle(fontSize: 16, color: Colors.black54),
                 ),

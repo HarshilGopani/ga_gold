@@ -40,7 +40,7 @@ class ShowFullScareenImage extends StatelessWidget {
         ),
         title: Text(
           'gallery'.tr,
-          style: Styles.appColorW90020,
+          style: Styles.titleColorW60018,
         ),
       ),
       body: SafeArea(
@@ -84,6 +84,7 @@ class ShowFullScareenImage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class GalleryAllVideoPlayer extends StatefulWidget {
   dynamic video;
 

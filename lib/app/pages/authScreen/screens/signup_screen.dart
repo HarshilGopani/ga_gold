@@ -35,11 +35,11 @@ class _SignupScreenState extends State<SignupScreen> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Already Have An Account? ',
+                    text: 'already_have_an_account'.tr,
                     style: Styles.black50012,
                   ),
                   TextSpan(
-                    text: 'Log In',
+                    text: 'log_in'.tr,
                     style: Styles.lightYellow40012,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

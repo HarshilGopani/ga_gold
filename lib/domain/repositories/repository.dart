@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:ga_gold/app/app.dart';
 import 'package:ga_gold/data/data.dart';
 import 'package:ga_gold/device/device.dart';
-import 'package:ga_gold/domain/domain.dart';
 
 /// The main repository which will get the data from [DeviceRepository] or the
 /// [DataRepository].

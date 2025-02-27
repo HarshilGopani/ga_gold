@@ -228,7 +228,15 @@ class HomeController extends GetxController {
   //   update();
   // }
 
-  List<ProductsDoc> getAllProductDocList = [ProductsDoc(),ProductsDoc(),ProductsDoc(),ProductsDoc(),ProductsDoc(),ProductsDoc(),ProductsDoc()];
+  List<ProductsDoc> getAllProductDocList = [
+    ProductsDoc(),
+    ProductsDoc(),
+    ProductsDoc(),
+    ProductsDoc(),
+    ProductsDoc(),
+    ProductsDoc(),
+    ProductsDoc()
+  ];
   final ScrollController scrollViewAllController = ScrollController();
 
   bool isSearchLoading = false;
@@ -305,8 +313,12 @@ class HomeController extends GetxController {
 
   final ScrollController scrollWishListController = ScrollController();
 
-  List<WishlistDoc> wishlistList = [];
-  List<WishlistDoc> wishlistCount = [];
+  List<WishlistDoc> wishlistList = [
+    WishlistDoc(),
+  ];
+  List<WishlistDoc> wishlistCount = [
+    WishlistDoc(),
+  ];
   bool isWishListLastPage = false;
   bool isWishListLoading = false;
   int pageWishCount = 1;

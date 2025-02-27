@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
                               Dimens.boxHeight5,
                               Text(
                                 controller.getProfileModel?.email ??
-                                    'test@email.com',
+                                    'tirth@email.com',
                                 style: Styles.color21212170014,
                               ),
                               Dimens.boxHeight25
@@ -166,9 +166,9 @@ class ProfileScreen extends StatelessWidget {
                         color: ColorsValue.colorF3F4F6,
                       ),
                       Dimens.boxHeight20,
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
-                          RouteManagement.goToOrderHistoryScreen();
+                          RouteManagement.goToOrderScreen();
                         },
                         child: Container(
                           height: Dimens.sixty,
@@ -200,8 +200,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       InkWell(
-                        // onTap: () =>
-                        //     RouteManagement.goToRepairOrderHistoryScreen(),
+                        onTap: () =>
+                            RouteManagement.goToRepairOrderHistoryScreen(),
                         child: Container(
                           height: Dimens.sixty,
                           decoration: BoxDecoration(
@@ -232,7 +232,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       InkWell(
-                        // onTap: () => RouteManagement.goToBankDetailScreen(),
+                        onTap: () =>
+                            RouteManagement.goToSampleOrderHistoryScreen(),
                         child: Container(
                           height: Dimens.sixty,
                           decoration: BoxDecoration(

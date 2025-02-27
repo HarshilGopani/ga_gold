@@ -295,11 +295,10 @@ abstract class Dimens {
   static EdgeInsets edgeInsetsLeft20 = EdgeInsets.only(left: twenty);
   static EdgeInsets edgeInsetsLeft4 = EdgeInsets.only(left: four);
 
-
   static EdgeInsets edgeInsetsTop10 = EdgeInsets.only(top: ten);
 
   static EdgeInsets edgeInsetsTop20 = EdgeInsets.only(top: twenty);
-static EdgeInsets edgeInsetsTop60 = EdgeInsets.only(
+  static EdgeInsets edgeInsetsTop60 = EdgeInsets.only(
     top: sixty,
   );
   static EdgeInsets edgeInsetsBottom30 = EdgeInsets.only(bottom: thirty);
@@ -334,11 +333,22 @@ static EdgeInsets edgeInsetsTop60 = EdgeInsets.only(
     // vertical: Dimens.twenty,
   );
 
+  static EdgeInsets edgeInsets20_30 = EdgeInsets.symmetric(
+    horizontal: Dimens.twenty,
+    vertical: Dimens.thirty,
+  );
+
   static EdgeInsets edgeInsets15_15_15_0 = EdgeInsets.fromLTRB(
     fifteen,
     fifteen,
     fifteen,
     zero,
+  );
+  static EdgeInsets edgeInsets15_20_15_30 = EdgeInsets.fromLTRB(
+    fifteen,
+    twenty,
+    fifteen,
+    thirty,
   );
   static EdgeInsets edgeInsets15_15_15_15 = EdgeInsets.fromLTRB(
     fifteen,
@@ -347,7 +357,7 @@ static EdgeInsets edgeInsetsTop60 = EdgeInsets.only(
     fifteen,
   );
 
-static EdgeInsets edgeInsets10_0_10_10 = EdgeInsets.fromLTRB(
+  static EdgeInsets edgeInsets10_0_10_10 = EdgeInsets.fromLTRB(
     ten,
     zero,
     ten,
@@ -378,6 +388,13 @@ static EdgeInsets edgeInsets10_0_10_10 = EdgeInsets.fromLTRB(
     sixteen,
     thirtyFour,
     sixteen,
+    thirty,
+  );
+
+  static EdgeInsets edgeInsets20_05_20_30 = EdgeInsets.fromLTRB(
+    twenty,
+    five,
+    twenty,
     thirty,
   );
 
@@ -421,7 +438,7 @@ static EdgeInsets edgeInsets10_0_10_10 = EdgeInsets.fromLTRB(
     twenty,
   );
 
-static EdgeInsets edgeInsets30_30_30_20 = EdgeInsets.only(
+  static EdgeInsets edgeInsets30_30_30_20 = EdgeInsets.only(
     left: thirty,
     top: thirty,
     right: thirty,
@@ -480,6 +497,12 @@ static EdgeInsets edgeInsets30_30_30_20 = EdgeInsets.only(
     three,
     zero,
     three,
+  );
+  static EdgeInsets edgeInsets30_00_30_00 = EdgeInsets.fromLTRB(
+    thirty,
+    zero,
+    thirty,
+    zero,
   );
   static EdgeInsets edgeInsets16_16_16_25 = EdgeInsets.fromLTRB(
     sixteen,

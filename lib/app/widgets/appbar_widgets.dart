@@ -24,14 +24,15 @@ class AppbarWidgets extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: ColorsValue.whiteColor,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(
-            Dimens.twenty,
-          ),
-          bottomRight: Radius.circular(
-            Dimens.twenty,
-          ),
-        ),
+        side: BorderSide(width: 0, color: ColorsValue.whiteColor),
+        // borderRadius: BorderRadius.only(
+        //   bottomLeft: Radius.circular(
+        //     Dimens.twenty,
+        //   ),
+        //   bottomRight: Radius.circular(
+        //     Dimens.twenty,
+        //   ),
+        // ),
       ),
       elevation: Dimens.ten,
       centerTitle: isCenter ? true : false,
@@ -52,7 +53,7 @@ class AppbarWidgets extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         textAlign: TextAlign.center,
         title,
-        style: Styles.appColorW90020,
+        style: Styles.titleColorW60018,
       ),
       actions: actions,
     );

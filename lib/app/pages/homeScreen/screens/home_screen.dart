@@ -236,8 +236,7 @@ class HomeScreen extends StatelessWidget {
                       GridView.builder(
                         shrinkWrap: true,
                         controller: controller.scrollViewAllController,
-                        gridDelegate:
-                            SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                           mainAxisSpacing: Dimens.fifteen,
                           crossAxisSpacing: Dimens.ten,
@@ -259,21 +258,17 @@ class HomeScreen extends StatelessWidget {
                                 Dimens.ten,
                               ),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   GestureDetector(
                                     onTap: () {
-                                      RouteManagement
-                                          .goToShowFullScareenImage(
-                                              item.image ?? "", "image");
+                                      RouteManagement.goToShowFullScareenImage(
+                                          item.image ?? "", "image");
                                     },
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.only(
-                                        topLeft:
-                                            Radius.circular(Dimens.ten),
-                                        topRight:
-                                            Radius.circular(Dimens.ten),
+                                        topLeft: Radius.circular(Dimens.ten),
+                                        topRight: Radius.circular(Dimens.ten),
                                       ),
                                       child: CachedNetworkImage(
                                         imageUrl: item.image ?? "",
@@ -285,9 +280,8 @@ class HomeScreen extends StatelessWidget {
                                           AssetConstants.placeholder,
                                           fit: BoxFit.cover,
                                         ),
-                                        errorWidget:
-                                            (context, url, error) =>
-                                                Image.asset(
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
                                           AssetConstants.placeholder,
                                           fit: BoxFit.cover,
                                         ),
@@ -316,8 +310,7 @@ class HomeScreen extends StatelessWidget {
                                             CrossAxisAlignment.end,
                                         children: [
                                           Padding(
-                                            padding:
-                                                Dimens.edgeInsets10_0_10_0,
+                                            padding: Dimens.edgeInsets10_0_10_0,
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -325,18 +318,15 @@ class HomeScreen extends StatelessWidget {
                                               children: [
                                                 Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       "Weigth",
-                                                      style: Styles
-                                                          .blackW60014,
+                                                      style: Styles.blackW60014,
                                                     ),
                                                     Text(
                                                       "${item.weight} gm",
-                                                      style:
-                                                          Styles.black60012,
+                                                      style: Styles.black60012,
                                                     ),
                                                   ],
                                                 ),
@@ -344,17 +334,18 @@ class HomeScreen extends StatelessWidget {
                                                   children: [
                                                     GestureDetector(
                                                       onTap:
-                                                          item.inCart ??
-                                                                  false
+                                                          item.inCart ?? false
                                                               ? null
                                                               : () {
                                                                   if (controller
-                                                                          .getAllProductDocList[index]
+                                                                          .getAllProductDocList[
+                                                                              index]
                                                                           .cartQuantity
                                                                           .toDouble() >
                                                                       0) {
                                                                     controller
-                                                                        .getAllProductDocList[index]
+                                                                        .getAllProductDocList[
+                                                                            index]
                                                                         .cartQuantity--;
                                                                   }
                                                                   controller
@@ -371,14 +362,13 @@ class HomeScreen extends StatelessWidget {
                                                           color: ColorsValue
                                                               .colorDFDFDF,
                                                         ),
-                                                        child: SvgPicture
-                                                            .asset(
+                                                        child: SvgPicture.asset(
                                                           AssetConstants
                                                               .ic_minus,
-                                                          height: Dimens
-                                                              .twentyFour,
-                                                          width: Dimens
-                                                              .twentyFour,
+                                                          height:
+                                                              Dimens.twentyFour,
+                                                          width:
+                                                              Dimens.twentyFour,
                                                         ),
                                                       ),
                                                     ),
@@ -389,35 +379,33 @@ class HomeScreen extends StatelessWidget {
                                                     ),
                                                     Dimens.boxWidth10,
                                                     GestureDetector(
-                                                      onTap: item.inCart ??
-                                                              false
-                                                          ? null
-                                                          : () {
-                                                              controller
-                                                                  .getAllProductDocList[
-                                                                      index]
-                                                                  .cartQuantity++;
-                                                              controller
-                                                                  .update();
-                                                            },
+                                                      onTap:
+                                                          item.inCart ?? false
+                                                              ? null
+                                                              : () {
+                                                                  controller
+                                                                      .getAllProductDocList[
+                                                                          index]
+                                                                      .cartQuantity++;
+                                                                  controller
+                                                                      .update();
+                                                                },
                                                       child: Container(
                                                         decoration:
                                                             BoxDecoration(
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(
-                                                                      10),
+                                                                  .circular(10),
                                                           color: ColorsValue
                                                               .colorDFDFDF,
                                                         ),
-                                                        child: SvgPicture
-                                                            .asset(
+                                                        child: SvgPicture.asset(
                                                           AssetConstants
                                                               .ic_plus,
-                                                          height: Dimens
-                                                              .twentyFour,
-                                                          width: Dimens
-                                                              .twentyFour,
+                                                          height:
+                                                              Dimens.twentyFour,
+                                                          width:
+                                                              Dimens.twentyFour,
                                                         ),
                                                       ),
                                                     ),
@@ -430,43 +418,57 @@ class HomeScreen extends StatelessWidget {
                                           Padding(
                                             padding:
                                                 Dimens.edgeInsets10_0_10_10,
-                                            child: InkWell(
-                                              onTap: () {
-                                                if (item.inCart ?? false) {
-                                                } else {
-                                                  if (controller
-                                                          .getAllProductDocList[
-                                                              index]
-                                                          .cartQuantity
-                                                          .toDouble() >
-                                                      0) {
-                                                  } else {
-                                                    Utility.errorMessage(
-                                                        "Please add one item.");
-                                                  }
-                                                }
-                                              },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                padding: Dimens
-                                                    .edgeInsets14_0_14_0,
-                                                height: Dimens.thirty,
-                                                decoration: BoxDecoration(
-                                                  color: ColorsValue
-                                                      .colorEDC97D,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                    Dimens.four,
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  'assets/svg/cart.svg',
+                                                  height: 25,
+                                                ),
+                                                Dimens.boxWidth10,
+                                                Expanded(
+                                                  child: InkWell(
+                                                    onTap: () {
+                                                      if (item.inCart ??
+                                                          false) {
+                                                      } else {
+                                                        if (controller
+                                                                .getAllProductDocList[
+                                                                    index]
+                                                                .cartQuantity
+                                                                .toDouble() >
+                                                            0) {
+                                                        } else {
+                                                          Utility.errorMessage(
+                                                              "Please add one item.");
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      padding: Dimens
+                                                          .edgeInsets14_0_14_0,
+                                                      height: Dimens.thirty,
+                                                      decoration: BoxDecoration(
+                                                        color: ColorsValue
+                                                            .colorEDC97D,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                          Dimens.four,
+                                                        ),
+                                                      ),
+                                                      child: Text(
+                                                        item.inCart ?? false
+                                                            ? 'Item In Cart'
+                                                            : 'Order Now',
+                                                        style: Styles
+                                                            .colorFBF7F350010,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
-                                                child: Text(
-                                                  item.inCart ?? false
-                                                      ? 'Item In Cart'
-                                                      : 'Order Now',
-                                                  style: Styles
-                                                      .colorFBF7F350010,
-                                                ),
-                                              ),
+                                              ],
                                             ),
                                           )
                                         ],

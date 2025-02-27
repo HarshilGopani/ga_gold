@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../domain/domain.dart';
 import '../../app.dart';
-
 
 class ShoppingCartController extends GetxController {
   ShoppingCartController(this.shoppingCartPresenter);
@@ -17,10 +17,10 @@ class ShoppingCartController extends GetxController {
 
   List<CartItemProductElement> list = [];
 
-  // List<String> filterType = [
-  //   'Weight'.tr,
-  //   'Stock'.tr,
-  // ];
+  List<String> filterType = [
+    'Weight'.tr,
+    'Stock'.tr,
+  ];
 
   int filterStock = 0;
 
@@ -302,16 +302,55 @@ class ShoppingCartController extends GetxController {
   // }
 
   final ScrollController scrollCartController = ScrollController();
-  List<CartItemProductElement> cartList = [];
-  // CartItemData? cartItemModel = CartItemData();
+  List<CartItemProductElement> cartList = [
+    CartItemProductElement(
+      category: Category(
+          name: 'ring', status: true, id: '09876', createTimestamp: 457),
+      description: '',
+      quantity: 2,
+      product: CartItemProductProduct(
+        category: 'Men Ring',
+        name: 'Ring123',
+        weight: 200,
+        image: AssetConstants.ring,
+        createTimestamp: 2,
+        id: '12345',
+        status: true,
+        createdAt: DateTime(
+          DateTime.august,
+        ),
+      ),
+    ),
+    CartItemProductElement(
+      category: Category(
+          name: 'ring', status: true, id: '09876', createTimestamp: 457),
+      description: 'cdjacakcniaschue',
+      quantity: 2,
+      product: CartItemProductProduct(
+        category: 'Men Ring',
+        name: 'Ring123',
+        weight: 200,
+        image: AssetConstants.ring,
+        createTimestamp: 2,
+        id: '12345',
+        status: true,
+        createdAt: DateTime(
+          DateTime.august,
+        ),
+      ),
+    ),
+  ];
+  CartItemData? cartItemModel = CartItemData(
+    id: 'ass',
+    totalQuantity: 2,
+  );
 
   int pageCartCount = 1;
   bool isCartLastPage = false;
   bool isCartLoading = false;
-
-  bool isLoader = true;
-
+  bool isLoader = false;
   double cartTotal = 0;
+
   // var client = http.Client();
 
   // Future<void> postCartList(int pageKey) async {
@@ -411,7 +450,7 @@ class ShoppingCartController extends GetxController {
   double endValue = 1000;
 
   final ScrollController scrollViewAllController = ScrollController();
-  // List<ProductsDoc> viewAllDocList = [];
+  List<ProductsDoc> viewAllDocList = [];
 
   int pageViewAllCount = 1;
   bool isViewAllLastPage = false;

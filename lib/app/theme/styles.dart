@@ -18,19 +18,16 @@ abstract class Styles {
     fontWeight: FontWeight.bold,
     fontSize: Dimens.twelve,
   );
-
-  static TextStyle greenW70010 = GoogleFonts.nunito(
-    fontSize: Dimens.ten,
-    fontWeight: FontWeight.w700,
-    color: Colors.green,
+  static TextStyle black50014 = GoogleFonts.montserrat(
+    color: ColorsValue.blackColor,
+    fontWeight: FontWeight.w500,
+    fontSize: Dimens.fourteen,
   );
-
-  static TextStyle redColorW70010 = GoogleFonts.nunito(
-    fontSize: Dimens.ten,
-    fontWeight: FontWeight.w700,
-    color: Colors.red,
+  static TextStyle grey94A3B860012 = GoogleFonts.montserrat(
+    color: ColorsValue.grey94A3B8,
+    fontWeight: FontWeight.w600,
+    fontSize: Dimens.twelve,
   );
-
   static TextStyle colorFBF7F350010 = GoogleFonts.montserrat(
     color: ColorsValue.colorFBF7F3,
     fontWeight: FontWeight.w500,
@@ -165,6 +162,11 @@ abstract class Styles {
 
   static TextStyle appColorW60018 = GoogleFonts.montserrat(
     color: ColorsValue.appColor,
+    fontSize: Dimens.eighteen,
+    fontWeight: FontWeight.w600,
+  );
+  static TextStyle titleColorW60018 = GoogleFonts.montserrat(
+    color: ColorsValue.titleColor,
     fontSize: Dimens.eighteen,
     fontWeight: FontWeight.w600,
   );
@@ -610,6 +612,12 @@ abstract class Styles {
     fontSize: Dimens.ten,
     fontWeight: FontWeight.w500,
     color: ColorsValue.colorA7A7A7,
+  );
+
+  static TextStyle color6474860016 = GoogleFonts.montserrat(
+    fontSize: Dimens.fourteen,
+    fontWeight: FontWeight.w600,
+    color: ColorsValue.color64748,
   );
 
   static TextStyle colorA7A7A780014 = GoogleFonts.montserrat(

@@ -1,6 +1,7 @@
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/domain/domain.dart';
 import 'package:get/get.dart';
+
+import '../../../domain/domain.dart';
+import '../../app.dart';
 
 // coverage:ignore-file
 /// A list of bindings which will be used in the route of [SplashView].
