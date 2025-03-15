@@ -4,19 +4,19 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
-import 'package:http_parser/src/media_type.dart' as media_type;
 import 'package:http/http.dart' as http;
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/data/data.dart';
-import 'package:ga_gold/device/device.dart';
-import 'package:ga_gold/domain/domain.dart';
-
-import '../../domain/models/response_model.dart';
+import 'package:http_parser/src/media_type.dart' as media_type;
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/data/data.dart';
+import 'package:ga_final/device/device.dart';
+import 'package:ga_final/domain/domain.dart';
 
 /// API WRAPPER to call all the APIs and handle the error status codes
 class ApiWrapper {
-  final String _baseUrl = 'https://savani.areumjewels.com/';
-  static String imageUrl = 'https://eventopackage.s3.ap-south-1.amazonaws.com/';
+  final String _baseUrl = 'https://api.gagold.in/';
+  static String baseUrl = 'https://api.gagold.in/';
+  static String imageUrl = 'https://krishna.s3.ap-south-1.amazonaws.com/';
+  static var client = http.Client();
 
   /// Method to make all the requests inside the app like GET, POST, PUT, Delete
   Future<ResponseModel> makeRequest(
@@ -26,7 +26,6 @@ class ApiWrapper {
     bool isLoading,
     Map<String, String> headers, {
     media_type.MediaType? mediaType,
-    String? awsKey,
   }) async {
     /// To see whether the network is available or not
     if (await Utility.isNetworkAvailable()) {
@@ -44,7 +43,7 @@ class ApiWrapper {
             }
 
             try {
-              final response = await http
+              final response = await client
                   .get(
                     Uri.parse(uri),
                     headers: headers,
@@ -78,7 +77,7 @@ class ApiWrapper {
                 }
                 Utility.showLoader();
               }
-              final response = await http
+              final response = await client
                   .post(
                     Uri.parse(uri),
                     body: jsonEncode(data),
@@ -219,7 +218,41 @@ class ApiWrapper {
               }
               var request = http.MultipartRequest('POST', Uri.parse(uri));
               request.files.add(await http.MultipartFile.fromPath(
-                  awsKey ?? 'file', data ?? '',
+                  'file', data ?? '',
+                  contentType:
+                      mediaType ?? media_type.MediaType("image", "jpeg")));
+              request.headers.addAll(headers);
+
+              http.StreamedResponse response =
+                  await request.send().timeout(const Duration(seconds: 120));
+              if (isLoading) Utility.closeDialog();
+              var bytesToString = await response.stream.bytesToString();
+              var res = ResponseModel(
+                  data: bytesToString, hasError: false, statusCode: 200);
+              log(
+                'URL :- $uri\nData :- $data\nHeaders :- $headers\nResponse :-\nStatus Code :- ${res.statusCode}\nResponse Data :- ${res.data}',
+              );
+              return res;
+            } on TimeoutException catch (_) {
+              if (isLoading) Utility.closeDialog();
+              return ResponseModel(
+                  data: '{"message":"Request timed out"}', hasError: true);
+            }
+          }
+        case Request.filePath:
+          {
+            var uri = _baseUrl + url;
+
+            try {
+              if (isLoading) {
+                if (Get.isSnackbarOpen) {
+                  await Get.closeCurrentSnackbar();
+                }
+                Utility.showLoader();
+              }
+              var request = http.MultipartRequest('POST', Uri.parse(uri));
+              request.files.add(await http.MultipartFile.fromPath(
+                  'image', data ?? '',
                   contentType:
                       mediaType ?? media_type.MediaType("image", "jpeg")));
               request.headers.addAll(headers);

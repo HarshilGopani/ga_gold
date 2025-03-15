@@ -1,13 +1,14 @@
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/domain/domain.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/domain/domain.dart';
+import 'package:get/get.dart';
 
 /// Text widget, that turns URLs, email and phone numbers into clickable inline links in text for flutter
 ///
 class LinkyfyText extends StatefulWidget {
-  const LinkyfyText({
-    super.key,
+  LinkyfyText({
+    Key? key,
     @required this.text,
     @required this.textStyle,
     @required this.linkStyle,
@@ -15,7 +16,7 @@ class LinkyfyText extends StatefulWidget {
     this.onEmailTap,
     this.onPhoneTap,
     this.maxLines,
-  });
+  }) : super(key: key);
 
   final String? text;
   final int? maxLines;
@@ -97,9 +98,9 @@ class _LinkyfyTextState extends State<LinkyfyText> {
                         },
                         child: Text(
                           isReadMore ? 'less' : '',
-                          // style: Styles.blackBold12.copyWith(
-                          //   color: Get.theme.secondaryHeaderColor,
-                          // ),
+                          style: Styles.blackBold12.copyWith(
+                            color: Get.theme.secondaryHeaderColor,
+                          ),
                         ),
                       )
                     : GestureDetector(
@@ -110,9 +111,9 @@ class _LinkyfyTextState extends State<LinkyfyText> {
                         },
                         child: Text(
                           !isReadMore ? '...more' : '',
-                          // style: Styles.blackBold12.copyWith(
-                          //   color: Get.theme.secondaryHeaderColor,
-                          // ),
+                          style: Styles.blackBold12.copyWith(
+                            color: Get.theme.secondaryHeaderColor,
+                          ),
                         ),
                       )
                 : Dimens.box0,

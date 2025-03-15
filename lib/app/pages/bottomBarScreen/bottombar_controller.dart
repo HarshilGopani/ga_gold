@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../app.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/domain/domain.dart';
+import 'package:ga_final/domain/services/firebase_api.dart';
 
 class BottomBarController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -12,32 +13,32 @@ class BottomBarController extends GetxController
   int selectedIndex = 0;
   TabController? tabController;
 
-  // @override
+  @override
   void onInit() {
-    tabController = TabController(vsync: this, length: 3);
+    tabController = TabController(vsync: this, length: 4);
     tabController?.addListener(update);
-    // getProfile();
+    getProfile();
 
     super.onInit();
 
-    // SocketConnection.initSocket();
-    // FirebaseApi().initNotification();
+    SocketConnection.initSocket();
+    FirebaseApi().initNotification();
   }
 
-  // GetProfileData? getProfileModel;
+  GetProfileData? getProfileModel;
 
-  // Future<void> getProfile() async {
-  //   var response = await bottomBarPresenter.getProfile(
-  //     isLoading: true,
-  //   );
-  //   getProfileModel = null;
-  //   if (response != null) {
-  //     getProfileModel = response.data;
-  //     Get.find<Repository>()
-  //         .saveValue(LocalKeys.chanelId, getProfileModel?.channelid ?? "");
-  //     update();
-  //   } else {
-  //     Utility.errorMessage(response?.message ?? "");
-  //   }
-  // }
+  Future<void> getProfile() async {
+    var response = await bottomBarPresenter.getProfile(
+      isLoading: true,
+    );
+    getProfileModel = null;
+    if (response != null) {
+      getProfileModel = response.data;
+      Get.find<Repository>()
+          .saveValue(LocalKeys.chanelId, getProfileModel?.channelid ?? "");
+      update();
+    } else {
+      Utility.errorMessage(response?.message ?? "");
+    }
+  }
 }

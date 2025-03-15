@@ -1,10 +1,11 @@
 // coverage:ignore-file
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/data/data.dart';
-import 'package:ga_gold/device/device.dart';
-import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_final/app/utils/strings/strings.dart';
+import 'package:ga_final/app/utils/utils.dart';
+import 'package:ga_final/data/data.dart';
+import 'package:ga_final/device/device.dart';
+import 'package:ga_final/domain/domain.dart';
 
 /// Repositories that communicate with the platform e.g. GPS
 class DeviceRepository extends DomainRepository {
@@ -35,7 +36,7 @@ class DeviceRepository extends DomainRepository {
   /// Delete the box
   @override
   void deleteBox() {
-    Hive.box<void>(StringConstants.appName).clear();
+    Hive.box<dynamic>(StringConstants.appName).clear();
   }
 
   /// returns stored string value

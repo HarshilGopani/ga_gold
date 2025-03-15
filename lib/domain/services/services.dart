@@ -4,3 +4,4 @@
 ///
 /// Will be ignored for test since all are static values and would not change.
 export 'common_service.dart';
+export 'socket_connection.dart';

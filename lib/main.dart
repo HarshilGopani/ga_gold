@@ -1,17 +1,33 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ga_final/domain/services/firebase_api.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/data/data.dart';
-import 'package:ga_gold/device/device.dart';
-import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/app/navigators/navigators.dart';
+import 'package:ga_final/data/data.dart';
+import 'package:ga_final/device/device.dart';
+import 'package:ga_final/domain/domain.dart';
+import 'package:no_screenshot/no_screenshot.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+final noScreenshot = NoScreenshot.instance;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initServices();
-  runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseMessaging.instance.setAutoInitEnabled(true);
+  FirebaseApi.initilizeNotification();
+  Utility.disableScreenshot(noScreenshot);
+  runApp(
+    MyApp(),
+  );
 }
 
 Future<void> initServices() async {
@@ -47,9 +63,10 @@ class DbService extends GetxService {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

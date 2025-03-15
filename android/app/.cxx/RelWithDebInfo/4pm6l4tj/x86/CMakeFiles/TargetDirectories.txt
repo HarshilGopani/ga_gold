@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Downloads/ga_final 2/android/app/.cxx/RelWithDebInfo/4pm6l4tj/x86/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Downloads/ga_final 2/android/app/.cxx/RelWithDebInfo/4pm6l4tj/x86/CMakeFiles/rebuild_cache.dir

@@ -1,39 +1,19 @@
+import 'package:ga_final/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ga_gold/app/theme/theme.dart';
 
 ThemeData themeData(BuildContext context) => ThemeData(
       disabledColor: const Color(0xFFEEEEEE),
-      primaryColor: Colors.blue, // Change this to your color
-      buttonTheme: const ButtonThemeData(
-        textTheme: ButtonTextTheme.primary,
-      ),
       bottomSheetTheme: const BottomSheetThemeData(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
       ),
       dialogBackgroundColor: ColorsValue.whiteColor,
-      datePickerTheme: DatePickerThemeData(
-        backgroundColor: ColorsValue.whiteColor,
-        todayBackgroundColor: WidgetStatePropertyAll(ColorsValue.appColor),
-        todayForegroundColor: const WidgetStatePropertyAll(
-          Colors.white,
-        ),
-      ),
-      dropdownMenuTheme: DropdownMenuThemeData(
-        menuStyle: MenuStyle(
-          backgroundColor: WidgetStateProperty.all<Color>(
-            ColorsValue.whiteColor,
-          ),
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          fillColor: ColorsValue.whiteColor,
-        ),
-      ),
       shadowColor: const Color(0xFFDDE3FD),
       checkboxTheme: CheckboxThemeData(
-        fillColor: WidgetStateProperty.all<Color>(ColorsValue.appColor),
+        fillColor: WidgetStateProperty.all<Color>(ColorsValue.lightYellow),
         side: BorderSide.none,
       ),
+      canvasColor: ColorsValue.greyAAA,
       appBarTheme: const AppBarTheme(
         backgroundColor: Colors.white,
         titleTextStyle: TextStyle(
@@ -52,14 +32,14 @@ ThemeData themeData(BuildContext context) => ThemeData(
         type: BottomNavigationBarType.fixed,
         elevation: 0,
       ),
+      primaryColor: ColorsValue.lightYellow,
       secondaryHeaderColor: Colors.white,
       fontFamily: 'Product Sans',
       brightness: Brightness.light,
-      scaffoldBackgroundColor: Colors.transparent,
-      colorScheme: ColorScheme.light(
+      scaffoldBackgroundColor: ColorsValue.transparent,
+      colorScheme: const ColorScheme.light(
         surface: Colors.white,
-        onInverseSurface: const Color.fromRGBO(0, 0, 0, 0.12),
-        primary: ColorsValue.appColor,
+        primary: ColorsValue.lightYellow,
       ),
       iconTheme: const IconThemeData(
         color: Colors.black,
@@ -110,8 +90,9 @@ ThemeData themeData(BuildContext context) => ThemeData(
           ),
         ),
       ),
-      textSelectionTheme:
-          const TextSelectionThemeData(cursorColor: Color(0xFFEA6F00)),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: ColorsValue.blackColor,
+      ),
       tabBarTheme: const TabBarTheme(
         labelColor: Colors.black,
       ),

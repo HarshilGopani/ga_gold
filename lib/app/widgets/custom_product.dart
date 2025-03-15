@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-
-import '../app.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/app/navigators/navigators.dart';
 
 // ignore: must_be_immutable
 class CustomProductView extends StatelessWidget {
@@ -43,13 +43,13 @@ class CustomProductView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: Dimens.edgeInsets10,
-      height: Dimens.threeHundred,
+      height: Dimens.ten,
       width: Dimens.twoHundredTen,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           Dimens.ten,
         ),
-        color: ColorsValue.lightPrimaryColor,
+        color: ColorsValue.whiteColor,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +65,7 @@ class CustomProductView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(
                       Dimens.ten,
                     ),
-                    color: ColorsValue.appColor,
+                    color: ColorsValue.appBg,
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(
@@ -153,34 +153,37 @@ class CustomProductView extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Weigth : ",
+                        style: Styles.blackW60014,
+                      ),
+                      Text(
+                        "$weigth gm",
+                        style: Styles.black60012,
+                      ),
+                    ],
+                  ),
+                  Dimens.boxHeight5,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
-                        children: [
-                          Text(
-                            "Weigth",
-                            style: Styles.blackW60014,
-                          ),
-                          Text(
-                            "$weigth gm",
-                            style: Styles.blackW60014,
-                          ),
-                        ],
-                      ),
                       Row(
                         children: [
                           GestureDetector(
                             onTap: dincrement,
                             child: Container(
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(
+                                  Dimens.ten,
+                                ),
                                 color: ColorsValue.colorDFDFDF,
                               ),
                               child: SvgPicture.asset(
-                                AssetConstants.ic_minus,
+                                AssetConstants.minus,
                                 height: Dimens.twentyFour,
                                 width: Dimens.twentyFour,
                               ),
@@ -199,7 +202,7 @@ class CustomProductView extends StatelessWidget {
                                 color: ColorsValue.colorDFDFDF,
                               ),
                               child: SvgPicture.asset(
-                                AssetConstants.ic_plus,
+                                AssetConstants.plus,
                                 height: Dimens.twentyFour,
                                 width: Dimens.twentyFour,
                               ),
@@ -207,31 +210,7 @@ class CustomProductView extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                  Dimens.boxHeight5,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Dimens.boxHeight20,
-                      GestureDetector(
-                        onTap: dincrement,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: ColorsValue.colorDFDFDF,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(2.5),
-                            child: SvgPicture.asset(
-                              // AssetConstants.ic_Profile,
-                              "assets/svg/cart.svg",
-                              height: Dimens.twenty,
-                              width: Dimens.twenty,
-                            ),
-                          ),
-                        ),
-                      ),
+                      Dimens.boxHeight10,
                       InkWell(
                         onTap: onAddToCard,
                         child: Container(
@@ -239,13 +218,13 @@ class CustomProductView extends StatelessWidget {
                           padding: Dimens.edgeInsets14_0_14_0,
                           height: Dimens.twentyFive,
                           decoration: BoxDecoration(
-                            color: ColorsValue.buttonColor,
+                            color: ColorsValue.colorEDC97D,
                             borderRadius: BorderRadius.circular(
                               Dimens.four,
                             ),
                           ),
                           child: Text(
-                            inCart ? 'Item in Order' : 'Order now',
+                            inCart ? 'Item In Cart' : 'Add To Cart',
                             style: Styles.colorFBF7F350010,
                           ),
                         ),

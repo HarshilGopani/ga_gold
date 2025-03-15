@@ -1,65 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_gold/app/app.dart';
+import 'package:ga_final/app/app.dart';
 
 // ignore: must_be_immutable
-class AppbarWidgets extends StatelessWidget implements PreferredSizeWidget {
-  AppbarWidgets({
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  AppBarWidget({
     super.key,
     required this.onTapBack,
     required this.title,
+    this.isTitle = true,
     this.isVisible = true,
-    this.isCenter = false,
-    this.actions,
+    this.isBottomVisible = true,
   });
 
   void Function()? onTapBack;
   String title;
+  bool isTitle;
   bool isVisible;
-  bool isCenter;
-  List<Widget>? actions;
+  bool isBottomVisible;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: ColorsValue.whiteColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(
-            Dimens.twenty,
-          ),
-          bottomRight: Radius.circular(
-            Dimens.twenty,
-          ),
-        ),
-      ),
-      elevation: Dimens.ten,
-      centerTitle: isCenter ? true : false,
+      centerTitle: true,
       automaticallyImplyLeading: false,
       leading: Visibility(
         visible: isVisible,
         child: Padding(
-          padding: Dimens.edgeInsets15,
-          child: InkWell(
+          padding: Dimens.edgeInsetsLeft20,
+          child: GestureDetector(
             onTap: onTapBack,
             child: SvgPicture.asset(
-              AssetConstants.ic_back,
+              AssetConstants.ic_back_arrow,
             ),
           ),
         ),
       ),
-      titleSpacing: Dimens.zero,
-      title: Text(
-        textAlign: TextAlign.center,
-        title,
-        style: Styles.appColorW90020,
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(1.0),
+        child: Container(
+          color: isBottomVisible ? ColorsValue.lightE2E8F0 : ColorsValue.transparent,
+          // Change this to your preferred border color
+          height: 1.0,
+        ),
       ),
-      actions: actions,
+      title: Visibility(
+        visible: isTitle,
+        child: Text(
+          title,
+          style: Styles.color212121W80018,
+        ),
+      ),
     );
   }
 
   static final _appBar = AppBar();
 
   @override
-  Size get preferredSize => AppbarWidgets._appBar.preferredSize;
+  Size get preferredSize => _appBar.preferredSize;
 }

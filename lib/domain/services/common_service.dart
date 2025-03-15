@@ -1,6 +1,7 @@
 // coverage:ignore-file
 
 import 'dart:async';
+
 // import 'package:connectivity/connectivity.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 // import 'package:demo_clean_architecture/app/app.dart';
@@ -53,4 +54,37 @@ class CommonService extends GetxService {
   //     },
   //   );
   // }
+}
+
+enum CategoryEnum {
+  pending,
+  processing,
+  completed,
+  cancelled,
+}
+
+extension CategoryEnumX on CategoryEnum? {
+  bool get isPending => this == CategoryEnum.pending;
+
+  bool get isProcessing => this == CategoryEnum.processing;
+
+  bool get isCompleted => this == CategoryEnum.completed;
+
+  bool get isCancelled => this == CategoryEnum.cancelled;
+
+  CategoryEnum get uiName {
+    if (isPending) {
+      return CategoryEnum.pending;
+    }
+    if (isProcessing) {
+      return CategoryEnum.processing;
+    }
+    if (isCompleted) {
+      return CategoryEnum.completed;
+    }
+    if (isCancelled) {
+      return CategoryEnum.pending;
+    }
+    return CategoryEnum.pending;
+  }
 }

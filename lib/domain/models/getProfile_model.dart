@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-// GetProfileModel getProfileModelFromJson(String str) =>
-//     GetProfileModel.fromJson(json.decode(str));
+GetProfileModel getProfileModelFromJson(String str) =>
+    GetProfileModel.fromJson(json.decode(str));
 
-// String getProfileModelToJson(GetProfileModel data) =>
-//     json.encode(data.toJson());
+String getProfileModelToJson(GetProfileModel data) =>
+    json.encode(data.toJson());
 
 class GetProfileModel {
   String? message;
@@ -23,21 +23,21 @@ class GetProfileModel {
     this.isSuccess,
   });
 
-  // factory GetProfileModel.fromJson(Map<String, dynamic> json) =>
-  //     GetProfileModel(
-  //       message: json["Message"],
-  //       data:
-  //           json["Data"] == null ? null : GetProfileData.fromJson(json["Data"]),
-  //       status: json["Status"],
-  //       isSuccess: json["IsSuccess"],
-  //     );
+  factory GetProfileModel.fromJson(Map<String, dynamic> json) =>
+      GetProfileModel(
+        message: json["Message"],
+        data:
+            json["Data"] == null ? null : GetProfileData.fromJson(json["Data"]),
+        status: json["Status"],
+        isSuccess: json["IsSuccess"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //       "Message": message,
-  //       "Data": data?.toJson(),
-  //       "Status": status,
-  //       "IsSuccess": isSuccess,
-  //     };
+  Map<String, dynamic> toJson() => {
+        "Message": message,
+        "Data": data?.toJson(),
+        "Status": status,
+        "IsSuccess": isSuccess,
+      };
 }
 
 class GetProfileData {
@@ -65,34 +65,34 @@ class GetProfileData {
     this.countryWiseContact,
   });
 
-  // factory GetProfileData.fromJson(Map<String, dynamic> json) => GetProfileData(
-  //       id: json["_id"],
-  //       profilePic: json["profile_pic"],
-  //       email: json["email"],
-  //       countryCode: json["countryCode"],
-  //       mobile: json["mobile"],
-  //       productVisible: json["product_visible"],
-  //       channelid: json["channelid"],
-  //       status: json["status"],
-  //       name: json["name"],
-  //       countryWiseContact: json["country_wise_contact"] == null
-  //           ? null
-  //           : GetProfileCountryWiseContact.fromJson(
-  //               json["country_wise_contact"]),
-  //     );
+  factory GetProfileData.fromJson(Map<String, dynamic> json) => GetProfileData(
+        id: json["_id"],
+        profilePic: json["profile_pic"],
+        email: json["email"],
+        countryCode: json["countryCode"],
+        mobile: json["mobile"],
+        productVisible: json["product_visible"],
+        channelid: json["channelid"],
+        status: json["status"],
+        name: json["name"],
+        countryWiseContact: json["country_wise_contact"] == null
+            ? null
+            : GetProfileCountryWiseContact.fromJson(
+                json["country_wise_contact"]),
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //       "_id": id,
-  //       "profile_pic": profilePic,
-  //       "email": email,
-  //       "countryCode": countryCode,
-  //       "mobile": mobile,
-  //       "product_visible": productVisible,
-  //       "channelid": channelid,
-  //       "status": status,
-  //       "name": name,
-  //       "country_wise_contact": countryWiseContact?.toJson(),
-  //     };
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "profile_pic": profilePic,
+        "email": email,
+        "countryCode": countryCode,
+        "mobile": mobile,
+        "product_visible": productVisible,
+        "channelid": channelid,
+        "status": status,
+        "name": name,
+        "country_wise_contact": countryWiseContact?.toJson(),
+      };
 }
 
 class GetProfileCountryWiseContact {
@@ -112,22 +112,22 @@ class GetProfileCountryWiseContact {
     this.dialCode,
   });
 
-  // factory GetProfileCountryWiseContact.fromJson(Map<String, dynamic> json) =>
-  //     GetProfileCountryWiseContact(
-  //       number: json["number"],
-  //       internationalNumber: json["internationalNumber"],
-  //       nationalNumber: json["nationalNumber"],
-  //       e164Number: json["e164Number"],
-  //       countryCode: json["countryCode"],
-  //       dialCode: json["dialCode"],
-  //     );
+  factory GetProfileCountryWiseContact.fromJson(Map<String, dynamic> json) =>
+      GetProfileCountryWiseContact(
+        number: json["number"],
+        internationalNumber: json["internationalNumber"],
+        nationalNumber: json["nationalNumber"],
+        e164Number: json["e164Number"],
+        countryCode: json["countryCode"],
+        dialCode: json["dialCode"],
+      );
 
-  // Map<String, dynamic> toJson() => {
-  //       "number": number,
-  //       "internationalNumber": internationalNumber,
-  //       "nationalNumber": nationalNumber,
-  //       "e164Number": e164Number,
-  //       "countryCode": countryCode,
-  //       "dialCode": dialCode,
-  //     };
+  Map<String, dynamic> toJson() => {
+        "number": number,
+        "internationalNumber": internationalNumber,
+        "nationalNumber": nationalNumber,
+        "e164Number": e164Number,
+        "countryCode": countryCode,
+        "dialCode": dialCode,
+      };
 }

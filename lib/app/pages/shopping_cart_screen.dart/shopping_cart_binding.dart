@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
-
-import '../../../domain/domain.dart';
-import '../../app.dart';
-
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/domain/domain.dart';
 
 class ShoppingCartBinding extends Bindings {
   @override

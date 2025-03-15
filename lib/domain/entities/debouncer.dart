@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 /// Class to call the api after specific amount of time
 class Debouncer {
-  VoidCallback? action;
+  final int milliseconds;
   Timer? _timer;
 
-  void run(VoidCallback action) {
-    if (null != _timer) {
-      _timer!.cancel();
-    }
-    _timer = Timer(const Duration(milliseconds: 750), action);
+  Debouncer({required this.milliseconds});
+
+  run(VoidCallback action) {
+    _timer?.cancel();
+    _timer = Timer(Duration(milliseconds: milliseconds), action);
   }
 }

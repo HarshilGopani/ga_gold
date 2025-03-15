@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/app/navigators/navigators.dart';
+import 'package:ga_final/device/device.dart';
 import 'package:get/get.dart';
-
-import '../../app.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -11,10 +12,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(
-      // initState: (state) {
-      //   var controller = Get.find<ProfileController>();
-      //   controller.getProfile();
-      // },
+      initState: (state) {
+        var controller = Get.find<ProfileController>();
+        Utility.showLoader();
+        controller.getProfile();
+      },
       builder: (controller) => Scaffold(
         backgroundColor: ColorsValue.primaryColor,
         body: Stack(
@@ -59,7 +61,9 @@ class ProfileScreen extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () async {
                             if (await Utility.imagePermissionCheack(context)) {
-                              // controller.setProfilePic();
+                              controller.setProfilePic();
+                              controller.isProfileLoading = true;
+                              controller.update();
                             }
                           },
                           child: SizedBox(
@@ -168,7 +172,7 @@ class ProfileScreen extends StatelessWidget {
                       Dimens.boxHeight20,
                       GestureDetector(
                         onTap: () {
-                          RouteManagement.goToOrderHistoryScreen();
+                          RouteManagement.goToOrderScreen();
                         },
                         child: Container(
                           height: Dimens.sixty,
@@ -200,8 +204,8 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       InkWell(
-                        // onTap: () =>
-                        //     RouteManagement.goToRepairOrderHistoryScreen(),
+                        onTap: () =>
+                            RouteManagement.goToRepairOrderHistoryScreen(),
                         child: Container(
                           height: Dimens.sixty,
                           decoration: BoxDecoration(
@@ -232,7 +236,9 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       InkWell(
-                        // onTap: () => RouteManagement.goToBankDetailScreen(),
+                        // onTap: () => RouteManagement.goToCustomizeOrderScreen(),
+                        onTap: () =>
+                            RouteManagement.goToSampleOrderHistoryScreen(),
                         child: Container(
                           height: Dimens.sixty,
                           decoration: BoxDecoration(
@@ -249,10 +255,10 @@ class ProfileScreen extends StatelessWidget {
                                 color: ColorsValue.colorA7A7A7,
                               ),
                               leading: SvgPicture.asset(
-                                AssetConstants.ic_sample,
+                                AssetConstants.ic_customize,
                               ),
                               title: Text(
-                                "sample_order_history".tr,
+                                "customize_order_history".tr,
                                 style: Styles.color21212160014,
                               ),
                             ),
@@ -370,11 +376,11 @@ class ProfileScreen extends StatelessWidget {
                                                           ),
                                                         ),
                                                         onPressed: () {
-                                                          // Get.find<
-                                                          //         DeviceRepository>()
-                                                          //     .deleteBox();
-                                                          // RouteManagement
-                                                          //     .goToLoginView();
+                                                          Get.find<
+                                                                  DeviceRepository>()
+                                                              .deleteBox();
+                                                          RouteManagement
+                                                              .goToLoginView();
                                                         },
                                                         child: Text(
                                                           "logout"

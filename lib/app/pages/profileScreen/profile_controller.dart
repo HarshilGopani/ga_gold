@@ -1,26 +1,50 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/domain/domain.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import '../../../domain/domain.dart';
-import '../../app.dart';
-
 
 class ProfileController extends GetxController {
   ProfileController(this.profilePresenter);
 
   final ProfilePresenter profilePresenter;
 
-  // @override
-  // onInit() {
-  //   super.onInit();
-  //   getProfile();
-  // }
+  @override
+  onInit() {
+    super.onInit();
+  }
 
   bool isProfileLoading = true;
   GetProfileData? getProfileModel;
+  var client = http.Client();
+
+  Future<void> getProfile() async {
+    var response = await client.get(
+      Uri.parse("https://api.gagold.in/user/profile"),
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization':
+            'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
+      },
+    );
+    var profileModel = getProfileModelFromJson(response.body);
+
+    if (profileModel.data != null) {
+      Utility.closeLoader();
+      getProfileModel = profileModel.data;
+      Get.find<Repository>()
+          .saveValue(LocalKeys.chanelId, getProfileModel?.channelid ?? "");
+      isProfileLoading = false;
+    } else {
+      Utility.closeLoader();
+      isProfileLoading = false;
+      Utility.errorMessage(profileModel.message ?? "");
+    }
+    update();
+  }
 
   // Future<void> getProfile() async {
   //   var response = await profilePresenter.getProfile(
@@ -39,27 +63,27 @@ class ProfileController extends GetxController {
   //   update();
   // }
 
-  String? profileImage;
-  final picker = ImagePicker();
+  // String? profileImage;
+  // final picker = ImagePicker();
 
-  // // Future selectProfilePic() async {
-  // //   final pickedFile = await picker.pickImage(
-  // //     source: ImageSource.gallery,
-  // //   );
+  // Future selectProfilePic() async {
+  //   final pickedFile = await picker.pickImage(
+  //     source: ImageSource.gallery,
+  //   );
 
-  // //   if (pickedFile != null) {
-  // //     if (Utility.getImageSizeMB(pickedFile.path) <= 5) {
-  // //       profileImage = await profilePresenter.postUploadProfile(
-  // //         filePath: pickedFile.path,
-  // //         isLoading: true,
-  // //       );
-  // //       update();
-  // //     } else {
-  // //       Utility.errorMessage("max_5_mb_img_error".tr);
-  // //     }
-  // //   }
-  // //   update();
-  // // }
+  //   if (pickedFile != null) {
+  //     if (Utility.getImageSizeMB(pickedFile.path) <= 5) {
+  //       profileImage = await profilePresenter.postUploadProfile(
+  //         filePath: pickedFile.path,
+  //         isLoading: true,
+  //       );
+  //       update();
+  //     } else {
+  //       Utility.errorMessage("max_5_mb_img_error".tr);
+  //     }
+  //   }
+  //   update();
+  // }
 
   TextEditingController holderName = TextEditingController();
   TextEditingController bankName = TextEditingController();
@@ -70,19 +94,19 @@ class ProfileController extends GetxController {
   File? imageFile;
   final pickerProfile = ImagePicker();
 
-  // Future setProfilePic() async {
-  //   final pickedFile =
-  //       await pickerProfile.pickImage(source: ImageSource.gallery);
+  Future setProfilePic() async {
+    final pickedFile =
+        await pickerProfile.pickImage(source: ImageSource.gallery);
 
-  //   if (pickedFile != null) {
-  //     imageFile = File(pickedFile.path);
-  //     print(">>>>>>>>>>>>>> File Path ${imageFile?.path}");
-  //     print(
-  //         ">>>>>>>>>>>>>> Splited File Path ${imageFile?.path.split("/").last}");
-  //     final profileImage = await profilePresenter.postUploadProfile(
-  //       filePath: imageFile?.path ?? '',
-  //     );
-  //   }
-  //   update();
-  // }
+    if (pickedFile != null) {
+      imageFile = File(pickedFile.path);
+      print(">>>>>>>>>>>>>> File Path ${imageFile?.path}");
+      print(
+          ">>>>>>>>>>>>>> Splited File Path ${imageFile?.path.split("/").last}");
+      final profileImage = await profilePresenter.postUploadProfile(
+        filePath: imageFile?.path ?? '',
+      );
+    }
+    update();
+  }
 }

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-// WishlistModel wishlistModelFromJson(String str) =>
-//     WishlistModel.fromJson(json.decode(str));
+WishlistModel wishlistModelFromJson(String str) => WishlistModel.fromJson(json.decode(str));
+
+String wishlistModelToJson(WishlistModel data) => json.encode(data.toJson());
 
 class WishlistModel {
   String? message;
@@ -16,19 +17,21 @@ class WishlistModel {
     this.isSuccess,
   });
 
-  // factory WishlistModel.fromJson(Map<String, dynamic> json) => WishlistModel(
-  //       message: json["Message"],
-  //       data: json["Data"] == null || json["Data"] == 0 ? null : WishlistData.fromJson(json["Data"]),
-  //       status: json["Status"],
-  //       isSuccess: json["IsSuccess"],
-  //     );
+  factory WishlistModel.fromJson(Map<String, dynamic> json) => WishlistModel(
+    message: json["Message"],
+    data: json["Data"] is Map<String, dynamic> // Check if "Data" is an object
+        ? WishlistData.fromJson(json["Data"])
+        : WishlistData(), // If "Data" is an empty list, return an empty WishlistData object
+    status: json["Status"],
+    isSuccess: json["IsSuccess"],
+  );
 
-  // Map<String, dynamic> toJson() => {
-  //       "Message": message,
-  //       "Data": data?.toJson(),
-  //       "Status": status,
-  //       "IsSuccess": isSuccess,
-  //     };
+  Map<String, dynamic> toJson() => {
+    "Message": message,
+    "Data": data?.toJson(), // Serialize only if data is not null
+    "Status": status,
+    "IsSuccess": isSuccess,
+  };
 }
 
 class WishlistData {
@@ -54,39 +57,36 @@ class WishlistData {
     this.nextPage,
   });
 
-  // factory WishlistData.fromJson(Map<String, dynamic> json) => WishlistData(
-  //       docs: json["docs"] == null
-  //           ? []
-  //           : List<WishlistDoc>.from(
-  //               json["docs"]!.map((x) => WishlistDoc.fromJson(x))),
-  //       totalDocs: json["totalDocs"],
-  //       limit: json["limit"],
-  //       totalPages: json["totalPages"],
-  //       page: json["page"],
-  //       hasPrevPage: json["hasPrevPage"],
-  //       hasNextPage: json["hasNextPage"],
-  //       prevPage: json["prevPage"],
-  //       nextPage: json["nextPage"],
-  //     );
+  factory WishlistData.fromJson(Map<String, dynamic> json) => WishlistData(
+    docs: json["docs"] == null
+        ? []
+        : List<WishlistDoc>.from(json["docs"].map((x) => WishlistDoc.fromJson(x))),
+    totalDocs: json["totalDocs"],
+    limit: json["limit"],
+    totalPages: json["totalPages"],
+    page: json["page"],
+    hasPrevPage: json["hasPrevPage"],
+    hasNextPage: json["hasNextPage"],
+    prevPage: json["prevPage"],
+    nextPage: json["nextPage"],
+  );
 
-  // Map<String, dynamic> toJson() => {
-  //       "docs": docs == null
-  //           ? []
-  //           : List<dynamic>.from(docs!.map((x) => x.toJson())),
-  //       "totalDocs": totalDocs,
-  //       "limit": limit,
-  //       "totalPages": totalPages,
-  //       "page": page,
-  //       "hasPrevPage": hasPrevPage,
-  //       "hasNextPage": hasNextPage,
-  //       "prevPage": prevPage,
-  //       "nextPage": nextPage,
-  //     };
+  Map<String, dynamic> toJson() => {
+    "docs": docs == null ? [] : List<dynamic>.from(docs!.map((x) => x.toJson())),
+    "totalDocs": totalDocs,
+    "limit": limit,
+    "totalPages": totalPages,
+    "page": page,
+    "hasPrevPage": hasPrevPage,
+    "hasNextPage": hasNextPage,
+    "prevPage": prevPage,
+    "nextPage": nextPage,
+  };
 }
 
 class WishlistDoc {
   String? id;
-  WishlistProductid? productid;
+  Productid? productid;
   bool? status;
   bool? isDeleted;
   String? createdBy;
@@ -95,6 +95,7 @@ class WishlistDoc {
   DateTime? updatedAt;
   int? v;
   bool? inCart;
+  int? quantity;
 
   WishlistDoc({
     this.id,
@@ -107,58 +108,55 @@ class WishlistDoc {
     this.updatedAt,
     this.v,
     this.inCart,
+    this.quantity,
   });
 
-  // factory WishlistDoc.fromJson(Map<String, dynamic> json) => WishlistDoc(
-  //       id: json["_id"],
-  //       productid: json["productid"] == null
-  //           ? null
-  //           : WishlistProductid.fromJson(json["productid"]),
-  //       status: json["status"],
-  //       isDeleted: json["isDeleted"],
-  //       createdBy: json["createdBy"],
-  //       updatedBy: json["updatedBy"],
-  //       createdAt: json["createdAt"] == null
-  //           ? null
-  //           : DateTime.parse(json["createdAt"]),
-  //       updatedAt: json["updatedAt"] == null
-  //           ? null
-  //           : DateTime.parse(json["updatedAt"]),
-  //       v: json["__v"],
-  //       inCart: json["in_cart"],
-  //     );
+  factory WishlistDoc.fromJson(Map<String, dynamic> json) => WishlistDoc(
+    id: json["_id"],
+    productid: json["productid"] == null ? null : Productid.fromJson(json["productid"]),
+    status: json["status"],
+    isDeleted: json["isDeleted"],
+    createdBy: json["createdBy"],
+    updatedBy: json["updatedBy"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    v: json["__v"],
+    inCart: json["in_cart"],
+    quantity: json["quantity"],
+  );
 
-  // Map<String, dynamic> toJson() => {
-  //       "_id": id,
-  //       "productid": productid?.toJson(),
-  //       "status": status,
-  //       "isDeleted": isDeleted,
-  //       "createdBy": createdBy,
-  //       "updatedBy": updatedBy,
-  //       "createdAt": createdAt?.toIso8601String(),
-  //       "updatedAt": updatedAt?.toIso8601String(),
-  //       "__v": v,
-  //       "in_cart": inCart,
-  //     };
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "productid": productid?.toJson(),
+    "status": status,
+    "isDeleted": isDeleted,
+    "createdBy": createdBy,
+    "updatedBy": updatedBy,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+    "in_cart": inCart,
+    "quantity": quantity,
+  };
 }
 
-class WishlistProductid {
+class Productid {
   String? id;
   String? category;
   String? name;
-  num? weight;
+  int? weight;
   String? image;
   bool? status;
   int? createTimestamp;
   bool? isDeleted;
   String? createdBy;
-  dynamic updatedBy;
+  String? updatedBy;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? v;
-  int quantity;
+  dynamic quantity;
 
-  WishlistProductid({
+  Productid({
     this.id,
     this.category,
     this.name,
@@ -172,43 +170,40 @@ class WishlistProductid {
     this.createdAt,
     this.updatedAt,
     this.v,
-    this.quantity = 0,
+    this.quantity,
   });
 
-  // factory WishlistProductid.fromJson(Map<String, dynamic> json) =>
-  //     WishlistProductid(
-  //       id: json["_id"],
-  //       category: json["category"],
-  //       name: json["name"],
-  //       weight: json["weight"],
-  //       image: json["image"],
-  //       status: json["status"],
-  //       createTimestamp: json["create_timestamp"],
-  //       isDeleted: json["isDeleted"],
-  //       createdBy: json["createdBy"],
-  //       updatedBy: json["updatedBy"],
-  //       createdAt: json["createdAt"] == null
-  //           ? null
-  //           : DateTime.parse(json["createdAt"]),
-  //       updatedAt: json["updatedAt"] == null
-  //           ? null
-  //           : DateTime.parse(json["updatedAt"]),
-  //       v: json["__v"],
-  //     );
+  factory Productid.fromJson(Map<String, dynamic> json) => Productid(
+    id: json["_id"],
+    category: json["category"],
+    name: json["name"],
+    weight: json["weight"],
+    image: json["image"],
+    status: json["status"],
+    createTimestamp: json["create_timestamp"],
+    isDeleted: json["isDeleted"],
+    createdBy: json["createdBy"],
+    updatedBy: json["updatedBy"],
+    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    v: json["__v"],
+    quantity: json["quantity"],
+  );
 
-  // Map<String, dynamic> toJson() => {
-  //       "_id": id,
-  //       "category": category,
-  //       "name": name,
-  //       "weight": weight,
-  //       "image": image,
-  //       "status": status,
-  //       "create_timestamp": createTimestamp,
-  //       "isDeleted": isDeleted,
-  //       "createdBy": createdBy,
-  //       "updatedBy": updatedBy,
-  //       "createdAt": createdAt?.toIso8601String(),
-  //       "updatedAt": updatedAt?.toIso8601String(),
-  //       "__v": v,
-  //     };
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "category": category,
+    "name": name,
+    "weight": weight,
+    "image": image,
+    "status": status,
+    "create_timestamp": createTimestamp,
+    "isDeleted": isDeleted,
+    "createdBy": createdBy,
+    "updatedBy": updatedBy,
+    "createdAt": createdAt?.toIso8601String(),
+    "updatedAt": updatedAt?.toIso8601String(),
+    "__v": v,
+    "quantity": quantity,
+  };
 }

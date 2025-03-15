@@ -1,51 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:ga_gold/app/app.dart';
+import 'package:ga_final/app/app.dart';
 
-class CustomButton extends StatelessWidget {
-  final String text;
+class CustomButton extends StatefulWidget {
+  const CustomButton(
+      {super.key,
+      required this.text,
+      required this.onTap,
+      this.height,
+      this.backgroundColor,
+      this.radius,
+      this.style,
+      this.side});
+  final String? text;
   final double? height;
-  final double? width;
   final Color? backgroundColor;
   final BorderRadiusGeometry? radius;
   final Function()? onTap;
   final TextStyle? style;
   final BoxBorder? side;
 
-  const CustomButton({
-    super.key,
-    required this.text,
-    required this.onTap,
-    this.height,
-    this.width,
-    this.backgroundColor,
-    this.radius,
-    this.style,
-    this.side,
-  });
-
   @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: width ?? double.infinity,
-        height: height,
-        decoration: BoxDecoration(
-          color: backgroundColor ?? ColorsValue.buttomColor,
-          borderRadius: radius ?? BorderRadius.circular(Dimens.ten),
-          border: side,
-        ),
-        child: Center(
-          child: Text(
-            text,
-            style: style ??
-                TextStyle(
-                    color: ColorsValue.whiteColor,
-                    fontWeight: FontWeight.w800,
-                    fontSize: Dimens.fourteen),
+  State<CustomButton> createState() => _CustomButtonState();
+}
+
+class _CustomButtonState extends State<CustomButton> {
+  @override
+  Widget build(BuildContext context) => Column(
+        children: [
+          InkWell(
+            onTap: widget.onTap,
+            child: Container(
+              height: widget.height,
+              decoration: BoxDecoration(
+                color: widget.backgroundColor ?? ColorsValue.lightYellow,
+                borderRadius:
+                    widget.radius ?? BorderRadius.circular(Dimens.twelve),
+                border: widget.side,
+              ),
+              child: Center(
+                child: Text(
+                  widget.text!,
+                  style: widget.style ?? Styles.txtWhite80018,
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-    );
-  }
+        ],
+      );
 }

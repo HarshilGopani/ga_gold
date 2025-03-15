@@ -1,20 +1,6 @@
-<svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_13_1712)">
-<rect x="10" y="6.00488" width="50" height="50" rx="25" fill="#286BB0"/>
-<path d="M25 21H26.74C27.82 21 28.67 21.93 28.58 23L27.75 32.96C27.61 34.59 28.9 35.99 30.54 35.99H41.19C42.63 35.99 43.89 34.81 44 33.38L44.54 25.88C44.66 24.22 43.4 22.87 41.73 22.87H28.82" stroke="#FFF8F1" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M39.25 41C39.9404 41 40.5 40.4404 40.5 39.75C40.5 39.0596 39.9404 38.5 39.25 38.5C38.5596 38.5 38 39.0596 38 39.75C38 40.4404 38.5596 41 39.25 41Z" stroke="#FFF8F1" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M31.25 41C31.9404 41 32.5 40.4404 32.5 39.75C32.5 39.0596 31.9404 38.5 31.25 38.5C30.5596 38.5 30 39.0596 30 39.75C30 40.4404 30.5596 41 31.25 41Z" stroke="#FFF8F1" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M32 27H44" stroke="#FFF8F1" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<filter id="filter0_d_13_1712" x="0" y="0.00488281" width="70" height="70" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="5"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.243137 0 0 0 0 0.384314 0 0 0 0 0.152941 0 0 0 0.54 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_13_1712"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_13_1712" result="shape"/>
-</filter>
-</defs>
+<svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.16699 2.5H3.907C4.987 2.5 5.83699 3.43 5.74699 4.5L4.91699 14.46C4.77699 16.09 6.06699 17.49 7.70699 17.49H18.357C19.797 17.49 21.057 16.31 21.167 14.88L21.707 7.38C21.827 5.72 20.567 4.37 18.897 4.37H5.987" stroke="#94A3B8" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M16.417 22.5C17.1073 22.5 17.667 21.9404 17.667 21.25C17.667 20.5596 17.1073 20 16.417 20C15.7266 20 15.167 20.5596 15.167 21.25C15.167 21.9404 15.7266 22.5 16.417 22.5Z" stroke="#94A3B8" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.41699 22.5C9.10735 22.5 9.66699 21.9404 9.66699 21.25C9.66699 20.5596 9.10735 20 8.41699 20C7.72664 20 7.16699 20.5596 7.16699 21.25C7.16699 21.9404 7.72664 22.5 8.41699 22.5Z" stroke="#94A3B8" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9.16699 8.5H21.167" stroke="#94A3B8" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

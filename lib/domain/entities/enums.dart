@@ -1,7 +1,6 @@
 // coverage:ignore-file
 
 /// A set of enums use all over the
-library;
 
 /// RequestType
 enum Request {
@@ -13,6 +12,7 @@ enum Request {
   awsFileUpload,
   awsUpload,
   getApiWithoutBaseURL,
+  filePath,
 }
 
 /// MQTT Enums
@@ -80,11 +80,11 @@ enum AwsMediaType {
   OTHER,
 }
 
-// enum MediaType {
-//   IMAGE,
-//   VIDEO,
-//   OTHER,
-// }
+enum MediaType {
+  IMAGE,
+  VIDEO,
+  OTHER,
+}
 
 enum TransactionType {
   ALL,

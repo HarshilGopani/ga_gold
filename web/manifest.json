@@ -1,6 +1,6 @@
 {
-    "name": "ga_gold",
-    "short_name": "ga_gold",
+    "name": "ga_final",
+    "short_name": "ga_final",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

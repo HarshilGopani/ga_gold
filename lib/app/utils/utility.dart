@@ -1,30 +1,38 @@
 // coverage:ignore-file
 import 'dart:convert';
-import 'dart:io' show Directory, File, FileMode, Platform;
+import 'dart:io' show Directory, File, FileMode, InternetAddress, Platform;
 import 'dart:math';
 
+import 'package:connectivity_plus/connectivity_plus.dart'
+    show Connectivity, ConnectivityResult;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:email_validator/email_validator.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_in_store_app_version_checker/flutter_in_store_app_version_checker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:ga_final/app/app.dart';
+import 'package:ga_final/domain/domain.dart';
 import 'package:logger/logger.dart';
-import 'package:ga_gold/app/app.dart';
-import 'package:ga_gold/domain/domain.dart';
+import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 abstract class Utility {
   static Directory path = Directory('storage/emulated/0/Fanzly');
+  static String? coutryCurrency;
+
+  static String? profilePic;
+
+  static InStoreAppVersionChecker checker = InStoreAppVersionChecker(
+    appId: 'com.krishna.krishna_ornaments',
+  );
 
   /// common header for All api
   static Map<String, String> commonHeader({
@@ -37,8 +45,8 @@ abstract class Utility {
     };
     if (isDefaultAuthorizationKeyAdd) {
       header.addAll({
-        // 'Authorization':
-        //     'Token ${Get.find<Repository>().getStringValue(LocalKey.isDefaultAuthorizationKeyAdd)}',
+        'Authorization':
+            'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
       });
     }
 
@@ -47,6 +55,183 @@ abstract class Utility {
     }
     return header;
   }
+
+  static void showMessage(String? message, MessageType messageType,
+      Function()? onTap, String actionName) {
+    if (message == null || message.isEmpty) return;
+    closeSnackbar();
+    var backgroundColor = Colors.black;
+    switch (messageType) {
+      case MessageType.error:
+        backgroundColor = Colors.red;
+        break;
+      case MessageType.information:
+        backgroundColor = Colors.black.withOpacity(0.3);
+        break;
+      case MessageType.success:
+        backgroundColor = Colors.green;
+        break;
+      default:
+        backgroundColor = Colors.black;
+        break;
+    }
+    Future.delayed(
+      const Duration(seconds: 0),
+      () {
+        Get.rawSnackbar(
+          snackPosition: SnackPosition.TOP,
+          messageText: Text(
+            message,
+            style: const TextStyle(color: Colors.white),
+          ),
+          mainButton: TextButton(
+            onPressed: onTap ?? Get.back,
+            child: Text(
+              actionName,
+              style: const TextStyle(color: Colors.white),
+            ),
+          ),
+          backgroundColor: backgroundColor,
+          margin: const EdgeInsets.all(15.0),
+          borderRadius: 15,
+          snackStyle: SnackStyle.FLOATING,
+        );
+      },
+    );
+  }
+
+  static double getImageSizeMB(String filePath) {
+    var file = File(filePath);
+    final bytes = file.readAsBytesSync().lengthInBytes;
+    final kb = bytes / 1024;
+    final mb = kb / 1024;
+    return mb;
+  }
+
+  static void disableScreenshot(noScreenshot) async {
+    bool result = await noScreenshot.screenshotOff();
+    debugPrint('Screenshot Off: $result');
+  }
+
+  static void launchLinkURL(String url) async {
+    await launchUrl(Uri.parse(url)).onError(
+      (error, stackTrace) {
+        print("Url is not valid!");
+        return false;
+      },
+    );
+  }
+
+  static Future<bool> imagePermissionCheack(BuildContext context) async {
+    bool status = false;
+    bool statusVideos = false;
+    bool permanentlyDenied = false;
+    bool permanentlyVideoDenied = false;
+    if (Platform.isAndroid) {
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      if (androidInfo.version.sdkInt < 33) {
+        status = await Permission.storage.request().isDenied;
+        permanentlyDenied =
+            await Permission.storage.request().isPermanentlyDenied;
+      } else {
+        status = await Permission.photos.request().isDenied;
+        permanentlyDenied =
+            await Permission.photos.request().isPermanentlyDenied;
+        statusVideos = await Permission.videos.request().isDenied;
+        permanentlyVideoDenied =
+            await Permission.videos.request().isPermanentlyDenied;
+      }
+    } else {
+      status = await Permission.photos.request().isDenied;
+      permanentlyDenied = await Permission.photos.request().isPermanentlyDenied;
+    }
+    if (status || permanentlyDenied || statusVideos || permanentlyVideoDenied) {
+      Get.dialog(
+          barrierDismissible: false,
+          AlertDialog(
+            title: Text(
+              "Permission Needed!",
+              style: Styles.blackColorW50018,
+            ),
+            content: Text(
+              "Please give the Photos Permission for uploading the image.",
+              style: Styles.redcolor50014,
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  "Allow",
+                  style: Styles.redcolor50014,
+                ),
+                onPressed: () async {
+                  Get.back();
+                  await openAppSettings();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  "Deny",
+                  style: Styles.black50014,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
+          ));
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static Future<bool> cameraPermissionCheack(BuildContext context) async {
+    final status;
+    var permanentlyDenied;
+    status = await Permission.camera.request().isDenied;
+    permanentlyDenied = await Permission.camera.request().isPermanentlyDenied;
+    if (status || permanentlyDenied) {
+      Get.dialog(
+          barrierDismissible: false,
+          AlertDialog(
+            title: Text(
+              "Permission Needed!",
+              style: Styles.blackColorW50018,
+            ),
+            content: Text(
+              "Please give the Camera Permission for capture image.",
+              style: Styles.redcolor50014,
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  "Allow",
+                  style: Styles.redcolor50014,
+                ),
+                onPressed: () async {
+                  Get.back();
+                  await openAppSettings();
+                },
+              ),
+              TextButton(
+                child: Text(
+                  "Deny",
+                  style: Styles.black50014,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
+              )
+            ],
+          ));
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
 
   // coverage:ignore-start
   static void printDLog(String message) {
@@ -130,16 +315,22 @@ abstract class Utility {
     return true;
   }
 
-  static String getFormatedDateTime(int datea) {
-    var date = DateTime.fromMillisecondsSinceEpoch(datea);
-    return DateFormat('dd/MM/yyyy').format(date);
-  }
-
-  static String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-
   /// Returns true if the internet connection is available.
-  static Future<bool> isNetworkAvailable() async =>
-      await InternetConnectionChecker().hasConnection;
+  static Future<bool> isNetworkAvailable() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      return false;
+    }
+
+    try {
+      // Try a DNS lookup to confirm internet access
+      final result = await InternetAddress.lookup('api.kratosclub.com');
+      return result.isNotEmpty && result.first.rawAddress.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
 
   /// Print the details of the [response].
   static void printResponseDetails(Response? response) {
@@ -180,36 +371,6 @@ abstract class Utility {
   static String getWeekDay(DateTime dateTime) =>
       DateFormat.EEEE().format(dateTime);
 
-  /// createDate '2018-04-10T04:00:00.000Z' To Time and date
-  static String getFormatedTime(String dateTime) {
-    var date = DateTime.parse(dateTime);
-    var format = DateFormat('HH:MM');
-    return format.format(date);
-  }
-
-  ///TimeStemp To Get DateFormat
-  static String parseTimeStamp(int value) {
-    var date = DateTime.fromMillisecondsSinceEpoch(value);
-    var d12 = DateFormat('dd MMMM yyyy, hh:mm a').format(date);
-    return d12;
-  }
-
-  // Date Format Change
-  static String dateStringConvertDate(String tod) {
-    var inputFormat = DateFormat('dd-MM-yyyy');
-    var date = inputFormat.parse(tod);
-    var formattedTime = DateFormat('dd/MM/yyyy');
-    return formattedTime.format(date);
-  }
-
-  // Time Format Change
-  static String timeStringConvertTimeHH(String tod) {
-    var inputFormat = DateFormat('HH:mm');
-    var date = inputFormat.parse(tod);
-    var formattedTime = DateFormat('HH:mm a');
-    return formattedTime.format(date);
-  }
-
   /// Calculates number of weeks for a given year as per https://en.wikipedia.org/wiki/ISO_week_date#Weeks_per_year
   static int _numOfWeeks(int year) {
     var dec28 = DateTime(year, 12, 28);
@@ -237,6 +398,10 @@ abstract class Utility {
     await Get.dialog<dynamic>(
       const Center(
         child: CircularProgressIndicator(),
+        // child: Lottie.asset(
+        //   AssetConstants.loaderJson,
+        //   height: Dimens.sixtyFour,
+        // ),
       ),
       barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(.7),
@@ -323,6 +488,68 @@ abstract class Utility {
     }
   }
 
+  /// Show no internet dialog if there is no
+  /// internet available.
+  // static Future<void> showNoInternetDialog() async {
+  //   await Get.dialog<void>(
+  //     const NoInternetWidget(),
+  //     barrierDismissible: false,
+  //   );
+  // }
+
+  /// Show a message to the user.
+  ///
+  /// [message] : Message you need to show to the user.
+  // ignore: comment_references
+  /// [messageType] : Type of the message for different background color.
+  // ignore: comment_references
+  /// [onTap] : An event for onTap.
+  // ignore: comment_references
+  /// [actionName] : The name for the action.
+  // static void showMessage(String? message, MessageType messageType,
+  //     Function()? onTap, String actionName) {
+  //   if (message == null || message.isEmpty) return;
+  //   closeDialog();
+  //   closeSnackbar();
+  //   var backgroundColor = Colors.black;
+  //   switch (messageType) {
+  //     case MessageType.error:
+  //       backgroundColor = Colors.red;
+  //       break;
+  //     case MessageType.information:
+  //       backgroundColor = Colors.black.withOpacity(0.3);
+  //       break;
+  //     case MessageType.success:
+  //       backgroundColor = Colors.green;
+  //       break;
+  //     default:
+  //       backgroundColor = Colors.black;
+  //       break;
+  //   }
+  //   Future.delayed(
+  //     const Duration(seconds: 0),
+  //     () {
+  //       Get.rawSnackbar(
+  //         messageText: Text(
+  //           '${jsonDecode(message)['message']}',
+  //           style: const TextStyle(color: Colors.white),
+  //         ),
+  //         mainButton: TextButton(
+  //           onPressed: onTap ?? Get.back,
+  //           child: Text(
+  //             actionName,
+  //             style: const TextStyle(color: Colors.white),
+  //           ),
+  //         ),
+  //         backgroundColor: backgroundColor,
+  //         margin: const EdgeInsets.all(15.0),
+  //         borderRadius: 15,
+  //         snackStyle: SnackStyle.FLOATING,
+  //       );
+  //     },
+  //   );
+  // }
+
   /// Returns Platform type
   static String platFormType() {
     var value = kIsWeb
@@ -380,7 +607,128 @@ abstract class Utility {
     );
   }
 
-  ////imageOptimization
+  /// Bottomsheet to show only alerts to user.
+  static void showInfoBottomSheet({
+    required String icon,
+    required String title,
+    required String coloredTitle,
+    String? description,
+    double? titleSize,
+    String? subTitle,
+    double? subTitleSize,
+    Widget? actions,
+    Function()? onPress,
+    bool isdismissible = true,
+    Axis direction = Axis.vertical,
+    double? fontSize,
+    bool defaultSpaceBetweenColoredText = false,
+  }) =>
+      Get.bottomSheet<void>(
+        Container(
+          padding: Dimens.edgeInsets16,
+          decoration: BoxDecoration(
+            color: Theme.of(Get.context!).canvasColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(
+                Dimens.fourteen,
+              ),
+              topRight: Radius.circular(
+                Dimens.fourteen,
+              ),
+            ),
+          ),
+          child: Container(
+            margin: Dimens.edgeInsets0_20_0_0,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (subTitle != null)
+                  Text(
+                    subTitle,
+                    style: Styles.blackBold16,
+                  ),
+                if (description != null)
+                  Text(
+                    description,
+                    style: Styles.black12.copyWith(
+                      color: Theme.of(Get.context!).hintColor,
+                    ),
+                  ),
+                if (actions == null) Dimens.boxHeight40,
+                if (actions != null) actions,
+                if (actions == null)
+                  // CustomMaterialButton(
+                  //   text: 'ok'.tr,
+                  //   onTap: onPress,
+                  // ),
+                  // else
+                  //   actions,
+                  Dimens.boxHeight10,
+              ],
+            ),
+          ),
+        ),
+        isScrollControlled: true,
+        backgroundColor: Theme.of(Get.context!).canvasColor,
+        isDismissible: isdismissible,
+        enableDrag: isdismissible,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14.0),
+        ),
+      );
+
+  // /// Bottomsheet to show only alerts to user.
+  // static void showAlertBottomSheet({
+  //   String? title,
+  //   Function()? onCancle,
+  //   Function()? onConfirm,
+  //   String? cancleCustomText,
+  //   String? confirmCustomText,
+  // }) =>
+  //     Get.bottomSheet<void>(
+  //       Container(
+  //         color: isThemeDarkMode()
+  //             ? Theme.of(Get.context!).canvasColor
+  //             : ColorsValue.whiteColor,
+  //         padding: Dimens.edgeInsets35,
+  //         child: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           children: [
+  //             Text(
+  //               title ?? 'areYouSure'.tr,
+  //               style: Styles.blackBold26,
+  //             ),
+  //             Dimens.boxHeight20,
+  //             Row(
+  //               children: [
+  //                 Expanded(
+  //                   child: PrimaryButton(
+  //                     margin: Dimens.edgeInsets0_16_0_16,
+  //                     style: Styles.cancleElevatedButtonTheme,
+  //                     title: confirmCustomText ?? 'confirm'.tr,
+  //                     onPress: onConfirm,
+  //                     padding: Dimens.edgeInsets0,
+  //                   ),
+  //                 ),
+  //                 Dimens.boxWidth10,
+  //                 Expanded(
+  //                   child: PrimaryButton(
+  //                     margin: Dimens.edgeInsets0,
+  //                     title: cancleCustomText ?? 'cancle'.tr,
+  //                     onPress: onCancle,
+  //                     padding: Dimens.edgeInsets0,
+  //                   ),
+  //                 ),
+  //               ],
+  //             )
+  //           ],
+  //         ),
+  //       ),
+  //       isScrollControlled: true,
+  //       backgroundColor: Theme.of(Get.context!).canvasColor,
+  //     );
+
   static String imageOptimization({
     required String bucket,
     required String url,
@@ -403,7 +751,6 @@ abstract class Utility {
     return data;
   }
 
-  /// imageOptimizationWithoutSize
   static String imageOptimizationWithoutSize({
     required String bucket,
     required String key,
@@ -424,7 +771,6 @@ abstract class Utility {
     return data;
   }
 
-  //createFolder
   static Future<String> createFolder() async {
     var permissionGranted = false;
     if (await Permission.storage.request().isGranted) {
@@ -483,7 +829,7 @@ abstract class Utility {
       );
 
       if (GetPlatform.isIOS) {
-        // dynamic result = await ImageGallerySaver.saveImage(
+        // dynamic result = await ImageGallerySaverPlus.saveImage(
         //     Uint8List.fromList(response.data as List<int>),
         //     quality: 60,
         //     name: name);
@@ -505,11 +851,78 @@ abstract class Utility {
     }
   }
 
-  static bool isThemeDarkMode() {
-    var repository = Get.find<Repository>();
-    var themeMode = repository.getStoredValue(LocalKeys.isThemeDarkMode);
-    return themeMode;
+  static void getReadMoreSheet({String? title, String? text}) {
+    Get.bottomSheet<dynamic>(
+      SafeArea(
+        child: Container(
+          height: Dimens.twoHundredEighty,
+          constraints: const BoxConstraints(maxHeight: double.infinity),
+          width: double.infinity,
+          color: ColorsValue.greyColor,
+          child: Padding(
+            padding: Dimens.edgeInsets15_20_15_0,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          title!,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: Styles.white23,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Get.back<void>();
+                        },
+                        child: const Icon(
+                          Icons.cancel,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Dimens.boxHeight30,
+                  Text(
+                    text!,
+                    style: Styles.white14,
+                  ),
+                  Dimens.boxHeight10,
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
+
+  // static bool isThemeDarkMode() {
+  //   var repository = Get.find<Repository>();
+  //   var themeMode = repository.getStoredValue(LocalKeys.isThemeDarkMode);
+  //   return themeMode;
+  // }
+
+  // static String getStyledHtml(String content) {
+  //   if (content.contains('rgb')) {
+  //     debugPrint('contains======== true');
+  //     var repository = Get.find<Repository>();
+  //     var themeMode = repository.getStoredValue(LocalKeys.isThemeDarkMode);
+  //     if (themeMode) {
+  //       return content.replaceAll('<span style=\"color: rgb(44, 53, 60);\">',
+  //           '<span style=\"color: rgb(255, 255, 255);\">');
+  //     } else {
+  //       return content;
+  //     }
+  //   } else {
+  //     debugPrint('contains========== false');
+  //     return content;
+  //   }
+  // }
 
   /// Compare password & confirm password.
   ///
@@ -518,6 +931,54 @@ abstract class Utility {
       return true;
     }
     return false;
+  }
+
+  /// Show Error bottomsheet.
+  ///
+  static void showErrorBottomSheet({
+    required String? message,
+    Function()? onPress,
+    bool isDismissible = true,
+    bool autoDismiss = true,
+  }) async {
+    await Get.bottomSheet<void>(
+      Container(
+        padding: Dimens.edgeInsets30,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$message',
+              style: Styles.blackBold16.copyWith(
+                color: const Color.fromRGBO(235, 87, 87, 1),
+              ),
+            ),
+            Dimens.boxHeight10,
+            // CustomButton(
+            //   width: Get.width - Dimens.sixty,
+            //   onPress: onPress ?? Get.back,
+            //   height: 50,
+            //   title: 'ok'.tr,
+            //   color: const Color.fromRGBO(235, 87, 87, 1),
+            // ),
+            // Dimens.boxHeight10,
+          ],
+        ),
+      ),
+      backgroundColor: const Color.fromRGBO(255, 206, 206, 1),
+      isScrollControlled: true,
+      isDismissible: isDismissible,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14.0),
+      ),
+    ).timeout(const Duration(seconds: 4), onTimeout: () {
+      if (autoDismiss) {
+        if (Get.isBottomSheetOpen!) {
+          Get.back<void>();
+        }
+      }
+    });
   }
 
   /// Method For Get Floated Snack Bar
@@ -541,13 +1002,12 @@ abstract class Utility {
     );
   }
 
-  // SnackBar
   static void snacBar(
     String message,
     Color backgroundColor,
   ) async {
     Get.rawSnackbar(
-        message: message,
+        message: message ?? "Internal Server error",
         backgroundColor: backgroundColor,
         margin: const EdgeInsets.all(15.0),
         borderRadius: 15,
@@ -555,7 +1015,6 @@ abstract class Utility {
         snackPosition: SnackPosition.TOP);
   }
 
-  // Error Message
   static errorMessage(String message) async {
     return Get.rawSnackbar(
         title: "Error",
@@ -567,6 +1026,18 @@ abstract class Utility {
         instantInit: true);
   }
 
+  // static String findResult(List<AddressComponent> results, key) {
+  //   for (int i = 0; i < results.length; i++) {
+  //     for (int j = 0; j < results[i].types!.length; j++) {
+  //       if (results[i].types![j] == key) {
+  //         return results[i].longName!;
+  //       }
+  //     }
+  //   }
+  //   return "";
+  // }
+
+  /// Video Type List For Every Platform
   static List<String> videoTypeList = [
     'webm',
     'mkv',
@@ -758,12 +1229,12 @@ abstract class Utility {
     return bytes;
   }
 
-  static Future<FilePickerResult?> pickPhotoVideo() async =>
-      await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowMultiple: false,
-        allowedExtensions: List.from(imageTypeList)..addAll(videoTypeList),
-      );
+  // static Future<filePicker.FilePickerResult?> pickPhotoVideo() async =>
+  //     await filePicker.FilePicker.platform.pickFiles(
+  //       type: filePicker.FileType.custom,
+  //       allowMultiple: false,
+  //       allowedExtensions: List.from(imageTypeList)..addAll(videoTypeList),
+  //     );
 
   /// Method For Convert Duration To String
   static String durationToString({required Duration duration}) {
@@ -796,6 +1267,50 @@ abstract class Utility {
     return age;
   }
 
+  // static void showMessage(String? message, MessageType messageType,
+  //     Function()? onTap, String actionName) {
+  //   if (message == null || message.isEmpty) return;
+  //   closeSnackbar();
+  //   var backgroundColor = Colors.black;
+  //   switch (messageType) {
+  //     case MessageType.error:
+  //       backgroundColor = Colors.red;
+  //       break;
+  //     case MessageType.information:
+  //       backgroundColor = Colors.black.withOpacity(0.3);
+  //       break;
+  //     case MessageType.success:
+  //       backgroundColor = Colors.green;
+  //       break;
+  //     default:
+  //       backgroundColor = Colors.black;
+  //       break;
+  //   }
+  //   Future.delayed(
+  //     const Duration(seconds: 0),
+  //     () {
+  //       Get.rawSnackbar(
+  //         snackPosition: SnackPosition.TOP,
+  //         messageText: Text(
+  //           message,
+  //           style: const TextStyle(color: Colors.white),
+  //         ),
+  //         mainButton: TextButton(
+  //           onPressed: onTap ?? Get.back,
+  //           child: Text(
+  //             actionName,
+  //             style: const TextStyle(color: Colors.white),
+  //           ),
+  //         ),
+  //         backgroundColor: backgroundColor,
+  //         margin: const EdgeInsets.all(15.0),
+  //         borderRadius: 15,
+  //         snackStyle: SnackStyle.FLOATING,
+  //       );
+  //     },
+  //   );
+  // }
+
   static AndroidDeviceInfo? androidInfo;
 
   static Future<bool> _requestPermission(Permission permission) async {
@@ -810,7 +1325,72 @@ abstract class Utility {
     return false;
   }
 
-  // Get File Extension
+  // static Future<bool> saveFile(String url, String fileName) async {
+  //   try {
+  //     if (await _requestPermission(int.parse(androidInfo == null
+  //                 ? "12"
+  //                 : androidInfo!.version.release.toString()) >
+  //             12
+  //         ? Permission.photos
+  //         : Permission.storage)) {
+  //       Directory? directory;
+  //       // directory = await getExternalStorageDirectory();
+  //       // String newPath = "";
+  //       // List<String> paths = directory!.path.split("/");
+  //       // for (int x = 1; x < paths.length; x++) {
+  //       //   String folder = paths[x];
+  //       //   if (folder != "Android") {
+  //       //     newPath += "/" + folder;
+  //       //   } else {
+  //       //     break;
+  //       //   }
+  //       // }
+  //       // newPath = newPath + "/EventoPackage";
+  //       // directory = Directory(newPath);
+
+  //       try {
+  //         if (Platform.isIOS) {
+  //           var dir = await getLibraryDirectory();
+  //           directory = Directory(dir.path + '/FestumEvento');
+  //         } else {
+  //           directory = Directory('/storage/emulated/0/Download/FestumEvento');
+  //           // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+  //           // ignore: avoid_slow_async_io
+  //           // if (!await directory.exists()) directory = await getExternalStorageDirectory();
+  //         }
+  //       } catch (err) {
+  //         print("Cannot get download folder path");
+  //       }
+  //       var myPath = directory?.path;
+  //       File saveFile = File(myPath! + "/$fileName");
+  //       if (kDebugMode) {
+  //         print(saveFile.path);
+  //       }
+  //       if (!await directory!.exists()) {
+  //         await directory.create(recursive: true);
+  //       }
+  //       if (await directory.exists()) {
+  //         Utility.showLoader();
+
+  //         await dio.Dio()
+  //             .download(
+  //           url,
+  //           saveFile.path,
+  //         )
+  //             .then((value) {
+  //           Utility.closeLoader();
+  //           Get.to(() => PdfViewerPage(saveFile.path));
+  //         });
+  //       }
+  //     }
+  //     return true;
+  //   } catch (e) {
+  //     //commonHelper.errorMessage(e);
+  //     errorMessage(e.toString());
+  //     return false;
+  //   }
+  // }
+
   static String getFileExtension(String fileName) {
     try {
       return ".${fileName.split('.').last}";
@@ -819,66 +1399,9 @@ abstract class Utility {
     }
   }
 
-  static String dateTimeTodayWithDate(timeDate) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(timeDate);
-
-    final DateTime dtToday = DateTime.now();
-    final DateTime dtYesterday =
-        DateTime.now().subtract(const Duration(days: 1));
-    final DateFormat formatter = DateFormat("dd-MM-yyyy");
-    final DateFormat formatterDateTime = DateFormat("dd,MMMM yyyy hh:mm a");
-    final DateFormat timeFormat = DateFormat("hh:mm a");
-
-    return formatter.format(dateTime) == formatter.format(dtToday)
-        ? "Today ${timeFormat.format(dateTime)}"
-        : formatter.format(dateTime) == formatter.format(dtYesterday)
-            ? "Yesterday ${timeFormat.format(dateTime)}"
-            : formatterDateTime.format(dateTime);
-  }
-
-  static bool timeToNext(sendTime) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(sendTime);
-
-    String timeApi = DateFormat('hh-mm').format(dateTime);
-    DateTime currentTime = DateTime.now();
-
-    DateTime targetTime = DateTime(
-      currentTime.year,
-      currentTime.month,
-      currentTime.day,
-      int.parse(timeApi.split('-').first),
-      int.parse(timeApi.split('-').last),
-    );
-
-    bool within10Minutes =
-        currentTime.isAfter(targetTime.subtract(const Duration(minutes: 10))) &&
-            currentTime.isBefore(targetTime.add(const Duration(minutes: 10)));
-
-    // Display the result
-    print(within10Minutes);
-    return within10Minutes;
-  }
-
-  static String timestempToTime(int time) {
-    var dt = DateTime.fromMillisecondsSinceEpoch(time);
-
-    final todayDate = DateTime.now();
-
-    final today = DateTime(todayDate.year, todayDate.month, todayDate.day);
-    final yesterday =
-        DateTime(todayDate.year, todayDate.month, todayDate.day - 1);
-    String difference = '';
-    final aDate = DateTime(dt.year, dt.month, dt.day);
-
-    if (aDate == today) {
-      difference = "Today";
-    } else if (aDate == yesterday) {
-      difference = "Yesterday";
-    } else {
-      difference = DateFormat.yMMMd().format(dt).toString();
-    }
-
-    return difference;
+  static String getFormatedDateTime(int datea) {
+    var date = DateTime.fromMillisecondsSinceEpoch(datea);
+    return DateFormat('dd/MM/yyyy').format(date);
   }
 
   static String timeAgo(String d) {
@@ -904,436 +1427,6 @@ abstract class Utility {
     }
     return "just now";
   }
-
-  /// Image And Video Permssion Cheack
-  static Future<bool> imagePermissionCheack(BuildContext context) async {
-    bool status = false;
-    bool statusVideos = false;
-    bool permanentlyDenied = false;
-    bool permanentlyVideoDenied = false;
-    if (Platform.isAndroid) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      if (androidInfo.version.sdkInt < 33) {
-        status = await Permission.storage.request().isDenied;
-        permanentlyDenied =
-            await Permission.storage.request().isPermanentlyDenied;
-      } else {
-        status = await Permission.photos.request().isDenied;
-        permanentlyDenied =
-            await Permission.photos.request().isPermanentlyDenied;
-        statusVideos = await Permission.videos.request().isDenied;
-        permanentlyVideoDenied =
-            await Permission.videos.request().isPermanentlyDenied;
-      }
-    } else {
-      status = await Permission.photos.request().isDenied;
-      permanentlyDenied = await Permission.photos.request().isPermanentlyDenied;
-    }
-    if (status || permanentlyDenied || statusVideos || permanentlyVideoDenied) {
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "પરવાનગીની જરૂર છે!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "કૃપા કરીને છબી અપલોડ કરવા માટે ફોટાની પરવાનગી આપો.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "પરવાનગી આપે છે",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "નામંજૂર કરો",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Camera Permission Chan
-  static Future<bool> cameraPermissionCheack(BuildContext context) async {
-    final bool status;
-    bool permanentlyDenied;
-    status = await Permission.camera.request().isDenied;
-    permanentlyDenied = await Permission.camera.request().isPermanentlyDenied;
-    if (status || permanentlyDenied) {
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Camera Permission for capture image.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Audio Permission
-  static Future<bool> audioPermissionCheack(BuildContext context) async {
-    final bool status;
-    bool permanentlyDenied;
-    if (Platform.isAndroid) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      if (androidInfo.version.sdkInt < 33) {
-        status = await Permission.storage.request().isDenied;
-        permanentlyDenied =
-            await Permission.storage.request().isPermanentlyDenied;
-      } else {
-        status = await Permission.audio.request().isDenied;
-        permanentlyDenied =
-            await Permission.audio.request().isPermanentlyDenied;
-      }
-    } else {
-      status = await Permission.microphone.request().isDenied;
-      permanentlyDenied =
-          await Permission.microphone.request().isPermanentlyDenied;
-    }
-    if (status || permanentlyDenied) {
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Audio Permission for uploading the audio.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Microphone Permission
-  static Future<bool> microphonePermissionCheack(BuildContext context) async {
-    final bool status;
-    bool permanentlyDenied;
-    status = await Permission.microphone.request().isDenied;
-    permanentlyDenied =
-        await Permission.microphone.request().isPermanentlyDenied;
-    // }
-    if (status || permanentlyDenied) {
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Microphone Permission for voice call.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// FilePicker Permission
-  static Future<bool> filePickPermissionCheack() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    final bool status;
-    bool permanentlyDenied;
-    if (Platform.isIOS) {
-      status = await Permission.storage.request().isDenied;
-      permanentlyDenied =
-          await Permission.storage.request().isPermanentlyDenied;
-    } else {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-
-      if (androidInfo.version.sdkInt < 33) {
-        status = await Permission.storage.request().isDenied;
-        permanentlyDenied =
-            await Permission.storage.request().isPermanentlyDenied;
-      } else {
-        status = await Permission.photos.request().isDenied;
-        permanentlyDenied =
-            await Permission.photos.request().isPermanentlyDenied;
-      }
-    }
-    if (status || permanentlyDenied) {
-      Get.dialog(
-        barrierDismissible: false,
-        AlertDialog(
-          title: Text(
-            "Permission Needed!",
-            style: Styles.blackColorW50018,
-          ),
-          content: Text(
-            "Please give the Storage Permission for uploading the File.",
-            style: Styles.redColor50014,
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text(
-                "Allow",
-                style: Styles.redColor50014,
-              ),
-              onPressed: () async {
-                Get.back();
-                await openAppSettings();
-              },
-            ),
-            TextButton(
-              child: Text(
-                "Deny",
-                style: Styles.blackColorW50014,
-              ),
-              onPressed: () {
-                Get.back();
-              },
-            )
-          ],
-        ),
-      );
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Location Permission
-  static Future<bool> locationPermissionCheack() async {
-    final status = await Permission.locationWhenInUse.request().isDenied;
-    var permanentlyDenied =
-        await Permission.locationWhenInUse.request().isPermanentlyDenied;
-    if (status || permanentlyDenied) {
-      // ignore: use_build_context_synchronously
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Location Permission for Current Location.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Contact Permission
-  static Future<bool> contactPermissionCheack() async {
-    final status = await Permission.contacts.request().isDenied;
-    var permanentlyDenied =
-        await Permission.contacts.request().isPermanentlyDenied;
-    if (status || permanentlyDenied) {
-      // ignore: use_build_context_synchronously
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Contacts Permission for get contact.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  /// Notification Permission
-  static Future<bool> notificationPermissionCheack() async {
-    final status = await Permission.notification.request().isDenied;
-    var permanentlyDenied =
-        await Permission.notification.request().isPermanentlyDenied;
-    if (status || permanentlyDenied) {
-      // ignore: use_build_context_synchronously
-      Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
-            ),
-            content: Text(
-              "Please give the Notification Permission for notification.",
-              style: Styles.redColor50014,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redColor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.blackColorW50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  // Image Fix Size Upload
-  static double getImageSizeMB(String filePath) {
-    var file = File(filePath);
-    final bytes = file.readAsBytesSync().lengthInBytes;
-    final kb = bytes / 1024;
-    final mb = kb / 1024;
-    return mb;
-  }
 }
 
 String? validateEmail(String value) {
@@ -1351,11 +1444,31 @@ String? validateEmail(String value) {
       : null;
 }
 
-// Widget Loader() {
-//   return Center(
-//       child: Lottie.asset(
-//     AssetConstants.loader,
-//     height: 100,
-//     width: 100,
-//   ));
-// }
+Widget Loader() {
+  return Center(
+      child: Lottie.asset(
+    AssetConstants.loader,
+    height: 100,
+    width: 100,
+  ));
+}
+
+extension StringCasingExtension on String {
+  String get toCapitalized =>
+      length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
+
+  String get toTitleCase => replaceAll(RegExp(' +'), ' ')
+      .split(' ')
+      .map((str) => str.toCapitalized)
+      .join(' ');
+}
+
+extension DateTimex on DateTime {
+  String get dateFormate => DateFormat('dd, MMM yyyy').format(this);
+}
+
+extension DateFormatExtension on DateTime {
+  String formatToDDMMYYYY() {
+    return "${this.day.toString().padLeft(2, '0')}/${this.month.toString().padLeft(2, '0')}/${this.year}";
+  }
+}

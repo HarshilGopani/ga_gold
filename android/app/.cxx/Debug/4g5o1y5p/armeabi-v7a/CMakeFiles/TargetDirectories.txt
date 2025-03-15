@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Downloads/ga_final 2/android/app/.cxx/Debug/4g5o1y5p/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Downloads/ga_final 2/android/app/.cxx/Debug/4g5o1y5p/armeabi-v7a/CMakeFiles/rebuild_cache.dir

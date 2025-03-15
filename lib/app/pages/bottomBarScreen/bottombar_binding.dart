@@ -1,8 +1,7 @@
 // coverage:ignore-file
+import 'package:ga_final/app/pages/pages.dart';
+import 'package:ga_final/domain/domain.dart';
 import 'package:get/get.dart';
-
-import '../../../domain/domain.dart';
-import '../../app.dart';
 
 class BottomBarBinding extends Bindings {
   @override
@@ -41,20 +40,20 @@ class BottomBarBinding extends Bindings {
         ),
       ),
     );
-    // Get.put<CategoryController>(
-    //   CategoryController(
-    //     Get.put(
-    //       CategoryPresenter(
-    //         Get.put(
-    //           CategoryUseCases(
-    //             Get.find(),
-    //           ),
-    //           permanent: true,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
+    Get.put<CategoryController>(
+      CategoryController(
+        Get.put(
+          CategoryPresenter(
+            Get.put(
+              CategoryUseCases(
+                Get.find(),
+              ),
+              permanent: true,
+            ),
+          ),
+        ),
+      ),
+    );
     Get.put<ProfileController>(
       ProfileController(
         Get.put(
@@ -91,19 +90,19 @@ class BottomBarBinding extends Bindings {
       ),
     );
 
-    // Get.put<RepairController>(
-    //   RepairController(
-    //     Get.put(
-    //       RepairPresenter(
-    //         Get.put(
-    //           RepairUsecases(
-    //             Get.find(),
-    //           ),
-    //           permanent: true,
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
+    Get.put<RepairController>(
+      RepairController(
+        Get.put(
+          RepairPresenter(
+            Get.put(
+              RepairUsecases(
+                Get.find(),
+              ),
+              permanent: true,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

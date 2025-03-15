@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Documents/flutter_project/ga_final/android/app/.cxx/RelWithDebInfo/3z375t4o/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Documents/flutter_project/ga_final/android/app/.cxx/RelWithDebInfo/3z375t4o/arm64-v8a/CMakeFiles/rebuild_cache.dir
