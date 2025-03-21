@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:ga_final/domain/models/getOne_order_model.dart';
+import 'package:Ga_Gold/domain/models/getOne_order_model.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/navigators.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 
 class OrderDetalisScreen extends StatelessWidget {
   const OrderDetalisScreen({super.key});
@@ -81,35 +81,41 @@ class CustomJewelryCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: CachedNetworkImage(
-                      imageUrl: item.productImage ?? '',
-                      fit: BoxFit.cover,
-                      maxWidthDiskCache: 300,
-                      maxHeightDiskCache: 300,
-                      height: Dimens.hundred,
-                      width: Dimens.hundred,
-                      placeholder: (context, url) {
-                        return Image.asset(
-                          AssetConstants.placeholder,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                      errorWidget: (context, url, error) {
-                        return Image.asset(
-                          AssetConstants.placeholder,
-                          fit: BoxFit.cover,
-                        );
-                      },
-                    ),
+                  GestureDetector(
+                    onTap: () {
+                      RouteManagement.goToShowFullScareenImage(
+                          item.productImage ?? "", "image");
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: CachedNetworkImage(
+                        imageUrl: item.productImage ?? '',
+                        fit: BoxFit.cover,
+                        maxWidthDiskCache: 300,
+                        maxHeightDiskCache: 300,
+                        height: Dimens.hundred,
+                        width: Dimens.hundred,
+                        placeholder: (context, url) {
+                          return Image.asset(
+                            AssetConstants.placeholder,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                        errorWidget: (context, url, error) {
+                          return Image.asset(
+                            AssetConstants.placeholder,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
 
-                    // Image.network(
-                    //   item.productImage ?? '',
-                    //   height: 80,
-                    //   width: 80,
-                    //   fit: BoxFit.cover,
-                    // ),
+                      // Image.network(
+                      //   item.productImage ?? '',
+                      //   height: 80,
+                      //   width: 80,
+                      //   fit: BoxFit.cover,
+                      // ),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -129,22 +135,35 @@ class CustomJewelryCard extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Actual Weight: \n${item.productWeight} gm",
-                            style: Styles.black64748BW50014,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Actual Weight: ",
+                                  style: Styles.black64748BW50014,
+                                ),
+                                Text(
+                                  "${item.productWeight} gm",
+                                  style: Styles.black64748BW50014,
+                                ),
+                              ],
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                "Total Quantity: ${item.quantity}",
-                                style: Styles.black64748BW50014,
-                              ),
-                              Text(
-                                "Total Weight: ${item.productWeight} gm",
-                                style: Styles.black64748BW50014,
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  "Total Quantity: ${item.quantity}",
+                                  style: Styles.black64748BW50014,
+                                ),
+                                Text(
+                                  "Total Weight: ${item.productWeight} gm",
+                                  style: Styles.black64748BW50014,
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -153,11 +172,16 @@ class CustomJewelryCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 12),
+              _buildInfoChip("Gold purity", item.priority ?? '-'),
+              const SizedBox(height: 12),
               Row(
                 children: [
-                  _buildInfoChip("Gold purity", item.priority ?? ''),
-                  _buildInfoChip("Weight", '${item.weight}gm' ?? ''),
-                  _buildInfoChip("Size", item.size ?? ''),
+                  Expanded(
+                    child: _buildInfoChip("Weight", '${item.weight ?? '-'}gm'),
+                  ),
+                  Expanded(
+                    child: _buildInfoChip("Size", item.size ?? '-'),
+                  ),
                 ],
               ),
               const SizedBox(height: 10),
@@ -171,7 +195,7 @@ class CustomJewelryCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    item.description ?? '',
+                    item.description ?? '-',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

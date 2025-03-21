@@ -4,14 +4,14 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/domain/models/upload_image_model.dart';
+import 'package:Ga_Gold/domain/models/upload_image_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/routes_management.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/routes_management.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 class LoginController extends GetxController {
   LoginController(this.loginPresenter);
@@ -90,6 +90,7 @@ class LoginController extends GetxController {
   TextEditingController mobileNumberController = TextEditingController();
   TextEditingController signupEmailController = TextEditingController();
   TextEditingController cityController = TextEditingController();
+  TextEditingController signEmailController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   List<String> images = [];
@@ -109,7 +110,7 @@ class LoginController extends GetxController {
       body: jsonEncode(
         {
           "name": nameController.text,
-          "email": emailController.text,
+          "email": signEmailController.text,
           "companyname": compleyNameController.text,
           "city": cityController.text,
           "countryCode": dailEditcode,
@@ -127,7 +128,7 @@ class LoginController extends GetxController {
             "dialCode": dailEditcode,
           },
           "password": confirmPasswordController.text,
-          "image": uploadData?.data ?? [],
+          "image": [frountImage, backImage],
         },
       ),
     );
@@ -144,7 +145,7 @@ class LoginController extends GetxController {
     update();
   }
 
-  selectImage(BuildContext context, bool isSample) {
+  selectImage(BuildContext context, bool isBack) {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
@@ -163,7 +164,7 @@ class LoginController extends GetxController {
                     topLeft: Radius.circular(Dimens.twelve),
                     topRight: Radius.circular(Dimens.twelve),
                   ),
-                  color: ColorsValue.color9C9C9C,
+                  color: ColorsValue.textfildBorder,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,8 +189,8 @@ class LoginController extends GetxController {
                         InkWell(
                           onTap: () async {
                             if (await Utility.imagePermissionCheack(context)) {
-                              selectPic(ImageSource.gallery);
                               Get.back();
+                              selectPic(ImageSource.gallery, isBack: isBack);
                             }
                           },
                           child: Column(
@@ -210,8 +211,8 @@ class LoginController extends GetxController {
                         InkWell(
                           onTap: () async {
                             if (await Utility.cameraPermissionCheack(context)) {
-                              selectPic(ImageSource.camera);
                               Get.back();
+                              selectPic(ImageSource.camera, isBack: isBack);
                             }
                           },
                           child: Column(
@@ -244,11 +245,12 @@ class LoginController extends GetxController {
   final pickerProfile = ImagePicker();
   File? imageFile;
   String profileImage = "";
-  UploadImage? uploadData;
+  List<UploadImageDatum>? uploadData;
+  String frountImage = '';
+  String backImage = '';
 
-  Future selectPic(
-    ImageSource sourcePic,
-  ) async {
+  Future selectPic(ImageSource sourcePic, {required bool isBack}) async {
+    Utility.showLoader();
     final pickedFile = await pickerProfile.pickImage(
       source: sourcePic,
     );
@@ -263,7 +265,11 @@ class LoginController extends GetxController {
         uploadData = null;
         if (response?.data != null) {
           Utility.closeLoader();
-          uploadData!.data = response?.data ?? [];
+          isBack
+              ? backImage = response?.data[0].url ?? ''
+              : frountImage = response?.data[0].url ?? '';
+          // uploadData?.addAll(response?.data ?? []);
+          // uploadData += response?.data ?? [];
         }
       } else {
         Utility.closeLoader();

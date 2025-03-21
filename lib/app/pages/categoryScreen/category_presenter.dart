@@ -1,4 +1,4 @@
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 class CategoryPresenter {
   CategoryPresenter(this.categoryUseCases);

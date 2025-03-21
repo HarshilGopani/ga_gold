@@ -1,7 +1,7 @@
 // coverage:ignore-file
 
 abstract class StringConstants {
-  static String appName = 'Krishna Ornaments';
+  static String appName = 'Ga Gold';
   static String bitlyToken = '2b5fa12f0ca6d0d40aecf7fd5fd0c2d914780daf';
   static String webLink = 'https://web.hookUp.in/';
   static String placeSearchKey = 'AIzaSyCCb0R7kEmKTzZehC_AwE4Oc0Pq_I9kc_Q';

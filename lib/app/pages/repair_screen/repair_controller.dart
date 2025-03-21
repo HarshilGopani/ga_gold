@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/navigators.dart';
-import 'package:ga_final/app/widgets/custom_stepper.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:Ga_Gold/app/widgets/custom_stepper.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -140,9 +140,8 @@ class RepairController extends GetxController {
                         InkWell(
                           onTap: () async {
                             if (await Utility.imagePermissionCheack(context)) {
-                              Utility.showLoader();
-                              selectPic(ImageSource.gallery);
                               Get.back();
+                              selectPic(ImageSource.gallery);
                             }
                           },
                           child: Column(
@@ -163,9 +162,8 @@ class RepairController extends GetxController {
                         InkWell(
                           onTap: () async {
                             if (await Utility.cameraPermissionCheack(context)) {
-                              Utility.showLoader();
-                              selectPic(ImageSource.camera);
                               Get.back();
+                              selectPic(ImageSource.camera);
                             }
                           },
                           child: Column(
@@ -215,18 +213,18 @@ class RepairController extends GetxController {
         );
         reapirUploadData = null;
         if (response?.data != null) {
-          Utility.showLoader();
+          Utility.closeLoader();
           reapirUploadData = response?.data;
           RouteManagement.goToRepairDetailsScreen();
         }
       } else {
         Utility.closeLoader();
-
         Utility.errorMessage("max_10_mb_img".tr);
       }
     } else {
       Utility.closeLoader();
     }
+    Utility.closeLoader();
     update();
   }
 
@@ -280,7 +278,6 @@ class RepairController extends GetxController {
                             if (await Utility.imagePermissionCheack(context)) {
                               postImage("gallery");
                               Get.back();
-                              Utility.showLoader();
                             }
                           },
                           child: Column(
@@ -303,7 +300,6 @@ class RepairController extends GetxController {
                             if (await Utility.cameraPermissionCheack(context)) {
                               postImage("camera");
                               Get.back();
-                              Utility.showLoader();
                             }
                           },
                           child: Column(
@@ -337,30 +333,31 @@ class RepairController extends GetxController {
     if (imageSource == "gallery") {
       final List<XFile> selectedImages =
           await picker.pickMultiImage(imageQuality: 5);
-
       if (selectedImages.isNotEmpty) {
         for (var images in selectedImages) {
           if (Utility.getImageSizeMB(images.path) <= 10) {
-            if (imageList.length < 5) {
-              var response = await repairPresenter.sampleOrderImage(
-                filePath: images.path,
-                isLoading: false,
-              );
-              if (response != null) {
-                imageList.addAll(response.data ?? []);
-                RouteManagement.goToSampleOrderScreen();
-                Utility.closeLoader();
-              }
-              update();
-            } else {
+            Utility.showLoader();
+            // if (imageList.length < 5) {
+            var response = await repairPresenter.sampleOrderImage(
+              filePath: images.path,
+              isLoading: false,
+            );
+            if (response != null) {
+              imageList.addAll(response.data ?? []);
               Utility.closeLoader();
-              Utility.errorMessage('Maximum 5 Photos Upload'.tr);
+              RouteManagement.goToSampleOrderScreen();
             }
+            update();
+            // } else {
+            //   Utility.closeLoader();
+            //   Utility.errorMessage('Maximum 5 Photos Upload'.tr);
+            // }
           } else {
             Utility.closeLoader();
             Utility.errorMessage("max_10_mb_img".tr);
           }
         }
+        // Utility.closeLoader();
       }
     } else {
       final pickedFile = await pickerProfile.pickImage(
@@ -369,6 +366,7 @@ class RepairController extends GetxController {
 
       if (pickedFile != null) {
         if (Utility.getImageSizeMB(pickedFile.path) <= 10) {
+          Utility.showLoader();
           if (imageList.length < 5) {
             imageFile = File(pickedFile.path);
             var response = await repairPresenter.sampleOrderImage(
@@ -389,6 +387,7 @@ class RepairController extends GetxController {
           Utility.errorMessage("max_10_mb_img".tr);
         }
       }
+      Utility.closeLoader();
     }
     update();
   }

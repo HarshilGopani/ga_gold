@@ -1,6 +1,6 @@
 // coverage:ignore-file
-import 'package:ga_final/app/pages/pages.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/pages/pages.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:get/get.dart';
 
 class BottomBarBinding extends Bindings {

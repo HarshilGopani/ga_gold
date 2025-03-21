@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:ga_final/app/app.dart';
+import 'package:Ga_Gold/app/app.dart';
 
 class CustomInternationalPhoneFild extends StatelessWidget {
   const CustomInternationalPhoneFild({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 
 class ContactUsScreen extends StatelessWidget {
   const ContactUsScreen({super.key});
@@ -51,7 +51,7 @@ class ContactUsScreen extends StatelessWidget {
                 Dimens.boxWidth30,
                 Flexible(
                   child: Text(
-                    "Krishna Oranaments",
+                    "Ga Gold",
                     style: Styles.appColor70020,
                   ),
                 ),

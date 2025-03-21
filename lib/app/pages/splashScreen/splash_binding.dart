@@ -1,5 +1,5 @@
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/usecases/usecases.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/usecases/usecases.dart';
 import 'package:get/get.dart';
 
 // coverage:ignore-file

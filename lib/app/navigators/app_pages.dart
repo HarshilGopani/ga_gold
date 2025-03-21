@@ -1,8 +1,8 @@
 // coverage:ignore-file
 
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/pages/order_screen/screens/oneOrderDetailScreen.dart';
-import 'package:ga_final/app/pages/profileScreen/screen/contact_us.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/pages/order_screen/screens/oneOrderDetailScreen.dart';
+import 'package:Ga_Gold/app/pages/profileScreen/screen/contact_us.dart';
 import 'package:get/get.dart';
 
 import '../pages/logingScreen/screens/mobile_number_verification.dart';

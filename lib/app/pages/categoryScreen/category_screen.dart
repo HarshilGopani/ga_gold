@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/navigators.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});

@@ -3,13 +3,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/src/media_type.dart' as media_type;
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/data/data.dart';
-import 'package:ga_final/device/device.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/data/data.dart';
+import 'package:Ga_Gold/device/device.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 /// API WRAPPER to call all the APIs and handle the error status codes
 class ApiWrapper {
@@ -369,7 +370,6 @@ class ApiWrapper {
         );
       case 400:
       case 401:
-
         /// unauthorized
         Repository(DeviceRepository(), DataRepository(ConnectHelper()))
             .deleteAllSecuredValues();

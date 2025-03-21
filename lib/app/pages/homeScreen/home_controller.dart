@@ -1,10 +1,11 @@
 import 'dart:convert';
 
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:flutter/widgets.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeController extends GetxController {
   HomeController(this.homePresenter);
@@ -16,7 +17,9 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getAllCategories();
+    if (Utility.isLoginOrNot()) {
+      getAllCategories();
+    }
   }
 
   Future<void> getProfile() async {
@@ -91,40 +94,42 @@ class HomeController extends GetxController {
   }
 
   final ScrollController scrollArrivalProductController = ScrollController();
-  List<ProductsDoc> productArrivalDocList = [];
 
   int pageArrivalProductCount = 1;
   bool isProductArrivalLastPage = false;
   bool isProductArrivalLoading = false;
 
-  Future<void> postAllProduct(String categoryId) async {
-    var response = await client.post(
-      Uri.parse("https://api.gagold.in/user/products"),
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':
-            'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
-      },
-      body: jsonEncode({
-        "page": 1,
-        "limit": 10,
-        "search": "",
-        "category": categoryId,
-        "min": "",
-        "max": "",
-        "sortField": "_id",
-        "sortOption": -1
-      }),
-    );
-    var loginModel = productsModelFromJson(response.body);
-    productArrivalDocList.clear();
-    if (loginModel.data != null) {
-      productArrivalDocList.addAll(loginModel.data?.docs ?? []);
-    } else {
-      Utility.errorMessage(loginModel.message.toString());
-    }
-    update();
-  }
+  // PagingController<int, RepairOrderHistoryDoc> repairOrderPagingController =
+  //     PagingController(firstPageKey: 1);
+  //
+  // Future<void> postAllProduct(String categoryId) async {
+  //   var response = await client.post(
+  //     Uri.parse("https://api.gagold.in/user/products"),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       'Authorization':
+  //           'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
+  //     },
+  //     body: jsonEncode({
+  //       "page": 1,
+  //       "limit": 10,
+  //       "search": "",
+  //       "category": categoryId,
+  //       "min": "",
+  //       "max": "",
+  //       "sortField": "_id",
+  //       "sortOption": -1
+  //     }),
+  //   );
+  //   var loginModel = productsModelFromJson(response.body);
+  //   productArrivalDocList.clear();
+  //   if (loginModel.data != null) {
+  //     productArrivalDocList.addAll(loginModel.data?.docs ?? []);
+  //   } else {
+  //     Utility.errorMessage(loginModel.message.toString());
+  //   }
+  //   update();
+  // }
 
   final ScrollController scrollTrendingController = ScrollController();
   List<ProductsDoc> productTrendingDocList = [];
@@ -133,113 +138,244 @@ class HomeController extends GetxController {
   bool isProductTrendingLastPage = false;
   bool isProductTrendingLoading = false;
 
-  Future<void> postAllTrendingProduct(int pageKey) async {
-    var response = await client.post(
-      Uri.parse("https://api.gagold.in/user/products"),
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':
-            'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
-      },
-      body: jsonEncode({
-        "page": 1,
-        "limit": 10,
-        "search": "",
-        "category": "",
-        "min": "",
-        "max": "",
-        "productType": "trending",
-        "sortField": "_id",
-        "sortOption": -1
-      }),
-    );
-    var loginModel = productsModelFromJson(response.body);
-    productTrendingDocList.clear();
-    if (loginModel.data != null) {
-      productTrendingDocList.addAll(loginModel.data?.docs ?? []);
-    } else {
-      Utility.errorMessage(loginModel.message.toString());
-    }
-    // var response = await homePresenter.postAllProduct(
-    //   page: pageKey,
-    //   limit: 10,
-    //   search: "",
-    //   category: "",
-    //   min: "",
-    //   max: "",
-    //   productType: "trending",
-    //   sortField: 'weight',
-    //   sortOption: 1,
-    //   isLoading: true,
-    // );
-    // if (response?.data != null) {
-    //   if (pageKey == 1) {
-    //     isProductTrendingLastPage = false;
-    //     productTrendingDocList.clear();
-    //   }
-    //   if ((response?.data?.docs?.length ?? 0) < 10) {
-    //     isProductTrendingLastPage = true;
-    //     productTrendingDocList.addAll(response?.data?.docs ?? []);
-    //   } else {
-    //     pageTrendingProductCount++;
-    //     productTrendingDocList.addAll(response?.data?.docs ?? []);
-    //   }
-    //   if (pageKey == 1) {
-    //     if (scrollTrendingController.positions.isNotEmpty) {
-    //       scrollTrendingController.jumpTo(0);
-    //     }
-    //   }
-    //   postWishlist(1);
-    // } else {
-    //   Utility.errorMessage(response?.message ?? "");
-    // }
-    update();
-  }
+  // Future<void> postAllTrendingProduct(int pageKey) async {
+  //   var response = await client.post(
+  //     Uri.parse("https://api.gagold.in/user/products"),
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       'Authorization':
+  //           'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
+  //     },
+  //     body: jsonEncode({
+  //       "page": pageKey,
+  //       "limit": 10,
+  //       "search": "",
+  //       "category": "",
+  //       "min": "",
+  //       "max": "",
+  //       "productType": "trending",
+  //       "sortField": "_id",
+  //       "sortOption": -1
+  //     }),
+  //   );
+  //   var loginModel = productsModelFromJson(response.body);
+  //   productTrendingDocList.clear();
+  //   if (loginModel.data != null) {
+  //     productTrendingDocList.addAll(loginModel.data?.docs ?? []);
+  //   } else {
+  //     Utility.errorMessage(loginModel.message.toString());
+  //   }
+  //   // var response = await homePresenter.postAllProduct(
+  //   //   page: pageKey,
+  //   //   limit: 10,
+  //   //   search: "",
+  //   //   category: "",
+  //   //   min: "",
+  //   //   max: "",
+  //   //   productType: "trending",
+  //   //   sortField: 'weight',
+  //   //   sortOption: 1,
+  //   //   isLoading: true,
+  //   // );
+  //   // if (response?.data != null) {
+  //   //   if (pageKey == 1) {
+  //   //     isProductTrendingLastPage = false;
+  //   //     productTrendingDocList.clear();
+  //   //   }
+  //   //   if ((response?.data?.docs?.length ?? 0) < 10) {
+  //   //     isProductTrendingLastPage = true;
+  //   //     productTrendingDocList.addAll(response?.data?.docs ?? []);
+  //   //   } else {
+  //   //     pageTrendingProductCount++;
+  //   //     productTrendingDocList.addAll(response?.data?.docs ?? []);
+  //   //   }
+  //   //   if (pageKey == 1) {
+  //   //     if (scrollTrendingController.positions.isNotEmpty) {
+  //   //       scrollTrendingController.jumpTo(0);
+  //   //     }
+  //   //   }
+  //   //   postWishlist(1);
+  //   // } else {
+  //   //   Utility.errorMessage(response?.message ?? "");
+  //   // }
+  //   update();
+  // }
 
   List<ProductsDoc> getAllProductDocList = [];
   final ScrollController scrollViewAllController = ScrollController();
+  PagingController<int, ProductsDoc> productDocPagingController =
+      PagingController(firstPageKey: 1);
+  int repairLimit = 10;
 
   bool isSearchLoading = false;
 
-  Future<void> postGetAllProduct(int pageKey, String search) async {
-    if (pageKey == 1) {
-      pageTrendingProductCount = 1;
+  // Future<void> postGetAllProduct({
+  //   required int pageKey,
+  //   String? search,
+  //   String? categoryId,
+  // }) async {
+  //   try {
+  //     print("Fetching page: $pageKey, Search: $search, Category: $categoryId");
+  //
+  //     if (pageKey == 1) {
+  //       pageTrendingProductCount = 1;
+  //       getAllProductDocList.clear();
+  //       print("Cleared old data. Ready to fetch new data.");
+  //     }
+  //
+  //     var response = await homePresenter.postAllProduct(
+  //       page: pageKey,
+  //       limit: repairLimit,
+  //       search: search ?? '',
+  //       category: categoryId ?? '',
+  //       min: "",
+  //       max: "",
+  //       sortField: '_id',
+  //       sortOption: 1,
+  //       isLoading: false,
+  //     );
+  //
+  //     if (response?.data?.docs != null) {
+  //       final newItems = response!.data!.docs!;
+  //       print("Received ${newItems.length} items from API");
+  //
+  //       // Append new data correctly
+  //       if (pageKey == 1) {
+  //         getAllProductDocList = newItems;
+  //       } else {
+  //         getAllProductDocList.addAll(newItems);
+  //       }
+  //
+  //       // Check if this is the last page
+  //       final isLastPage = newItems.length < repairLimit;
+  //       if (isLastPage) {
+  //         print("Last page reached.");
+  //         productDocPagingController.appendLastPage(newItems);
+  //       } else {
+  //         final nextPageKey = pageKey + 1;
+  //         print("Appending data. Next page key: $nextPageKey");
+  //         productDocPagingController.appendPage(newItems, nextPageKey);
+  //       }
+  //     } else {
+  //       print("API response is empty or invalid.");
+  //       Utility.errorMessage(response?.message ?? "Unknown Error");
+  //     }
+  //   } catch (error) {
+  //     print("Error occurred: $error");
+  //     Utility.errorMessage(error.toString());
+  //     productDocPagingController.error = error;
+  //   } finally {
+  //     isSearchLoading = false;
+  //     update();
+  //   }
+  // }
+
+  int currentPage = 1;
+  bool hasMore = true;
+
+  void onScroll() {
+    if (scrollViewAllController.position.pixels ==
+            scrollViewAllController.position.maxScrollExtent &&
+        hasMore) {
+      postGetAllProduct();
     }
+  }
+
+  List<NoTokenProduct> isNotLoginProduct = [
+    NoTokenProduct(
+      title: 'Ring 1',
+      weight: 3.7,
+      image: 'assets/images/Product.png',
+    ),
+    NoTokenProduct(
+      title: 'Ring 2',
+      weight: 3,
+      image: 'assets/images/Product (1).png',
+    ),
+    NoTokenProduct(
+      title: 'Ring 3',
+      weight: 4.7,
+      image: 'assets/images/Product (2).png',
+    ),
+    NoTokenProduct(
+      title: 'Ring 4',
+      weight: 7.5,
+      image: 'assets/images/Product (3).png',
+    )
+  ];
+
+  TextEditingController searchController = TextEditingController();
+  Future<void> postGetAllProduct({
+    String? search,
+    String? categoryId,
+  }) async {
+    if (isLoading || !hasMore) return;
+    isLoading = true;
+    // Fetch data from the API
     var response = await homePresenter.postAllProduct(
-      page: pageKey,
-      limit: 10,
-      search: search,
-      category: "",
-      min: "",
-      max: "",
+      page: currentPage,
+      limit: repairLimit,
+      search: searchController.text ?? '',
+      category: categoryId ?? '',
+      min: "0",
+      max: "1000",
       sortField: '_id',
       sortOption: 1,
       isLoading: false,
     );
-    if (response?.data != null) {
-      if (pageKey == 1) {
-        isProductTrendingLastPage = false;
-        getAllProductDocList.clear();
+    if (response?.data?.docs != null) {
+      getAllProductDocList.addAll(response?.data?.docs ?? []);
+      currentPage++;
+      isLoading = false;
+      // Check if there are more items to load
+      if (response?.data?.docs?.isEmpty ?? false) {
+        hasMore = false;
       }
-      if ((response?.data?.docs?.length ?? 0) < 10) {
-        isProductTrendingLastPage = true;
-        getAllProductDocList.addAll(response?.data?.docs ?? []);
-      } else {
-        pageTrendingProductCount++;
-        getAllProductDocList.addAll(response?.data?.docs ?? []);
-      }
-      if (pageKey == 1) {
-        if (scrollTrendingController.positions.isNotEmpty) {
-          scrollTrendingController.jumpTo(0);
-        }
-      }
-      isSearchLoading = false;
+      update();
     } else {
-      isSearchLoading = false;
-      Utility.errorMessage(response?.message ?? "");
+      isLoading = false;
+      throw Exception('Failed to load data');
     }
     update();
   }
+
+  // Future<void> postGetAllProduct(
+  //     {required int pageKey, String? search, String? categoryId}) async {
+  //   if (pageKey == 1) {
+  //     pageTrendingProductCount = 1;
+  //   }
+  //   var response = await homePresenter.postAllProduct(
+  //     page: pageKey ?? 1,
+  //     limit: repairLimit,
+  //     search: search ?? '',
+  //     category: categoryId ?? '',
+  //     min: "",
+  //     max: "",
+  //     sortField: '_id',
+  //     sortOption: 1,
+  //     isLoading: false,
+  //   );
+  //   if (response?.data != null) {
+  //     if (pageKey == 1) {
+  //       getAllProductDocList.clear();
+  //     }
+  //     getAllProductDocList = response?.data?.docs ?? [];
+  //
+  //     final isLastPage = getAllProductDocList.length < repairLimit;
+  //     if (isLastPage) {
+  //       productDocPagingController.appendLastPage(getAllProductDocList);
+  //     } else {
+  //       var nextPageKey = pageKey + 1;
+  //       productDocPagingController.appendPage(
+  //           getAllProductDocList, nextPageKey);
+  //     }
+  //     isSearchLoading = false;
+  //   } else {
+  //     isSearchLoading = false;
+  //     Utility.errorMessage(response!.message.toString());
+  //   }
+  //   update();
+  // }
 
   // Future<void> postAddToCart(
   //     String productId, int quantity, int index, String productType) async {
@@ -292,19 +428,21 @@ class HomeController extends GetxController {
     // } else {
     //   Utility.errorMessage(loginModel.message.toString());
     // }
+    Utility.closeSnackbar();
     if (response.statusCode == 200) {
       if (productType.contains("arrival")) {
-        productArrivalDocList[index].inCart = true;
+        getAllProductDocList[index].inCart = true;
       } else if (productType.contains('wishlist')) {
         wishlistList[index].inCart = true;
       } else {
         productTrendingDocList[index].inCart = true;
       }
+      postWishlist(1);
       Utility.snacBar(
           "Product added in cart successfully...!", ColorsValue.buttomColor);
     } else {
       if (productType.contains("arrival")) {
-        productArrivalDocList[index].cartquantity = 0;
+        getAllProductDocList[index].cartquantity = 0;
       } else {
         productTrendingDocList[index].cartquantity = 0;
       }
@@ -340,7 +478,6 @@ class HomeController extends GetxController {
       }),
     );
     var loginModel = wishlistModelFromJson(response.body);
-    wishlistList.clear();
     if (loginModel.data != null) {
       if (pageKey == 1) {
         isWishListLastPage = false;
@@ -395,14 +532,22 @@ class HomeController extends GetxController {
         "productid": productsDoc,
       }),
     );
-    if (response.body.isNotEmpty) {
+    if (response.statusCode == 200) {
       if (isRemove) {
         wishlistList.removeAt(index);
+        hasMore = true;
+        currentPage = 1;
+        getAllProductDocList.clear();
+        postGetAllProduct();
+      } else {
+        if (getAllProductDocList[index].wishlistStatus ?? false) {
+          getAllProductDocList[index].wishlistStatus = false;
+        } else {
+          getAllProductDocList[index].wishlistStatus = true;
+        }
       }
-      postAllProduct(
-        isSelcted == -1 ? '' : (getCategoriesList[isSelcted].id ?? ''),
-      );
-      postWishlist(1);
+
+      update();
       postWishlistCount();
     }
     update();
@@ -422,7 +567,38 @@ class HomeController extends GetxController {
     wishListCount = null;
     if (response.body.isNotEmpty) {
       wishListCount = jsonDecode(response.body)['Data'];
+      update();
     }
-    update();
+  }
+}
+
+class NoTokenProduct {
+  final String title;
+
+  final double weight;
+  final String image;
+
+  NoTokenProduct({
+    required this.title,
+    required this.weight,
+    required this.image,
+  });
+
+  // Factory constructor for JSON deserialization
+  factory NoTokenProduct.fromJson(Map<String, dynamic> json) {
+    return NoTokenProduct(
+      title: json['title'] ?? '',
+      weight: (json['weight'] ?? 0.0).toDouble(),
+      image: json['image'] ?? '',
+    );
+  }
+
+  // Method for JSON serialization
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'weight': weight,
+      'image': image,
+    };
   }
 }

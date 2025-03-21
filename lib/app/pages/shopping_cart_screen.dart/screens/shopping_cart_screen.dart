@@ -302,13 +302,13 @@
 //   }
 // }
 
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/widgets/custom_button.dart';
+import 'package:Ga_Gold/domain/models/cart_list_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
-import 'package:ga_final/app/widgets/custom_button.dart';
-import 'package:ga_final/domain/models/cart_list_model.dart';
 import 'package:get/get.dart';
 
 class ShoppingCartScreen extends StatelessWidget {
@@ -319,19 +319,23 @@ class ShoppingCartScreen extends StatelessWidget {
     return GetBuilder<ShoppingCartController>(
       initState: (state) async {
         var controller = Get.find<ShoppingCartController>();
-        controller.postCartList(1);
+        if (Utility.isLoginOrNot()) {
+          controller.postCartList(1);
+        }
       },
       builder: (controller) {
         return Scaffold(
           backgroundColor: ColorsValue.whiteColor,
           appBar: AppBarWidget(
-            onTapBack: () {},
+            onTapBack: () {
+              Get.back();
+            },
             title: 'cart'.tr,
-            isVisible: false,
+            isVisible: Get.arguments ?? false,
           ),
           bottomNavigationBar: controller.cartList.isNotEmpty
               ? Padding(
-                  padding: Dimens.edgeInsets20,
+                  padding: Dimens.edgeInsets10,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -341,7 +345,7 @@ class ShoppingCartScreen extends StatelessWidget {
                         style: Styles.whiteW80014,
                         onTap: controller.postOrderCreate,
                       ),
-                      Dimens.boxHeight10,
+                      // Dimens.boxHeight10,
                     ],
                   ),
                 )
@@ -350,11 +354,13 @@ class ShoppingCartScreen extends StatelessWidget {
               ? Center(child: CircularProgressIndicator())
               : controller.cartList.isNotEmpty
                   ? SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
                       child: Column(
                         children: [
                           ListView.builder(
                             itemCount: controller.cartList.length,
                             shrinkWrap: true,
+                            primary: false,
                             itemBuilder: (context, index) {
                               var item = controller.cartList[index];
                               return Padding(
@@ -480,27 +486,30 @@ class ShoppingCartScreen extends StatelessWidget {
                                       _infoTag(
                                         title: "Gold purity",
                                         controller: controller
-                                            .cartList[index]
-                                            .tcGoldPurity ??
+                                                .cartList[index].tcGoldPurity ??
                                             TextEditingController(),
                                         item: item,
                                         index: index,
                                         getController: controller,
+                                        keyBordType: TextInputType.none,
                                       ),
                                       Dimens.boxHeight8,
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Expanded(
                                             child: _infoTag(
                                               title: "Weight",
                                               controller: controller
-                                                      .cartList[index].tcWeight ??
+                                                      .cartList[index]
+                                                      .tcWeight ??
                                                   TextEditingController(),
                                               item: item,
                                               index: index,
                                               isWeigth: true,
                                               getController: controller,
+                                              keyBordType: TextInputType.number,
                                             ),
                                           ),
                                           Dimens.boxWidth10,
@@ -514,6 +523,7 @@ class ShoppingCartScreen extends StatelessWidget {
                                               index: index,
                                               isSize: true,
                                               getController: controller,
+                                              keyBordType: TextInputType.number,
                                             ),
                                           ),
                                         ],
@@ -759,6 +769,7 @@ class ShoppingCartScreen extends StatelessWidget {
     required TextEditingController controller,
     required CartItemProductElement item,
     required ShoppingCartController getController,
+    required TextInputType keyBordType,
   }) {
     // controller = List.generate(
     //     getController.cartList.length, (index) => TextEditingController());
@@ -785,6 +796,7 @@ class ShoppingCartScreen extends StatelessWidget {
                   isDense: true, // Reduces extra spacing
                 ),
                 style: Styles.color64748B50012,
+                keyboardType: keyBordType,
                 onChanged: (value) {
                   if (isWeigth == true) {
                     getController.cartList[index].weight = value;

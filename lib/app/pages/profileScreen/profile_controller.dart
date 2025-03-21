@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
@@ -37,6 +37,7 @@ class ProfileController extends GetxController {
       getProfileModel = profileModel.data;
       Get.find<Repository>()
           .saveValue(LocalKeys.chanelId, getProfileModel?.channelid ?? "");
+      selectedProfileImage = getProfileModel?.profilePic ?? "";
       isProfileLoading = false;
     } else {
       Utility.closeLoader();
@@ -94,18 +95,45 @@ class ProfileController extends GetxController {
   File? imageFile;
   final pickerProfile = ImagePicker();
 
+  // Future setProfilePic() async {
+  //   final pickedFile =
+  //       await pickerProfile.pickImage(source: ImageSource.gallery);
+  //
+  //   if (pickedFile != null) {
+  //     imageFile = File(pickedFile.path);
+  //     print(">>>>>>>>>>>>>> File Path ${imageFile?.path}");
+  //     print(
+  //         ">>>>>>>>>>>>>> Splited File Path ${imageFile?.path.split("/").last}");
+  //     final profileImage = await profilePresenter.postUploadProfile(
+  //       filePath: imageFile?.path ?? '',
+  //     );
+  //   }
+  //   update();
+  // }
+
+  String? selectedProfileImage;
+
   Future setProfilePic() async {
-    final pickedFile =
-        await pickerProfile.pickImage(source: ImageSource.gallery);
+    isProfileLoading = true;
+    final pickedFile = await pickerProfile.pickImage(
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       imageFile = File(pickedFile.path);
-      print(">>>>>>>>>>>>>> File Path ${imageFile?.path}");
-      print(
-          ">>>>>>>>>>>>>> Splited File Path ${imageFile?.path.split("/").last}");
-      final profileImage = await profilePresenter.postUploadProfile(
+      var respnse = await profilePresenter.postUploadProfile(
         filePath: imageFile?.path ?? '',
+        isLoading: false,
       );
+      if (respnse?.data != null) {
+        isProfileLoading = false;
+        selectedProfileImage = respnse?.data?.profilePic ?? "";
+      } else {
+        isProfileLoading = false;
+        Utility.errorMessage(respnse?.message ?? "");
+      }
+    } else {
+      isProfileLoading = false;
     }
     update();
   }

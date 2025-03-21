@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 

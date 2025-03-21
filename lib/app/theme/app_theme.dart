@@ -1,4 +1,4 @@
-import 'package:ga_final/app/app.dart';
+import 'package:Ga_Gold/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

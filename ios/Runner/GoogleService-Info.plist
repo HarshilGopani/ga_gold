@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCJATVMhop5-doPqIjqoUWXZEjoI9lbVo4</string>
+	<string>AIzaSyDbpXwfYqaQRjhEpfY-RBdpRhdGbkrl6DQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>145911937248</string>
+	<string>657796449093</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.gaFinal</string>
+	<string>com.ga.gagold</string>
 	<key>PROJECT_ID</key>
-	<string>ga-gold-8b8ee</string>
+	<string>ga-gold-f010b</string>
 	<key>STORAGE_BUCKET</key>
-	<string>ga-gold-8b8ee.firebasestorage.app</string>
+	<string>ga-gold-f010b.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:145911937248:ios:44e05da1d23f9906c73885</string>
+	<string>1:657796449093:ios:2eeecc97ecbdfc415b742c</string>
 </dict>
 </plist>

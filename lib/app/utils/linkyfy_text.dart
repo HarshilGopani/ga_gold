@@ -1,5 +1,5 @@
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

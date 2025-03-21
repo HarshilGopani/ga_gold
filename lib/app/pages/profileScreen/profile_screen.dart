@@ -1,9 +1,9 @@
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:Ga_Gold/device/device.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/navigators.dart';
-import 'package:ga_final/device/device.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -14,8 +14,10 @@ class ProfileScreen extends StatelessWidget {
     return GetBuilder<ProfileController>(
       initState: (state) {
         var controller = Get.find<ProfileController>();
-        Utility.showLoader();
-        controller.getProfile();
+        if (Utility.isLoginOrNot()) {
+          Utility.showLoader();
+          controller.getProfile();
+        }
       },
       builder: (controller) => Scaffold(
         backgroundColor: ColorsValue.primaryColor,
@@ -91,23 +93,41 @@ class ProfileScreen extends StatelessWidget {
                                     child: CachedNetworkImage(
                                       height: Dimens.hundredTen,
                                       width: Dimens.hundredTen,
-                                      imageUrl: controller
-                                              .getProfileModel?.profilePic ??
-                                          (controller.imageFile?.path ?? ''),
+                                      imageUrl:
+                                          controller.selectedProfileImage ??
+                                              (''),
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) {
                                         return Image.asset(
-                                          AssetConstants.placeholder,
+                                          AssetConstants.usera,
                                           fit: BoxFit.cover,
                                         );
                                       },
                                       errorWidget: (context, url, error) {
-                                        return SvgPicture.asset(
-                                          AssetConstants.placeholder,
+                                        return Image.asset(
+                                          AssetConstants.usera,
                                           fit: BoxFit.cover,
                                         );
                                       },
                                     ),
+                                    // CachedNetworkImage(
+                                    //   height: Dimens.hundredTen,
+                                    //   width: Dimens.hundredTen,
+                                    //   imageUrl: controller.profileImage ?? '',
+                                    //   fit: BoxFit.cover,
+                                    //   placeholder: (context, url) {
+                                    //     return Image.asset(
+                                    //       AssetConstants.placeholder,
+                                    //       fit: BoxFit.cover,
+                                    //     );
+                                    //   },
+                                    //   errorWidget: (context, url, error) {
+                                    //     return SvgPicture.asset(
+                                    //       AssetConstants.placeholder,
+                                    //       fit: BoxFit.cover,
+                                    //     );
+                                    //   },
+                                    // ),
                                   ),
                                 ),
                                 Positioned(
@@ -155,6 +175,10 @@ class ProfileScreen extends StatelessWidget {
                             contentPadding: Dimens.edgeInsets20_00_20_00,
                             leading: SvgPicture.asset(
                               AssetConstants.ic_call,
+                              colorFilter: ColorFilter.mode(
+                                ColorsValue.color475569,
+                                BlendMode.srcIn,
+                              ),
                             ),
                             title: Text(
                               controller.getProfileModel?.mobile ??
@@ -223,6 +247,10 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               leading: SvgPicture.asset(
                                 AssetConstants.ic_repair,
+                                colorFilter: ColorFilter.mode(
+                                  ColorsValue.color475569,
+                                  BlendMode.srcIn,
+                                ),
                                 height: Dimens.twentyFour,
                                 width: Dimens.twentyFour,
                               ),
@@ -236,7 +264,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Dimens.boxHeight20,
                       InkWell(
-                        // onTap: () => RouteManagement.goToCustomizeOrderScreen(),
                         onTap: () =>
                             RouteManagement.goToSampleOrderHistoryScreen(),
                         child: Container(
@@ -408,10 +435,14 @@ class ProfileScreen extends StatelessWidget {
                             contentPadding: Dimens.edgeInsets20_00_20_00,
                             leading: SvgPicture.asset(
                               AssetConstants.ic_logout,
+                              colorFilter: ColorFilter.mode(
+                                ColorsValue.colorD80032,
+                                BlendMode.srcIn,
+                              ),
                             ),
                             title: Text(
                               "logout".tr,
-                              style: Styles.redColor70016,
+                              style: Styles.colorD8003270016,
                             ),
                           ),
                         ),
@@ -421,16 +452,6 @@ class ProfileScreen extends StatelessWidget {
                 )
               ],
             ),
-            // if (controller.isProfileLoading) ...[
-            //   Container(
-            //     height: Get.height,
-            //     width: Get.width,
-            //     color: Colors.black.withValues(alpha: 0.5),
-            //     child: Center(
-            //       child: CircularProgressIndicator(),
-            //     ),
-            //   )
-            // ]
           ],
         ),
       ),

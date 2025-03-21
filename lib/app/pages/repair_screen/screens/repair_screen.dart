@@ -1,8 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 import 'package:get/get.dart';
 
 class RepairScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class RepairScreen extends StatelessWidget {
           onTapBack: () {
             Get.back();
           },
-          isBottomVisible: false  ,
+          isBottomVisible: false,
           title: '',
           isVisible: false,
         ),

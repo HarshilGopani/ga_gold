@@ -1,4 +1,5 @@
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/domain/domain.dart';
+import 'package:Ga_Gold/domain/models/uploadProfile_model.dart';
 
 class ProfilePresenter {
   ProfilePresenter(this.profileUseCases);
@@ -12,7 +13,7 @@ class ProfilePresenter {
         isLoading: isLoading,
       );
 
-  Future<String?> postUploadProfile({
+  Future<UploadProfileModel?> postUploadProfile({
     bool isLoading = false,
     required String filePath,
   }) async =>

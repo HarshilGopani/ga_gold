@@ -1,8 +1,8 @@
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/domain.dart';
+import 'package:Ga_Gold/domain/services/firebase_api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
-import 'package:ga_final/domain/services/firebase_api.dart';
 
 class BottomBarController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -17,12 +17,15 @@ class BottomBarController extends GetxController
   void onInit() {
     tabController = TabController(vsync: this, length: 4);
     tabController?.addListener(update);
-    getProfile();
 
     super.onInit();
 
     SocketConnection.initSocket();
     FirebaseApi().initNotification();
+
+    if (Utility.isLoginOrNot()) {
+      getProfile();
+    }
   }
 
   GetProfileData? getProfileModel;
@@ -33,12 +36,14 @@ class BottomBarController extends GetxController
     );
     getProfileModel = null;
     if (response != null) {
+      Utility.profileData = response.data;
       getProfileModel = response.data;
       Get.find<Repository>()
           .saveValue(LocalKeys.chanelId, getProfileModel?.channelid ?? "");
-      update();
+      Get.forceAppUpdate();
     } else {
       Utility.errorMessage(response?.message ?? "");
     }
+    update();
   }
 }

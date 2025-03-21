@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:ga_final/app/utils/utils.dart';
-import 'package:ga_final/data/data.dart';
-import 'package:ga_final/device/device.dart';
-import 'package:ga_final/domain/domain.dart';
-import 'package:ga_final/domain/models/upload_image_model.dart';
+import 'package:Ga_Gold/app/utils/utils.dart';
+import 'package:Ga_Gold/data/data.dart';
+import 'package:Ga_Gold/device/device.dart';
+import 'package:Ga_Gold/domain/domain.dart';
+import 'package:Ga_Gold/domain/models/uploadProfile_model.dart';
+import 'package:Ga_Gold/domain/models/upload_image_model.dart';
 
 /// The main repository which will get the data from [DeviceRepository] or the
 /// [DataRepository].
@@ -379,7 +380,7 @@ class Repository {
     }
   }
 
-  Future<String?> postUploadProfile({
+  Future<UploadProfileModel?> postUploadProfile({
     bool isLoading = false,
     required String filePath,
   }) async {
@@ -388,11 +389,11 @@ class Repository {
         isLoading: isLoading,
         filePath: filePath,
       );
-      if (response.statusCode == 200) {
-        return json.decode(response.data)['Data']['path'];
+      var uploadProfileModel = uploadProfileModelFromJson(response.data);
+      if (uploadProfileModel.data != null) {
+        return uploadProfileModel;
       } else {
-        Utility.showMessage(json.decode(response.data)['Message'].toString(),
-            MessageType.error, () => null, '');
+        Utility.errorMessage(uploadProfileModel.message.toString());
         return null;
       }
     } catch (_) {

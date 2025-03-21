@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 
 class RepairDetailsScreen extends StatelessWidget {
   const RepairDetailsScreen({super.key});
@@ -27,7 +27,9 @@ class RepairDetailsScreen extends StatelessWidget {
                   child: InkWell(
                 onTap: () {
                   controller.profileImage = "";
+                  Utility.closeLoader();
                   Get.back();
+
                 },
                 child: Container(
                   height: Dimens.fourtyFive,
@@ -251,6 +253,7 @@ class RepairDetailsScreen extends StatelessWidget {
                         child: CustomTextFormField(
                           text: 'Size',
                           hintText: "02",
+                          keyboardType: TextInputType.number,
                           controller: controller.tc_size,
                           validation: (value) {
                             if (value!.isEmpty) {

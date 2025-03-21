@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 
 class BankDetailScreen extends StatelessWidget {
   const BankDetailScreen({super.key});
@@ -12,11 +12,11 @@ class BankDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(initState: (state) {
       var controller = Get.find<ProfileController>();
-      controller.holderName.text = 'KRISHNA ORNAMENTS';
+      controller.holderName.text = 'Ga Gold';
       controller.bankName.text = 'HDFC';
       controller.branchName.text = "MANDVI BRANCH";
-      controller.acNumber.text = '50200034149231';
-      controller.IFSCcode.text = 'HDFC0002031';
+      controller.acNumber.text = '12345634149231';
+      controller.IFSCcode.text = 'HDFC0002123';
     }, builder: (controller) {
       return Scaffold(
         backgroundColor: ColorsValue.appBg,

@@ -1,6 +1,6 @@
-import 'package:ga_final/data/data.dart';
-import 'package:ga_final/domain/models/models.dart';
-import 'package:ga_final/domain/repositories/repositories.dart';
+import 'package:Ga_Gold/data/data.dart';
+import 'package:Ga_Gold/domain/models/models.dart';
+import 'package:Ga_Gold/domain/repositories/repositories.dart';
 
 /// Repositories (retrieve data, heavy processing etc..)
 class DataRepository extends DomainRepository {

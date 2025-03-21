@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ga_final/app/app.dart';
+import 'package:Ga_Gold/app/app.dart';
 
 // ignore: must_be_immutable
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {

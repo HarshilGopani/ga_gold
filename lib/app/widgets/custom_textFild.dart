@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:ga_final/app/app.dart';
+import 'package:Ga_Gold/app/app.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField(
@@ -27,6 +27,7 @@ class CustomTextFormField extends StatefulWidget {
       this.textAlign,
       this.textStyle,
       this.onTap});
+
   final String text;
   final String? hintText;
   final TextEditingController? controller;
@@ -88,7 +89,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           maxLines: widget.maxLines,
           autofocus: widget.autofocus,
           textAlign: widget.textAlign ?? TextAlign.left,
-          textInputAction: widget.textInputAction,
+          textInputAction: widget.textInputAction ?? TextInputAction.next,
           keyboardType: widget.keyboardType,
           validator: widget.validation,
           inputFormatters: widget.inputFormatter,

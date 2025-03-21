@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 SampleOrderHistoryModel sampleOrderHistoryModelFromJson(String str) =>
     SampleOrderHistoryModel.fromJson(json.decode(str));

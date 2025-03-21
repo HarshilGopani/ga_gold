@@ -8,7 +8,7 @@
 PRODUCT_NAME = ga_final
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.gaFinal
+PRODUCT_BUNDLE_IDENTIFIER = com.ga.gagold
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

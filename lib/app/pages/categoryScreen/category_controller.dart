@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 class CategoryController extends GetxController {
   CategoryController(this.categoryPresenter);

@@ -1,11 +1,11 @@
 // coverage:ignore-file
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:ga_final/app/utils/strings/strings.dart';
-import 'package:ga_final/app/utils/utils.dart';
-import 'package:ga_final/data/data.dart';
-import 'package:ga_final/device/device.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/utils/strings/strings.dart';
+import 'package:Ga_Gold/app/utils/utils.dart';
+import 'package:Ga_Gold/data/data.dart';
+import 'package:Ga_Gold/device/device.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 
 /// Repositories that communicate with the platform e.g. GPS
 class DeviceRepository extends DomainRepository {

@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "145911937248",
-    "project_id": "ga-gold-8b8ee",
-    "storage_bucket": "ga-gold-8b8ee.firebasestorage.app"
+    "project_number": "657796449093",
+    "project_id": "ga-gold-f010b",
+    "storage_bucket": "ga-gold-f010b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:145911937248:android:b97ac6f16591d217c73885",
+        "mobilesdk_app_id": "1:657796449093:android:5ee16f7ababcd4f75b742c",
         "android_client_info": {
-          "package_name": "com.example.ga_final"
+          "package_name": "com.ga.gagold"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC2HDNOm8zgSM319XaejOvFAdISk8GnNFQ"
+          "current_key": "AIzaSyDyINcHQSqt5sMZGgsLCkiEpobWnP_G3hg"
         }
       ],
       "services": {

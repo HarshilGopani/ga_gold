@@ -2,8 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/widgets/custom_button.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/widgets/custom_button.dart';
 
 class ForgetPasswordView extends StatelessWidget {
   const ForgetPasswordView({super.key});
@@ -47,7 +47,6 @@ class ForgetPasswordView extends StatelessWidget {
                         CustomTextFormField(
                           text: StringConstants.email,
                           hintText: StringConstants.enter_email,
-                          fillColor: ColorsValue.colorEEEAEA,
                           controller: controller.forgotEmailController,
                           validation: (value) {
                             if (value!.isNotEmpty) {

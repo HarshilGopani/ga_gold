@@ -3,10 +3,10 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/data/data.dart';
-import 'package:ga_final/data/helpers/end_points.dart';
-import 'package:ga_final/domain/domain.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/data/data.dart';
+import 'package:Ga_Gold/data/helpers/end_points.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/src/media_type.dart' as mediaType;
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';

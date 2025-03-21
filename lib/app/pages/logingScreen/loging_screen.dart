@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/app/navigators/navigators.dart';
-import 'package:ga_final/app/widgets/custom_button.dart';
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:Ga_Gold/app/widgets/custom_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                         CustomTextFormField(
                           text: 'Username',
                           hintText: "Enter Your Username",
-                          fillColor: ColorsValue.colorEEEAEA,
+                          maxLines: 1,
                           controller: controller.emailController,
                           validation: (value) {
                             if (value!.isEmpty) {
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                         CustomTextFormField(
                           text: 'Password',
                           hintText: "Enter Your Password",
-                          fillColor: ColorsValue.colorEEEAEA,
+                          maxLines: 1,
                           controller: controller.passwordController,
                           validation: (value) {
                             if (value!.isEmpty) {

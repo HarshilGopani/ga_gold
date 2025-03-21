@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'dart:io' show Directory, File, FileMode, InternetAddress, Platform;
 import 'dart:math';
 
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/routes_management.dart';
+import 'package:Ga_Gold/domain/domain.dart';
 import 'package:connectivity_plus/connectivity_plus.dart'
     show Connectivity, ConnectivityResult;
 import 'package:device_info_plus/device_info_plus.dart';
@@ -13,11 +16,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_in_store_app_version_checker/flutter_in_store_app_version_checker.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:ga_final/app/app.dart';
-import 'package:ga_final/domain/domain.dart';
 import 'package:logger/logger.dart';
 import 'package:lottie/lottie.dart';
 import 'package:path_provider/path_provider.dart';
@@ -29,9 +31,10 @@ abstract class Utility {
   static String? coutryCurrency;
 
   static String? profilePic;
+  static GetProfileData? profileData;
 
   static InStoreAppVersionChecker checker = InStoreAppVersionChecker(
-    appId: 'com.krishna.krishna_ornaments',
+    appId: 'com.ga.gagold',
   );
 
   /// common header for All api
@@ -1024,6 +1027,74 @@ abstract class Utility {
         icon: const Icon(Icons.error, color: Colors.white70),
         shouldIconPulse: true,
         instantInit: true);
+  }
+
+  static bool isLoginOrNot() {
+    if (Get.find<Repository>().getStringValue(LocalKeys.authToken).isNotEmpty) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  static Widget LoginNotWidget(String message) {
+    return Scaffold(
+      backgroundColor: ColorsValue.whiteColor,
+      body: Center(
+        child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Dimens.boxHeight30,
+              Center(
+                child: SvgPicture.asset(
+                  AssetConstants.ic_loginView,
+                  fit: BoxFit.cover,
+                  height: Get.height / 2.5,
+                ),
+              ),
+              Center(
+                child: Text(
+                  'you_are_missing'.tr,
+                  style: Styles.txtBlackColorW60016,
+                ),
+              ),
+              Dimens.boxHeight10,
+              Center(
+                child: Text(
+                  "${'sign_to_view'.tr}\n$message",
+                  style: Styles.txtBlackColorW50014,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Dimens.boxHeight10,
+              InkWell(
+                onTap: () {
+                  RouteManagement.goToLoginView();
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: Dimens.fourty,
+                  width: Dimens.hundred,
+                  decoration: BoxDecoration(
+                    color: ColorsValue.lightYellow,
+                    borderRadius: BorderRadius.circular(
+                      Dimens.sixteen,
+                    ),
+                  ),
+                  child: Text(
+                    'sign_in'.tr,
+                    style: Styles.whiteColorW80016,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   // static String findResult(List<AddressComponent> results, key) {

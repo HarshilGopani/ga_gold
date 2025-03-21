@@ -1,7 +1,7 @@
 //coverage:ignore-file
 
 import 'package:flutter/material.dart';
-import 'package:ga_final/app/app.dart';
+import 'package:Ga_Gold/app/app.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// A chunk of styles used in the application.
@@ -38,6 +38,13 @@ abstract class Styles {
     fontWeight: FontWeight.w700,
     fontSize: Dimens.sixteen,
   );
+
+  static TextStyle colorD8003270016 = GoogleFonts.montserrat(
+    color: ColorsValue.colorD80032,
+    fontWeight: FontWeight.w600,
+    fontSize: Dimens.sixteen,
+  );
+
 
   static TextStyle blackColorW50014 = GoogleFonts.montserrat(
     color: ColorsValue.blackColor,
