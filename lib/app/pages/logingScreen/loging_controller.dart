@@ -38,7 +38,7 @@ class LoginController extends GetxController {
   GlobalKey<FormState> logingFormkey = GlobalKey<FormState>();
 
   String? selectedBuyerType;
-  List<String> buyerTypes = ['Retail', 'Wholesale', 'Distributor'];
+  List<String> buyerTypes = ['Wholesale', 'B2B', 'Manufacturer'];
 
   LoginModel? loginData;
 
@@ -100,6 +100,35 @@ class LoginController extends GetxController {
   var client = http.Client();
 
   Future<void> registerApi() async {
+    List<Map<String, String>> images = [];
+    if (frountImage.isNotEmpty == true) {
+      images.add({"url": frountImage});
+    }
+    if (backImage.isNotEmpty == true) {
+      images.add({"url": backImage});
+    }
+
+    final body = jsonEncode({
+      "name": nameController.text,
+      "email": signEmailController.text,
+      "companyname": compleyNameController.text,
+      "city": cityController.text,
+      "countryCode": dailEditcode,
+      "mobile": "${dailEditcode.split("+").last}${mobileNumberController.text}",
+      "country_wise_contact": {
+        "number": mobileNumberController.text.isEmpty
+            ? ""
+            : "0${mobileNumberController.text}",
+        "internationalNumber": "$dailEditcode ${mobileNumberController.text}",
+        "nationalNumber": "0${mobileNumberController.text}",
+        "e164Number": dailEditcode + mobileNumberController.text,
+        "countryCode": PhoneNumber.getISO2CodeByPrefix(dailEditcode),
+        "dialCode": dailEditcode,
+      },
+      "password": confirmPasswordController.text,
+      "images": images,
+      "buyertype": selectedBuyerType
+    });
     var response = await client.post(
       Uri.parse("https://api.gagold.in/user/register"),
       headers: {
@@ -107,30 +136,7 @@ class LoginController extends GetxController {
         'Authorization':
             'Token ${Get.find<Repository>().getStringValue(LocalKeys.authToken)}',
       },
-      body: jsonEncode(
-        {
-          "name": nameController.text,
-          "email": signEmailController.text,
-          "companyname": compleyNameController.text,
-          "city": cityController.text,
-          "countryCode": dailEditcode,
-          "mobile":
-              "${dailEditcode.split("+").last}${mobileNumberController.text}",
-          "country_wise_contact": {
-            "number": mobileNumberController.text.isEmpty
-                ? ""
-                : "0${mobileNumberController.text}",
-            "internationalNumber":
-                "$dailEditcode ${mobileNumberController.text}",
-            "nationalNumber": "0${mobileNumberController.text}",
-            "e164Number": dailEditcode + mobileNumberController.text,
-            "countryCode": PhoneNumber.getISO2CodeByPrefix(dailEditcode),
-            "dialCode": dailEditcode,
-          },
-          "password": confirmPasswordController.text,
-          "image": [frountImage, backImage],
-        },
-      ),
+      body: body,
     );
     var registerModel = registerModelFromJson(response.body);
 

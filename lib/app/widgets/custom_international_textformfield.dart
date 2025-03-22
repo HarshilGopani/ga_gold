@@ -38,6 +38,7 @@ class CustomInternationalPhoneFild extends StatelessWidget {
               selectorType: PhoneInputSelectorType.DROPDOWN,
               setSelectorButtonAsPrefixIcon: true,
             ),
+            maxLength: 10,
             ignoreBlank: false,
             autoValidateMode: AutovalidateMode.onUserInteraction,
             selectorTextStyle: const TextStyle(color: ColorsValue.color2E363F),
