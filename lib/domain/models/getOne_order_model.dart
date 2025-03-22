@@ -46,15 +46,18 @@ class GetOneOrderData {
   String? user;
   List<GetOneOrderProduct>? products;
   String? orderNo;
-  int? totalQuantity;
-  int? totalCartWeight;
-  int? remainingTotalQuantity;
-  int? totalBags;
+  num? totalQuantity;
+  num? totalCartWeight;
+  num? remainingTotalQuantity;
+  num? totalBags;
   String? orderTracking;
-  int? createTimestamp;
+  num? createTimestamp;
   DateTime? createdAt;
   DateTime? acceptedDate;
-  int? acceptedTimestamp;
+  num? acceptedTimestamp;
+  DateTime? completedDate;
+  num? completedTimestamp;
+
   String? invoiceUrl;
 
   GetOneOrderData({
@@ -71,6 +74,8 @@ class GetOneOrderData {
     this.createdAt,
     this.acceptedDate,
     this.acceptedTimestamp,
+    this.completedDate,
+    this.completedTimestamp,
     this.invoiceUrl,
   });
 
@@ -96,6 +101,10 @@ class GetOneOrderData {
             ? null
             : DateTime.parse(json["accepted_date"]),
         acceptedTimestamp: json["accepted_timestamp"],
+        completedDate: json["completed_date"] == null
+            ? null
+            : DateTime.parse(json["completed_date"]),
+        completedTimestamp: json["completed_timestamp"],
         invoiceUrl: json["invoice_url"],
       );
 
@@ -113,9 +122,18 @@ class GetOneOrderData {
         "order_tracking": orderTracking,
         "create_timestamp": createTimestamp,
         "createdAt": createdAt?.toIso8601String(),
-        "accepted_date": acceptedDate?.toIso8601String(),
-        "accepted_timestamp": acceptedTimestamp,
-        "invoice_url": invoiceUrl,
+        if (acceptedDate != null)
+          "accepted_date": acceptedDate?.toIso8601String(),
+        if (acceptedTimestamp != null) "accepted_timestamp": acceptedTimestamp,
+        if (invoiceUrl != null) "invoice_url": invoiceUrl,
+        if (completedDate != null)
+          "completed_date": completedDate?.toIso8601String(),
+        if (completedTimestamp != null)
+          "completed_timestamp": completedTimestamp,
+
+        // "accepted_date": acceptedDate?.toIso8601String(),
+        // "accepted_timestamp": acceptedTimestamp,
+        // "invoice_url": invoiceUrl,
       };
 }
 
@@ -126,7 +144,7 @@ class GetOneOrderProduct {
   String? productName;
   String? productImage;
   String? productWeight;
-  int? quantity;
+  num? quantity;
   String? priority;
   String? weight;
   String? size;

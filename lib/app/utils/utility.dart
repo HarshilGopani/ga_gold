@@ -125,8 +125,11 @@ abstract class Utility {
     );
   }
 
-  static Future<void> downloadPdf(
-      {required BuildContext context,required String url,required String fileName}) async {
+  static Future<void> downloadPdf({
+    required BuildContext context,
+    required String url,
+    required String fileName,
+  }) async {
     try {
       // Request storage permission
       if (Platform.isAndroid) {
@@ -148,8 +151,8 @@ abstract class Utility {
         directory = await getApplicationDocumentsDirectory();
       }
 
-      if (!await directory.exists()) {
-        await directory.create(recursive: true);
+      if (directory == null) {
+        throw Exception("Unable to get storage directory.");
       }
 
       String filePath = '${directory.path}/$fileName';
@@ -163,20 +166,11 @@ abstract class Utility {
       );
 
       print('Download complete: $filePath');
-
-      // Show success Snackbar after the frame build is completed
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('$fileName downloaded successfully!')),
-        );
-      });
+      snacBar('Downloaded Successfully!', ColorsValue.lightYellow);
     } catch (e) {
       print('Error downloading file: $e');
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to download the file.')),
-        );
-      });
+
+      snacBar('Failed to download the file.', ColorsValue.lightYellow);
     }
   }
 

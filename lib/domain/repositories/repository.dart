@@ -173,7 +173,6 @@ class Repository {
     required String category,
     required String min,
     required String max,
-
     required String sortField,
     required var sortOption,
   }) async {
@@ -185,7 +184,6 @@ class Repository {
         category: category,
         min: min,
         max: max,
-
         sortField: sortField,
         sortOption: sortOption,
         isLoading: isLoading,
@@ -435,8 +433,7 @@ class Repository {
         isLoading: isLoading,
         filePath: filePath,
       );
-      var uploadImageModel =
-          uploadImageFromJson(response.data);
+      var uploadImageModel = uploadImageFromJson(response.data);
       if (uploadImageModel.status == 200) {
         return uploadImageModel;
       } else {
@@ -663,7 +660,8 @@ class Repository {
       var response = await _dataRepository.postRepairOrder(
         file: file,
         description: description,
-        isLoading: isLoading,productName: productName,
+        isLoading: isLoading,
+        productName: productName,
         weight: weight,
         size: size,
         priority: priority,
@@ -725,17 +723,16 @@ class Repository {
     }
   }
 
-  Future<RegisterModel?> registerApi({
-    bool isLoading = false,
-    required String city,
-    required String countryCode,
-    required String mobile,
-    required String password,
-    required String name,
-    required String email,
-    required String companyname,
-    required List<String> images
-  }) async {
+  Future<RegisterModel?> registerApi(
+      {bool isLoading = false,
+      required String city,
+      required String countryCode,
+      required String mobile,
+      required String password,
+      required String name,
+      required String email,
+      required String companyname,
+      required List<String> images}) async {
     try {
       var response = await _dataRepository.registerApi(
         city: city,
@@ -762,44 +759,44 @@ class Repository {
     }
   }
 
-  // Future<void> getUserLocationDetails() async {
-  //   try {
-  //     await Utility.getCurrentLocation();
+// Future<void> getUserLocationDetails() async {
+//   try {
+//     await Utility.getCurrentLocation();
 
-  //     var position = await Utility.getCurrentLatLng();
+//     var position = await Utility.getCurrentLatLng();
 
-  //     if (position != null) {
-  //       var lat = position.latitude.toString();
-  //       var lng = position.longitude.toString();
-  //       // saveSecureValue(LocalKeys.lat, lat);
-  //       // saveSecureValue(LocalKeys.lng, lng);
-  //     }
-  //     var locationDetails = await Utility.getCurrentLocationDetails(
-  //       isLoading: false,
-  //     );
+//     if (position != null) {
+//       var lat = position.latitude.toString();
+//       var lng = position.longitude.toString();
+//       // saveSecureValue(LocalKeys.lat, lat);
+//       // saveSecureValue(LocalKeys.lng, lng);
+//     }
+//     var locationDetails = await Utility.getCurrentLocationDetails(
+//       isLoading: false,
+//     );
 
-  //     if (locationDetails != null) {
-  //       var city = locationDetails.area;
-  //       var country = locationDetails.country;
-  //       saveSecureValue(LocalKeys.city, city);
-  //       saveSecureValue(LocalKeys.country, country);
-  //     }
-  //   } catch (e) {
-  //     Utility.showDialog(e.toString());
-  //   }
-  // }
+//     if (locationDetails != null) {
+//       var city = locationDetails.area;
+//       var country = locationDetails.country;
+//       saveSecureValue(LocalKeys.city, city);
+//       saveSecureValue(LocalKeys.country, country);
+//     }
+//   } catch (e) {
+//     Utility.showDialog(e.toString());
+//   }
+// }
 
   /// API to get the IP of the user
-  // Future<String?> getIp() async {
-  //   try {
-  //     var response = await _dataRepository.getIp();
-  //     saveSecureValue(LocalKeys.userIP, response);
+// Future<String?> getIp() async {
+//   try {
+//     var response = await _dataRepository.getIp();
+//     saveSecureValue(LocalKeys.userIP, response);
 
-  //     return response;
-  //   } catch (_) {
-  //     var response = await _deviceRepository.getIp();
+//     return response;
+//   } catch (_) {
+//     var response = await _deviceRepository.getIp();
 
-  //     return response;
-  //   }
-  // }
+//     return response;
+//   }
+// }
 }

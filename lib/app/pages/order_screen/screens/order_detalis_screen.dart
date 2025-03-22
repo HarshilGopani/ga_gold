@@ -195,7 +195,9 @@ class CustomJewelryCard extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Text(
-                    item.description ?? '-',
+                    item.description != null
+                        ? 'N/A'
+                        : item.description ?? 'N/A',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

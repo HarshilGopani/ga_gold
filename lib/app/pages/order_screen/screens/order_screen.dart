@@ -82,19 +82,19 @@ class OrderScreen extends StatelessWidget {
                                           style: Styles.color64748W60012,
                                         ),
                                         Dimens.boxHeight5,
-                                        if (e.orderTracking == "processing" ||
-                                            (e.invoiceUrl != null &&
-                                                e.invoiceUrl!.isNotEmpty))
-                                          InkWell(
-                                              onTap: () {
-                                                Utility.downloadPdf(
-                                                    context: context,
-                                                    url: e.invoiceUrl ?? '',
-                                                    fileName: e.products?[0]
-                                                            .productName ??
-                                                        'Ga Product');
-                                              },
-                                              child: Icon(Icons.download))
+                                        // if (e.orderTracking == "processing" ||
+                                        //     (e.invoiceUrl != null &&
+                                        //         e.invoiceUrl!.isNotEmpty))
+                                        //   InkWell(
+                                        //       onTap: () {
+                                        //         Utility.downloadPdf(
+                                        //             context: context,
+                                        //             url: e.invoiceUrl ?? '',
+                                        //             fileName: e.products?[0]
+                                        //                     .productName ??
+                                        //                 'Ga Product');
+                                        //       },
+                                        //       child: Icon(Icons.download))
                                       ],
                                     ),
                                     Column(

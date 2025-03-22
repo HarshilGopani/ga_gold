@@ -94,7 +94,7 @@ class GetOrderHistoryDoc {
   List<GetOrderHistoryProduct>? products;
   String? orderNo;
   int? totalQuantity;
-  int? totalCartWeight;
+  num? totalCartWeight;
   int? remainingTotalQuantity;
   int? totalBags;
   String? orderTracking;
