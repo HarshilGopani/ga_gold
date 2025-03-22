@@ -56,61 +56,72 @@ class OrderScreen extends StatelessWidget {
                                 ),
                               ),
                               child: Padding(
-                                  padding: Dimens.edgeInsets10,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Total Quantity: ${e.totalQuantity}",
-                                            style: Styles.color212121W90012,
-                                          ),
-                                          Dimens.boxHeight2,
-                                          Text(
-                                            "Total Weight: ${e.totalBags}gm",
-                                            style: Styles.color212121W90012,
-                                          ),
-                                          Dimens.boxHeight2,
-                                          Text(
-                                            "Order Date: 25/04/2024",
-                                            style: Styles.color64748W60012,
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            e.orderTracking?.toCapitalized ??
-                                                '',
-                                            style: e.orderTracking == "pending"
-                                                ? Styles.colorFFA50070012
-                                                : e.orderTracking == "completed"
-                                                    ? Styles.greenW70012
-                                                    : e.orderTracking ==
-                                                            "processing"
-                                                        ? Styles
-                                                            .colorFFA500W70012
-                                                        : Styles
-                                                            .redColorGuj70010,
-                                          ),
-                                          Text(
-                                            "Order No: ${e.orderTracking}",
-                                            style: Styles.color64748W60012,
-                                          ),
-                                        ],
-                                      )
-                                    ],
-                                  )),
+                                padding: Dimens.edgeInsets10,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Total Quantity: ${e.totalQuantity}",
+                                          style: Styles.color212121W90012,
+                                        ),
+                                        Dimens.boxHeight2,
+                                        Text(
+                                          "Total Weight: ${e.totalBags}gm",
+                                          style: Styles.color212121W90012,
+                                        ),
+                                        Dimens.boxHeight2,
+                                        Text(
+                                          "Order Date: 25/04/2024",
+                                          style: Styles.color64748W60012,
+                                        ),
+                                        Dimens.boxHeight5,
+                                        if (e.orderTracking == "processing" ||
+                                            (e.invoiceUrl != null &&
+                                                e.invoiceUrl!.isNotEmpty))
+                                          InkWell(
+                                              onTap: () {
+                                                Utility.downloadPdf(
+                                                    context: context,
+                                                    url: e.invoiceUrl ?? '',
+                                                    fileName: e.products?[0]
+                                                            .productName ??
+                                                        'Ga Product');
+                                              },
+                                              child: Icon(Icons.download))
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          e.orderTracking?.toCapitalized ?? '',
+                                          style: e.orderTracking == "pending"
+                                              ? Styles.colorFFA50070012
+                                              : e.orderTracking == "completed"
+                                                  ? Styles.greenW70012
+                                                  : e.orderTracking ==
+                                                          "processing"
+                                                      ? Styles.colorFFA500W70012
+                                                      : Styles.redColorGuj70010,
+                                        ),
+                                        Text(
+                                          "Order No: ${e.orderNo}",
+                                          style: Styles.color64748W60012,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         );

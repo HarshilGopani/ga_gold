@@ -1,7 +1,6 @@
 // coverage:ignore-file
 
 import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/pages/order_screen/screens/oneOrderDetailScreen.dart';
 import 'package:Ga_Gold/app/pages/profileScreen/screen/contact_us.dart';
 import 'package:get/get.dart';
 
@@ -198,14 +197,6 @@ class AppPages {
       binding: ShoppingCartBinding(),
       transition: Transition.fadeIn,
     ),
-    GetPage<OneOrderDetailsScreen>(
-      name: _Paths.oneOrderDetailScreen,
-      transitionDuration: transitionDuration,
-      page: OneOrderDetailsScreen.new,
-      binding: OrderBinding(),
-      transition: Transition.fadeIn,
-    ),
-
     GetPage<InAppUpdateScreen>(
       name: _Paths.inAppUpdateScreen,
       transitionDuration: transitionDuration,

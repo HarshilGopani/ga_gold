@@ -85,7 +85,7 @@ class RepairOrderHistoryScreen extends StatelessWidget {
                                           : Styles.redColorGuj70010,
                                 ),
                                 Text(
-                                  "Order No: ${item.orderTracking}",
+                                  "Order No: ${item.orderNumber}",
                                   style: Styles.color64748W60012,
                                 ),
                               ],

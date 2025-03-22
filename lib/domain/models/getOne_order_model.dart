@@ -47,14 +47,15 @@ class GetOneOrderData {
   List<GetOneOrderProduct>? products;
   String? orderNo;
   int? totalQuantity;
+  int? totalCartWeight;
   int? remainingTotalQuantity;
   int? totalBags;
   String? orderTracking;
   int? createTimestamp;
-  int? totalCartWeight;
   DateTime? createdAt;
   DateTime? acceptedDate;
   int? acceptedTimestamp;
+  String? invoiceUrl;
 
   GetOneOrderData({
     this.id,
@@ -62,14 +63,15 @@ class GetOneOrderData {
     this.products,
     this.orderNo,
     this.totalQuantity,
+    this.totalCartWeight,
     this.remainingTotalQuantity,
     this.totalBags,
     this.orderTracking,
     this.createTimestamp,
-    this.totalCartWeight,
     this.createdAt,
     this.acceptedDate,
     this.acceptedTimestamp,
+    this.invoiceUrl,
   });
 
   factory GetOneOrderData.fromJson(Map<String, dynamic> json) =>
@@ -82,11 +84,11 @@ class GetOneOrderData {
                 json["products"]!.map((x) => GetOneOrderProduct.fromJson(x))),
         orderNo: json["order_no"],
         totalQuantity: json["totalQuantity"],
+        totalCartWeight: json["totalCartWeight"],
         remainingTotalQuantity: json["remainingTotalQuantity"],
         totalBags: json["totalBags"],
         orderTracking: json["order_tracking"],
         createTimestamp: json["create_timestamp"],
-        totalCartWeight: json["totalCartWeight"],
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -94,6 +96,7 @@ class GetOneOrderData {
             ? null
             : DateTime.parse(json["accepted_date"]),
         acceptedTimestamp: json["accepted_timestamp"],
+        invoiceUrl: json["invoice_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -104,14 +107,15 @@ class GetOneOrderData {
             : List<dynamic>.from(products!.map((x) => x.toJson())),
         "order_no": orderNo,
         "totalQuantity": totalQuantity,
+        "totalCartWeight": totalCartWeight,
         "remainingTotalQuantity": remainingTotalQuantity,
         "totalBags": totalBags,
         "order_tracking": orderTracking,
         "create_timestamp": createTimestamp,
-        "totalCartWeight": totalCartWeight,
         "createdAt": createdAt?.toIso8601String(),
         "accepted_date": acceptedDate?.toIso8601String(),
         "accepted_timestamp": acceptedTimestamp,
+        "invoice_url": invoiceUrl,
       };
 }
 
@@ -127,6 +131,7 @@ class GetOneOrderProduct {
   String? weight;
   String? size;
   String? description;
+  String? totalWeight;
 
   GetOneOrderProduct({
     this.categoryId,
@@ -140,6 +145,7 @@ class GetOneOrderProduct {
     this.weight,
     this.size,
     this.description,
+    this.totalWeight,
   });
 
   factory GetOneOrderProduct.fromJson(Map<String, dynamic> json) =>
@@ -155,6 +161,7 @@ class GetOneOrderProduct {
         weight: json["weight"],
         size: json["size"],
         description: json["description"],
+        totalWeight: json["totalWeight"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -169,5 +176,6 @@ class GetOneOrderProduct {
         "weight": weight,
         "size": size,
         "description": description,
+        "totalWeight": totalWeight,
       };
 }

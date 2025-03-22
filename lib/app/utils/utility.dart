@@ -125,6 +125,61 @@ abstract class Utility {
     );
   }
 
+  static Future<void> downloadPdf(
+      {required BuildContext context,required String url,required String fileName}) async {
+    try {
+      // Request storage permission
+      if (Platform.isAndroid) {
+        if (!await Permission.storage.request().isGranted) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Storage permission denied.")),
+            );
+          });
+          return;
+        }
+      }
+
+      // Get directory path
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = Directory('/storage/emulated/0/Download');
+      } else {
+        directory = await getApplicationDocumentsDirectory();
+      }
+
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      String filePath = '${directory.path}/$fileName';
+      print('Downloading to: $filePath');
+
+      // Download using Dio
+      await dio.Dio().download(
+        url,
+        filePath,
+        options: dio.Options(followRedirects: true),
+      );
+
+      print('Download complete: $filePath');
+
+      // Show success Snackbar after the frame build is completed
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('$fileName downloaded successfully!')),
+        );
+      });
+    } catch (e) {
+      print('Error downloading file: $e');
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to download the file.')),
+        );
+      });
+    }
+  }
+
   static Future<bool> imagePermissionCheack(BuildContext context) async {
     bool status = false;
     bool statusVideos = false;
