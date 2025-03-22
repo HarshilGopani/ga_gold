@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Documents/Harshil/ga_gold/android/app/.cxx/RelWithDebInfo/161a4351/x86_64/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Documents/Harshil/ga_gold/android/app/.cxx/RelWithDebInfo/161a4351/x86_64/CMakeFiles/rebuild_cache.dir

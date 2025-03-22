@@ -1,0 +1,2 @@
+/Users/parthivdungarani/Documents/Harshil/ga_gold/android/app/.cxx/Debug/1e6a4h3j/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/parthivdungarani/Documents/Harshil/ga_gold/android/app/.cxx/Debug/1e6a4h3j/armeabi-v7a/CMakeFiles/rebuild_cache.dir
