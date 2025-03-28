@@ -46,13 +46,6 @@ class HomeController extends GetxController {
     AssetConstants.banner2,
     AssetConstants.banner3,
   ];
-
-  List<String> bannerHomeList = [
-    AssetConstants.home_banner1,
-    AssetConstants.home_banner2,
-    AssetConstants.home_banner3,
-  ];
-
   /// >>>>>>>>>>>>>> For view all Screen <<<<<<<<<<<<<<<<<<<< ///
 
   int selectPage = 0;

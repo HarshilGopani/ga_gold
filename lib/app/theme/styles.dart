@@ -1,7 +1,7 @@
 //coverage:ignore-file
 
-import 'package:flutter/material.dart';
 import 'package:Ga_Gold/app/app.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 /// A chunk of styles used in the application.
@@ -45,13 +45,17 @@ abstract class Styles {
     fontSize: Dimens.sixteen,
   );
 
+  static TextStyle colorD8003260014 = GoogleFonts.montserrat(
+    color: ColorsValue.colorD80032,
+    fontWeight: FontWeight.w600,
+    fontSize: Dimens.fourteen,
+  );
 
   static TextStyle blackColorW50014 = GoogleFonts.montserrat(
     color: ColorsValue.blackColor,
     fontSize: Dimens.fourteen,
     fontWeight: FontWeight.w500,
   );
-
 
   static TextStyle orangeW70010 = GoogleFonts.nunito(
     fontSize: Dimens.ten,
@@ -416,8 +420,6 @@ abstract class Styles {
     color: ColorsValue.lightYellow,
   );
 
-
-
   static TextStyle whiteW60016 = GoogleFonts.nunito(
     fontSize: Dimens.sixteen,
     fontWeight: FontWeight.w600,
@@ -483,8 +485,6 @@ abstract class Styles {
     color: ColorsValue.color544B6C,
   );
 
-
-
   static TextStyle color9C9C9CW50012 = GoogleFonts.nunito(
     fontSize: Dimens.twelve,
     fontWeight: FontWeight.w500,
@@ -508,8 +508,6 @@ abstract class Styles {
     fontWeight: FontWeight.w700,
     color: ColorsValue.color475569,
   );
-
-
 
   static TextStyle appColor70012 = GoogleFonts.nunito(
     fontSize: Dimens.twelve,
@@ -606,7 +604,6 @@ abstract class Styles {
     fontWeight: FontWeight.w700,
     color: ColorsValue.color475569,
   );
-  
 
   static TextStyle black221W70010 = GoogleFonts.nunito(
     fontSize: Dimens.ten,

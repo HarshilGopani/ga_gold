@@ -1,18 +1,19 @@
-import 'package:Ga_Gold/device/repositories/device_repositories.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:Ga_Gold/domain/services/firebase_api.dart';
-import 'package:get/get.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/data/data.dart';
 import 'package:Ga_Gold/device/device.dart';
+import 'package:Ga_Gold/device/repositories/device_repositories.dart';
 import 'package:Ga_Gold/domain/domain.dart';
-import 'package:no_screenshot/no_screenshot.dart';
+import 'package:Ga_Gold/domain/services/firebase_api.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:no_screenshot/no_screenshot.dart';
+
 import 'firebase_options.dart';
 
 final noScreenshot = NoScreenshot.instance;
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
         darkTheme: darkThemeData(context),
         themeMode: ThemeMode.light,
         getPages: AppPages.pages,
-        initialRoute: Routes.bottomBarScreen,
+        initialRoute: Routes.splashScreen,
         translations: TranslationsFile(),
         enableLog: true,
       ),

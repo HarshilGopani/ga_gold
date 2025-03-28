@@ -190,7 +190,7 @@ class WishlistScreen extends StatelessWidget {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        "Weigth",
+                                                        "Weight",
                                                         style:
                                                             Styles.blackW60014,
                                                       ),

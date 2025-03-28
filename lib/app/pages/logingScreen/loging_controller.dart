@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/routes_management.dart';
+import 'package:Ga_Gold/domain/domain.dart';
+import 'package:Ga_Gold/domain/models/upload_image_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Ga_Gold/domain/models/upload_image_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/routes_management.dart';
-import 'package:Ga_Gold/domain/domain.dart';
 
 class LoginController extends GetxController {
   LoginController(this.loginPresenter);
@@ -65,13 +65,15 @@ class LoginController extends GetxController {
       loginData = null;
       if (response.statusCode == 200 && loginModel.data != null) {
         loginData = loginModel;
-
-        Get.find<Repository>().saveValue(LocalKeys.authToken,
-            loginModel.data is Data ? loginModel.data?.accessToken : "");
-        RouteManagement.goToBottomBarView();
+        if (loginData?.data?.accessToken?.isNotEmpty ?? false) {
+          Get.find<Repository>().saveValue(
+              LocalKeys.authToken, loginModel.data?.accessToken ?? "");
+          RouteManagement.goToBottomBarView();
+        } else {
+          RouteManagement.goToVerifyIdentityScreen();
+        }
       } else {
-        Utility.errorMessage(
-            loginModel.message ?? 'Oops, something went wrong');
+        Utility.errorMessage(loginModel.message ?? "");
       }
     } catch (e) {
       isLoginLoading = false;
@@ -208,7 +210,7 @@ class LoginController extends GetxController {
                               Dimens.boxHeight10,
                               Text(
                                 'gallery'.tr,
-                                style: Styles.whiteW60012,
+                                style: Styles.appColor70012,
                               )
                             ],
                           ),
@@ -230,7 +232,7 @@ class LoginController extends GetxController {
                               Dimens.boxHeight10,
                               Text(
                                 'camera'.tr,
-                                style: Styles.whiteW60012,
+                                style: Styles.appColor70012,
                               )
                             ],
                           ),

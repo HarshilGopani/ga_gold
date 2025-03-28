@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/device/device.dart';
@@ -15,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
       initState: (state) {
         var controller = Get.find<ProfileController>();
         if (Utility.isLoginOrNot()) {
-          Utility.showLoader();
+          controller.isProfileLoading = true;
           controller.getProfile();
         }
       },
@@ -442,11 +444,44 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             title: Text(
                               "logout".tr,
-                              style: Styles.colorD8003270016,
+                              style: Styles.colorD8003260014,
                             ),
                           ),
                         ),
                       ),
+                      if (Platform.isIOS) ...[
+                        Dimens.boxHeight20,
+                        InkWell(
+                          onTap: () {
+                            Utility.launchLinkURL(
+                                "https://docs.google.com/forms/d/e/1FAIpQLSe2Psqwa-MxssS1xWREob1UyK1LCS2rMILMkz8IR5mRjNaQMQ/viewform?usp=dialog");
+                          },
+                          child: Container(
+                            height: Dimens.sixty,
+                            decoration: BoxDecoration(
+                              color: ColorsValue.colorF3F4F6,
+                              borderRadius: BorderRadius.circular(
+                                Dimens.sixteen,
+                              ),
+                            ),
+                            child: Center(
+                              child: ListTile(
+                                contentPadding: Dimens.edgeInsets20_00_20_00,
+                                leading: Image.asset(
+                                  AssetConstants.delete_ac,
+                                  height: Dimens.thirty,
+                                  width: Dimens.thirty,
+                                  color: ColorsValue.redColor,
+                                ),
+                                title: Text(
+                                  "Delete Account".tr,
+                                  style: Styles.colorD8003260014,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 )

@@ -1,11 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
 import 'package:Ga_Gold/app/widgets/custom_button.dart';
 import 'package:Ga_Gold/app/widgets/custom_order_dilog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
 class ViewAllProductScreen extends StatelessWidget {
@@ -737,11 +737,11 @@ class ViewAllProductScreen extends StatelessWidget {
                                 controller: controller.scrollViewAllController,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: Dimens.fifteen,
-                                  crossAxisSpacing: Dimens.ten,
-                                        mainAxisExtent: Dimens.threeHundredThirty
-                                ),
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: Dimens.fifteen,
+                                        crossAxisSpacing: Dimens.ten,
+                                        mainAxisExtent:
+                                            Dimens.threeHundredThirty),
                                 itemCount: controller.viewAllDocList.length,
                                 itemBuilder: (context, index) {
                                   var item = controller.viewAllDocList[index];
@@ -885,7 +885,7 @@ class ViewAllProductScreen extends StatelessWidget {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              "Weigth",
+                                                              "Weight",
                                                               style: Styles
                                                                   .blackW60014,
                                                             ),

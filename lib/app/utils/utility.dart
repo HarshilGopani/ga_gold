@@ -450,10 +450,7 @@ abstract class Utility {
     await Get.dialog<dynamic>(
       const Center(
         child: CircularProgressIndicator(),
-        // child: Lottie.asset(
-        //   AssetConstants.loaderJson,
-        //   height: Dimens.sixtyFour,
-        // ),
+      
       ),
       barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(.7),

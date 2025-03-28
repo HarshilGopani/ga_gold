@@ -54,20 +54,22 @@ abstract class AssetConstants {
   static const String dwsadsa = '';
 
   static const String copyIcon = 'assets/icons/copy.svg';
-  static const String app_logo = 'assets/images/app_logo.jpg';
+  static const String app_logo = 'assets/images/app_logo.png';
   static const String ring = 'assets/images/ring.png';
   static const String app_update_lottie = 'assets/images/main_lotte.json';
 
   // static const String banner1 = 'assets/images/banner1.png';
   // static const String banner2 = 'assets/images/banner2.jpg';
   // static const String banner3 = 'assets/images/banner3.jpg';
-  static const String banner1 = 'assets/images/1.jpg';
-  static const String banner2 = 'assets/images/2.jpg';
-  static const String banner3 = 'assets/images/3.jpg';
+  static const String banner1 = 'assets/images/banner1.png';
+  static const String banner2 = 'assets/images/banner2.png';
   static const String home_banner1 = 'assets/images/home_banner1.jpg';
   static const String home_banner2 = 'assets/images/home_banner2.jpg';
   static const String home_banner3 = 'assets/images/home_banner3.jpg';
   static const String ic_cart = 'assets/icons/ic_cart.svg';
   static const String ic_fill_cart = 'assets/icons/Frame 427319417.svg';
   static const String ic_remove = 'assets/svg/removeProduct.svg';
+  static const String verify_user = 'assets/svg/verify_user.svg';
+  static const String delete_ac = 'assets/images/delete_ac.png';
+  static const String banner3 = 'assets/images/banner3.png';
 }

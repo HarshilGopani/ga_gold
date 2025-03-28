@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:get/get.dart';
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/domain/domain.dart';
+import 'package:get/get.dart';
 
 class SplashController extends GetxController {
   SplashController(this.splashPresenter);
@@ -22,13 +22,14 @@ class SplashController extends GetxController {
     final result = await Utility.checker.checkUpdate();
     Future.delayed(const Duration(seconds: 3)).then((value) {
       RouteManagement.goToBottomBarView();
-      // final result =
-      //     Get.find<Repository>().getStringValue(LocalKeys.authToken).isEmpty;
-      // if (result) {
-      //   RouteManagement.goToLoginView();
-      // } else {
-      //
-      // }
+
+      if (Get.find<Repository>()
+          .getStringValue(LocalKeys.authToken)
+          .isNotEmpty) {
+        RouteManagement.goToBottomBarView();
+      } else {
+        RouteManagement.goToLoginView();
+      }
     });
     update();
   }

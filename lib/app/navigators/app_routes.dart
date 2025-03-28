@@ -30,6 +30,7 @@ abstract class Routes {
   static const contactUsScreen = _Paths.contactUsScreen;
   static const oneOrderDetailScreen = _Paths.oneOrderDetailScreen;
   static const shoppingCartScreen = _Paths.shoppingCartScreen;
+  static const verifyIdentityScreen = _Paths.verifyIdentityScreen;
 }
 
 abstract class _Paths {
@@ -59,4 +60,5 @@ abstract class _Paths {
   static const contactUsScreen = '/contactUsScreen';
   static const oneOrderDetailScreen = '/OneOrderDetailsScreen';
   static const shoppingCartScreen = '/shoppingCartScreen';
+  static const verifyIdentityScreen = '/verifyIdentityScreen';
 }

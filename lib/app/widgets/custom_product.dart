@@ -1,9 +1,9 @@
+import 'package:Ga_Gold/app/app.dart';
+import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
 
 // ignore: must_be_immutable
 class CustomProductView extends StatelessWidget {
@@ -158,7 +158,7 @@ class CustomProductView extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        "Weigth : ",
+                        "Weight : ",
                         style: Styles.blackW60014,
                       ),
                       Text(

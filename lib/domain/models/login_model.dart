@@ -7,7 +7,7 @@ String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
   String? message;
-  dynamic data;
+  Data? data;
   int? status;
   bool? isSuccess;
 
@@ -19,36 +19,38 @@ class LoginModel {
   });
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    message: json["Message"],
-    data: json["Data"] is int
-        ? json["Data"]
-        : json["Data"] == null
-        ? null
-        : Data.fromJson(json["Data"]),
-    status: json["Status"],
-    isSuccess: json["IsSuccess"],
-  );
+        message: json["Message"],
+        data: json["Data"] == null || json["Data"] == 0
+            ? null
+            : Data.fromJson(json["Data"]),
+        status: json["Status"],
+        isSuccess: json["IsSuccess"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "Message": message,
-    "Data": data is Data ? (data as Data).toJson() : data,
-    "Status": status,
-    "IsSuccess": isSuccess,
-  };
+        "Message": message,
+        "Data": data?.toJson(),
+        "Status": status,
+        "IsSuccess": isSuccess,
+      };
 }
 
 class Data {
   String? accessToken;
+  bool? isapproved;
 
   Data({
     this.accessToken,
+    this.isapproved,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    accessToken: json["accessToken"],
-  );
+        accessToken: json["accessToken"],
+        isapproved: json["isapproved"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "accessToken": accessToken,
-  };
+        "accessToken": accessToken,
+        "isapproved": isapproved,
+      };
 }

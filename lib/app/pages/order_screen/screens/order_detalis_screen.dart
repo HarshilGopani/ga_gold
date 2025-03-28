@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-import 'package:Ga_Gold/domain/models/getOne_order_model.dart';
-import 'package:get/get.dart';
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
+import 'package:Ga_Gold/domain/models/getOne_order_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OrderDetalisScreen extends StatelessWidget {
   const OrderDetalisScreen({super.key});
@@ -119,56 +119,35 @@ class CustomJewelryCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   Expanded(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        item.productName ?? 'title',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Actual Weight: ",
-                                  style: Styles.black64748BW50014,
-                                ),
-                                Text(
-                                  "${item.productWeight} gm",
-                                  style: Styles.black64748BW50014,
-                                ),
-                              ],
-                            ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.productName ?? 'title',
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
                           ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(
-                                  "Total Quantity: ${item.quantity}",
-                                  style: Styles.black64748BW50014,
-                                ),
-                                Text(
-                                  "Total Weight: ${item.productWeight} gm",
-                                  style: Styles.black64748BW50014,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  )),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "Actual Weight: ${item.productWeight} gm",
+                          style: Styles.black64748BW50014,
+                        ),
+                        Dimens.boxHeight3,
+                        Text(
+                          "Total Quantity: ${item.quantity}",
+                          style: Styles.black64748BW50014,
+                        ),
+                        Dimens.boxHeight3,
+                        Text(
+                          "Total Weight: ${item.totalWeight} gm",
+                          style: Styles.black64748BW50014,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 12),

@@ -204,5 +204,12 @@ class AppPages {
       binding: SplashBinding(),
       transition: Transition.fadeIn,
     ),
+    GetPage<VerifyIdentityScreen>(
+      name: _Paths.verifyIdentityScreen,
+      transitionDuration: transitionDuration,
+      page: VerifyIdentityScreen.new,
+      binding: LoginBinding(),
+      transition: Transition.fadeIn,
+    ),
   ];
 }

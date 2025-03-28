@@ -311,7 +311,7 @@ abstract class ColorsValue {
   static const black221 = Color(0xff222221);
   static const colorA7A7A7 = Color(0xffA7A7A7);
   static const appBg = Color(0xffFFF8F1);
-  static const appColor = Color(0xffE7AC2D);
+  static const appColor = Color(0xff286AB0);
   static const colorC7D1DD = Color(0xffC7D1DD);
   static const black333 = Color(0xff333333);
   static const black343434 = Color(0xff343434);
@@ -321,7 +321,7 @@ abstract class ColorsValue {
   static Color lightE2E8F0 = const Color(0xFFE2E8F0);
   static Color black64748B = const Color(0xFF64748B);
   static Color colorEBF1F8 = const Color(0xFFEBF1F8);
-  
+
   static Color lightF3F4F6 = const Color(0xFFF3F4F6);
   static Color black010101 = const Color(0xFF010101);
   static Color greyAAA = const Color(0xFFAAAAAA);
@@ -332,5 +332,4 @@ abstract class ColorsValue {
   static Color lightccc = const Color.fromARGB(255, 71, 71, 71);
   static Color color334155 = const Color(0xFF334155);
   static Color colorD80032 = const Color(0xFFD80032);
-
 }

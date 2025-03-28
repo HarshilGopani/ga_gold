@@ -1,7 +1,7 @@
 // coverage:ignore-file
 
-import 'package:get/get.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:get/get.dart';
 
 /// A chunk of routes taken in the application.
 ///
@@ -52,4 +52,6 @@ abstract class RouteManagement {
       Get.offAllNamed<void>(Routes.inAppUpdateScreen, arguments: appUrl);
   static void goToOneOrderDetailScreen(String id) =>
       Get.offAllNamed<void>(Routes.oneOrderDetailScreen, arguments: id);
+  static void goToVerifyIdentityScreen() =>
+      Get.offAllNamed<void>(Routes.verifyIdentityScreen);
 }

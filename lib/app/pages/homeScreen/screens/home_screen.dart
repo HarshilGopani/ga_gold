@@ -140,7 +140,7 @@ class HomeScreen extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: <Widget>[
               SliverAppBar(
-                expandedHeight: 220,
+                expandedHeight: 240,
                 floating: false,
                 pinned: false,
                 flexibleSpace: FlexibleSpaceBar(
@@ -152,37 +152,56 @@ class HomeScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            controller.bnnerList.isEmpty
-                                ? SizedBox(
-                                    width: double.maxFinite,
-                                    height: Dimens.twoHundred,
-                                    child: Center(
-                                      child: Text('No Dat Found'),
+                            SizedBox(
+                              width: double.maxFinite,
+                              height: Dimens.twoHundred,
+                              child: PageView.builder(
+                                itemCount: controller.bnnerList.length,
+                                onPageChanged: (value) {
+                                  controller.selectPage = value;
+                                  controller.update();
+                                },
+                                itemBuilder: (context, index) {
+                                  return ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                      Dimens.ten,
                                     ),
-                                  )
-                                : SizedBox(
-                                    width: double.maxFinite,
-                                    height: Dimens.twoHundred,
-                                    child: PageView.builder(
-                                      itemCount: controller.bnnerList.length,
-                                      onPageChanged: (value) {
-                                        controller.selectPage = value;
-                                        controller.update();
-                                      },
-                                      itemBuilder: (context, index) {
-                                        return ClipRRect(
-                                          borderRadius: BorderRadius.circular(
-                                            Dimens.ten,
-                                          ),
-                                          child: Image.asset(
-                                            controller.bnnerList[index],
-                                            fit: BoxFit.fill,
-                                            // AssetConstants.app_logo,
-                                          ),
-                                        );
-                                      },
+                                    child: Image.asset(
+                                      controller.bnnerList[index],
+                                      width: double.maxFinite,
+                                      // AssetConstants.app_logo,
                                     ),
-                                  ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Dimens.boxHeight8,
+                            Center(
+                              child: Wrap(
+                                children: controller.bnnerList
+                                    .asMap()
+                                    .entries
+                                    .map((e) {
+                                  return Padding(
+                                    padding: Dimens.edgeInsetsLeft4,
+                                    child: Container(
+                                      width: controller.selectPage == e.key
+                                          ? Dimens.ten
+                                          : Dimens.six,
+                                      height: Dimens.six,
+                                      decoration: BoxDecoration(
+                                        color: controller.selectPage == e.key
+                                            ? ColorsValue.appColor
+                                            : ColorsValue.greyAAAAAA,
+                                        borderRadius: BorderRadius.circular(
+                                          Dimens.twenty,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                             if (!Utility.isLoginOrNot()) ...[
                               Dimens.boxHeight10,
                               if (controller.getCategoriesList.isNotEmpty) ...[
@@ -494,7 +513,7 @@ class HomeScreen extends StatelessWidget {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      "Weigth",
+                                                      "Weight",
                                                       style: Styles.blackW60014,
                                                     ),
                                                     Text(
@@ -545,7 +564,7 @@ class HomeScreen extends StatelessWidget {
                           Dimens.boxHeight10,
                           Padding(
                             padding: Dimens.edgeInsets20_20,
-                            child : SizedBox(
+                            child: SizedBox(
                               height: Dimens.hundredThirty,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -778,7 +797,7 @@ class HomeScreen extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  "Weigth",
+                                                  "Weight",
                                                   style: Styles.blackW60014,
                                                 ),
                                                 Text(
@@ -1312,7 +1331,7 @@ class HomeScreen extends StatelessWidget {
           //                                                     .start,
           //                                             children: [
           //                                               Text(
-          //                                                 "Weigth",
+          //                                                 "Weight",
           //                                                 style: Styles
           //                                                     .blackW60014,
           //                                               ),
