@@ -46,6 +46,7 @@ class HomeController extends GetxController {
     AssetConstants.banner2,
     AssetConstants.banner3,
   ];
+
   /// >>>>>>>>>>>>>> For view all Screen <<<<<<<<<<<<<<<<<<<< ///
 
   int selectPage = 0;
@@ -296,11 +297,11 @@ class HomeController extends GetxController {
       image: 'assets/images/Product (3).png',
     )
   ];
+  String? categoryId;
 
   TextEditingController searchController = TextEditingController();
   Future<void> postGetAllProduct({
     String? search,
-    String? categoryId,
   }) async {
     if (isLoading || !hasMore) return;
     isLoading = true;
@@ -310,8 +311,8 @@ class HomeController extends GetxController {
       limit: repairLimit,
       search: searchController.text ?? '',
       category: categoryId ?? '',
-      min: "0",
-      max: "1000",
+      min: 0,
+      max: 1000,
       sortField: '_id',
       sortOption: 1,
       isLoading: false,

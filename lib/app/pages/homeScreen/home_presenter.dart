@@ -19,8 +19,8 @@ class HomePresenter {
     required int limit,
     required String search,
     required String category,
-    required String min,
-    required String max,
+    required int min,
+    required int max,
 
     required String sortField,
     required var sortOption,

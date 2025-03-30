@@ -239,11 +239,7 @@ class HomeScreen extends StatelessWidget {
                                                   ? controller.isSelcted = index
                                                   : null
                                               : controller.isSelcted = -1;
-                                          controller.postGetAllProduct(
-                                              categoryId:
-                                                  controller.isSelcted == -1
-                                                      ? ''
-                                                      : item.id ?? '');
+                                          controller.postGetAllProduct();
                                           // RouteManagement.goToViewAllProductScreen(
                                           //     "", item.id ?? "", item.name ?? "");
                                         },
@@ -586,10 +582,9 @@ class HomeScreen extends StatelessWidget {
                                               ? controller.isSelcted = index
                                               : null
                                           : controller.isSelcted = -1;
-                                      controller.postGetAllProduct(
-                                          categoryId: controller.isSelcted == -1
-                                              ? ''
-                                              : item.id ?? '');
+                                      controller.categoryId = item.id;
+                                      controller.update();
+                                      controller.postGetAllProduct();
                                       // controller.isSelcted = (controller.isSelcted != index)
                                       //     ? item.id == item.id
                                       //     ? index
