@@ -1,13 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:Ga_Gold/app/widgets/upload_image.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/widgets/custom_button.dart';
 import 'package:Ga_Gold/app/widgets/custom_international_textformfield.dart';
+import 'package:Ga_Gold/app/widgets/upload_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -332,9 +332,15 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: Dimens.fourtyFive,
                     text: 'Sign Up',
                     onTap: () {
-                      if (controller.signUpFormkey.currentState!.validate()) {
-                        Utility.showLoader();
-                        controller.registerApi();
+                      if (controller.frountImage.isEmpty) {
+                        Utility.errorMessage("Upload front side image.");
+                      } else if (controller.backImage.isEmpty) {
+                        Utility.errorMessage("Upload back side image.");
+                      } else {
+                        if (controller.signUpFormkey.currentState!.validate()) {
+                          Utility.showLoader();
+                          controller.registerApi();
+                        }
                       }
                     },
                   )
