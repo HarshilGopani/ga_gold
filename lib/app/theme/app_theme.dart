@@ -93,7 +93,7 @@ ThemeData themeData(BuildContext context) => ThemeData(
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: ColorsValue.blackColor,
       ),
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: Colors.black,
       ),
     );
@@ -171,7 +171,7 @@ ThemeData darkThemeData(BuildContext context) => ThemeData(
       ),
       scaffoldBackgroundColor: Colors.black,
       fontFamily: 'Product Sans',
-      tabBarTheme: const TabBarTheme(
+      tabBarTheme: const TabBarThemeData(
         labelColor: Colors.white,
       ),
     );

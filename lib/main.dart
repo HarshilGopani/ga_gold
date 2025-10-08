@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Ga_Gold/app/app.dart';
 import 'package:Ga_Gold/app/navigators/navigators.dart';
 import 'package:Ga_Gold/data/data.dart';
@@ -13,6 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:no_screenshot/no_screenshot.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'firebase_options.dart';
 
@@ -81,20 +84,29 @@ class MyApp extends StatelessWidget {
         statusBarColor: ColorsValue.primaryColor,
       ),
     );
+
+    final Upgrader upgrader = Upgrader(debugLogging: true);
+
     return ScreenUtilInit(
       minTextAdapt: true,
       designSize: const Size(375, 745),
-      builder: (_, child) => GetMaterialApp(
-        locale: const Locale('en'),
-        debugShowCheckedModeBanner: false,
-        title: StringConstants.appName,
-        theme: themeData(context),
-        darkTheme: darkThemeData(context),
-        themeMode: ThemeMode.light,
-        getPages: AppPages.pages,
-        initialRoute: Routes.splashScreen,
-        translations: TranslationsFile(),
-        enableLog: true,
+      builder: (_, child) => UpgradeAlert(
+        dialogStyle: Platform.isAndroid
+            ? UpgradeDialogStyle.material
+            : UpgradeDialogStyle.cupertino,
+        upgrader: upgrader,
+        child: GetMaterialApp(
+          locale: const Locale('en'),
+          debugShowCheckedModeBanner: false,
+          title: StringConstants.appName,
+          theme: themeData(context),
+          darkTheme: darkThemeData(context),
+          themeMode: ThemeMode.light,
+          getPages: AppPages.pages,
+          initialRoute: Routes.splashScreen,
+          translations: TranslationsFile(),
+          enableLog: true,
+        ),
       ),
     );
   }
