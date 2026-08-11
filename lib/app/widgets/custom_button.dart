@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Ga_Gold/app/app.dart';
+import 'package:ga_gold/app/app.dart';
 
 class CustomButton extends StatefulWidget {
   const CustomButton(

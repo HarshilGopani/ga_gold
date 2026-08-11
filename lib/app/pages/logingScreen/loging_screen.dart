@@ -1,9 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/app/widgets/custom_button.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/widgets/custom_button.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});

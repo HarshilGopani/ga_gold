@@ -1,4 +1,4 @@
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/domain/domain.dart';
 
 class RepairUsecases {
   RepairUsecases(this.repository);
@@ -87,11 +87,11 @@ class RepairUsecases {
   Future<ResponseModel?> postRepairOrder({
     bool isLoading = false,
     required String file,
-    required String description,required String productName,
+    required String description,
+    required String productName,
     required String priority,
     required String weight,
     required String size,
-
   }) async =>
       await repository.postRepairOrder(
         file: file,

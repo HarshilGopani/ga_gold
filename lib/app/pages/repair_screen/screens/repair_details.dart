@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
 
 class RepairDetailsScreen extends StatelessWidget {
   const RepairDetailsScreen({super.key});
@@ -29,7 +29,6 @@ class RepairDetailsScreen extends StatelessWidget {
                   controller.profileImage = "";
                   Utility.closeLoader();
                   Get.back();
-
                 },
                 child: Container(
                   height: Dimens.fourtyFive,

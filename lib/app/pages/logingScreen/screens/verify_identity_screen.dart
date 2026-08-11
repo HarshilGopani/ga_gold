@@ -1,6 +1,6 @@
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/widgets/custom_button.dart';
-import 'package:Ga_Gold/domain/repositories/repositories.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/widgets/custom_button.dart';
+import 'package:ga_gold/domain/repositories/repositories.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

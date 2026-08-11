@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/domain/domain.dart';
 
 SampleOrderHistoryModel sampleOrderHistoryModelFromJson(String str) =>
     SampleOrderHistoryModel.fromJson(json.decode(str));
@@ -139,7 +139,8 @@ class SampleOrderHistoryDoc {
         description: json["description"],
         images: json["images"] == null
             ? []
-            : List<RepairOrderUploadImageData>.from(json["images"]!.map((x) => RepairOrderUploadImageData.fromJson(x))),
+            : List<RepairOrderUploadImageData>.from(json["images"]!
+                .map((x) => RepairOrderUploadImageData.fromJson(x))),
         productname: json["productname"],
         priority: json["priority"],
         weight: json["weight"],
@@ -161,11 +162,11 @@ class SampleOrderHistoryDoc {
         "images": images == null
             ? []
             : List<dynamic>.from(images!.map((x) => x.toJson())),
-    "productname": productname,
-    "priority": priority,
-    "weight": weight,
-    "size": size,
-    "order_tracking": orderTracking,
+        "productname": productname,
+        "priority": priority,
+        "weight": weight,
+        "size": size,
+        "order_tracking": orderTracking,
         "create_timestamp": createTimestamp,
         "createdAt": createdAt?.toIso8601String(),
         "id": docId,

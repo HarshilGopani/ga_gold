@@ -1,4 +1,4 @@
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/domain/domain.dart';
 
 class SplashPresenter {
   SplashPresenter(this.splashUseCases);

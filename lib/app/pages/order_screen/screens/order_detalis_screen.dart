@@ -1,7 +1,7 @@
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
-import 'package:Ga_Gold/domain/models/getOne_order_model.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/domain/models/getOne_order_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

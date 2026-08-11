@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
 import 'package:get/get.dart';
 
 class SampleOrderScreen extends StatelessWidget {
@@ -26,32 +26,31 @@ class SampleOrderScreen extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                    child: InkWell(
-                  onTap: () {
-                    controller.profileImage = "";
-                    Get.back();
-                  },
-                  child: Container(
-                    height: Dimens.fourtyFive,
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        Dimens.twelve,
+                  child: InkWell(
+                    onTap: () {
+                      controller.profileImage = "";
+                      Get.back();
+                    },
+                    child: Container(
+                      height: Dimens.fourtyFive,
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimens.twelve),
+                        color: Colors.white,
+                        border: Border.all(
+                          width: Dimens.one,
+                          color: ColorsValue.colorA7A7A7,
+                        ),
                       ),
-                      color: Colors.white,
-                      border: Border.all(
-                        width: Dimens.one,
-                        color: ColorsValue.colorA7A7A7,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'cancle'.tr,
-                        style: Styles.colorA7A7A780014,
+                      child: Center(
+                        child: Text(
+                          'cancle'.tr,
+                          style: Styles.colorA7A7A780014,
+                        ),
                       ),
                     ),
                   ),
-                )),
+                ),
                 Dimens.boxWidth10,
                 Expanded(
                   child: ElevatedButton(
@@ -62,15 +61,10 @@ class SampleOrderScreen extends StatelessWidget {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      fixedSize: Size(
-                        double.maxFinite,
-                        Dimens.fourtyFive,
-                      ),
+                      fixedSize: Size(double.maxFinite, Dimens.fourtyFive),
                       backgroundColor: ColorsValue.lightYellow,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          Dimens.twelve,
-                        ),
+                        borderRadius: BorderRadius.circular(Dimens.twelve),
                       ),
                     ),
                     child: Center(
@@ -101,8 +95,9 @@ class SampleOrderScreen extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () async {
-                            var data =
-                                await Utility.imagePermissionCheack(context);
+                            var data = await Utility.imagePermissionCheack(
+                              context,
+                            );
                             if (data) {
                               controller.sampleOrderImage(context);
                             }
@@ -111,18 +106,18 @@ class SampleOrderScreen extends StatelessWidget {
                             width: Dimens.eighty,
                             height: Dimens.eighty,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                Dimens.six,
-                              ),
+                              borderRadius: BorderRadius.circular(Dimens.six),
                               color: ColorsValue.colorEEEAEA,
                             ),
                             alignment: Alignment.center,
                             child: DottedBorder(
-                              color: ColorsValue.greyColor,
-                              radius: Radius.circular(Dimens.five),
-                              borderType: BorderType.RRect,
-                              strokeWidth: Dimens.two,
-                              dashPattern: [Dimens.two],
+                              options: RoundedRectDottedBorderOptions(
+                                color: ColorsValue.greyColor,
+                                radius: Radius.circular(Dimens.five),
+                                strokeWidth: Dimens.two,
+                                dashPattern: [Dimens.two],
+                              ),
+
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,8 +160,10 @@ class SampleOrderScreen extends StatelessWidget {
                                           child: CachedNetworkImage(
                                             width: Dimens.eighty,
                                             height: Dimens.eighty,
-                                            imageUrl: controller
-                                                    .imageList[index].path ??
+                                            imageUrl:
+                                                controller
+                                                    .imageList[index]
+                                                    .path ??
                                                 "",
                                             fit: BoxFit.cover,
                                             placeholder: (context, url) {
@@ -189,8 +186,9 @@ class SampleOrderScreen extends StatelessWidget {
                                             padding: Dimens.edgeInsets8,
                                             child: InkWell(
                                               onTap: () {
-                                                controller.imageList
-                                                    .removeAt(index);
+                                                controller.imageList.removeAt(
+                                                  index,
+                                                );
                                                 controller.update();
                                               },
                                               child: Container(
@@ -201,8 +199,8 @@ class SampleOrderScreen extends StatelessWidget {
                                                   color: ColorsValue.whiteColor,
                                                   borderRadius:
                                                       BorderRadius.circular(
-                                                    Dimens.hundred,
-                                                  ),
+                                                        Dimens.hundred,
+                                                      ),
                                                 ),
                                                 child: SvgPicture.asset(
                                                   AssetConstants.ic_delete,
@@ -226,10 +224,7 @@ class SampleOrderScreen extends StatelessWidget {
                       ],
                     ),
                     Dimens.boxHeight30,
-                    Text(
-                      'product_quantity'.tr,
-                      style: Styles.color21212160012,
-                    ),
+                    Text('product_quantity'.tr, style: Styles.color21212160012),
                     Dimens.boxHeight10,
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -375,7 +370,7 @@ class SampleOrderScreen extends StatelessWidget {
                               return null;
                             },
                           ),
-                        )
+                        ),
                       ],
                     ),
                     Dimens.boxHeight10,

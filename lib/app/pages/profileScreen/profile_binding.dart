@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/pages/profileScreen/profile_page.dart';
-import 'package:Ga_Gold/domain/usecases/usecases.dart';
+import 'package:ga_gold/app/pages/profileScreen/profile_page.dart';
+import 'package:ga_gold/domain/usecases/usecases.dart';
 
 // coverage:ignore-file
 /// A list of bindings which will be used in the route of [SplashView].

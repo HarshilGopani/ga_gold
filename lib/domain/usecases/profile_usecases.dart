@@ -1,5 +1,5 @@
-import 'package:Ga_Gold/domain/domain.dart';
-import 'package:Ga_Gold/domain/models/uploadProfile_model.dart';
+import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_gold/domain/models/uploadProfile_model.dart';
 
 class ProfileUseCases {
   ProfileUseCases(this.repository);
@@ -21,5 +21,4 @@ class ProfileUseCases {
         filePath: filePath,
         isLoading: isLoading,
       );
-
 }

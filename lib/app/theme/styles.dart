@@ -1,6 +1,6 @@
 //coverage:ignore-file
 
-import 'package:Ga_Gold/app/app.dart';
+import 'package:ga_gold/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 

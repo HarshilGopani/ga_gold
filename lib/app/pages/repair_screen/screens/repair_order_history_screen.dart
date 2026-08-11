@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
-import 'package:Ga_Gold/domain/models/models.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/domain/models/models.dart';
 
 class RepairOrderHistoryScreen extends StatelessWidget {
   const RepairOrderHistoryScreen({super.key});

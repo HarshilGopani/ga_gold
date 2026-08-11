@@ -1,6 +1,6 @@
-import 'package:Ga_Gold/data/data.dart';
-import 'package:Ga_Gold/domain/models/models.dart';
-import 'package:Ga_Gold/domain/repositories/repositories.dart';
+import 'package:ga_gold/data/data.dart';
+import 'package:ga_gold/domain/models/models.dart';
+import 'package:ga_gold/domain/repositories/repositories.dart';
 
 /// Repositories (retrieve data, heavy processing etc..)
 class DataRepository extends DomainRepository {
@@ -80,7 +80,6 @@ class DataRepository extends DomainRepository {
     required String category,
     required int min,
     required int max,
-
     required String sortField,
     required var sortOption,
   }) async =>
@@ -91,7 +90,6 @@ class DataRepository extends DomainRepository {
         category: category,
         min: min,
         max: max,
-
         sortField: sortField,
         sortOption: sortOption,
         isLoading: isLoading,
@@ -207,7 +205,7 @@ class DataRepository extends DomainRepository {
         isLoading: isLoading,
       );
 
-      Future<ResponseModel> uploadImage({
+  Future<ResponseModel> uploadImage({
     bool isLoading = false,
     required String filePath,
   }) async =>

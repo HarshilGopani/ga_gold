@@ -2,10 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
-import 'package:Ga_Gold/app/widgets/custom_stepper.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/app/widgets/custom_stepper.dart';
 
 class RepairOrderDetalisScreen extends StatelessWidget {
   const RepairOrderDetalisScreen({super.key});
@@ -166,8 +166,9 @@ class RepairOrderDetalisScreen extends StatelessWidget {
                             ],
                           ),
                           Dimens.boxHeight4,
-                          Text(controller.getOneRepairOrderData?.description ??
-                              '',
+                          Text(
+                              controller.getOneRepairOrderData?.description ??
+                                  '',
                               style: Styles.color47556960012)
                         ],
                       ),

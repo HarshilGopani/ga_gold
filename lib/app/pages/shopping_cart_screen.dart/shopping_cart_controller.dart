@@ -3,9 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,8 +18,8 @@ class ShoppingCartController extends GetxController {
   GlobalKey<FormState> finalKey = GlobalKey<FormState>();
   TextEditingController productDesController = TextEditingController();
   List<TextEditingController>? goldPurityController;
-  List<TextEditingController>? weightController ;
-  List<TextEditingController>? sizeController ;
+  List<TextEditingController>? weightController;
+  List<TextEditingController>? sizeController;
   TextEditingController finalDesController = TextEditingController();
 
   List<CartItemProductElement> list = [];

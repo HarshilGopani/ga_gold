@@ -1,5 +1,5 @@
-import 'package:Ga_Gold/domain/domain.dart';
-import 'package:Ga_Gold/domain/models/upload_image_model.dart';
+import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_gold/domain/models/upload_image_model.dart';
 
 /// Use case for getting the data from the API
 class AuthUseCases {

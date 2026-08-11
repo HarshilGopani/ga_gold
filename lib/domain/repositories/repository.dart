@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:Ga_Gold/app/utils/utils.dart';
-import 'package:Ga_Gold/data/data.dart';
-import 'package:Ga_Gold/device/device.dart';
-import 'package:Ga_Gold/domain/domain.dart';
-import 'package:Ga_Gold/domain/models/uploadProfile_model.dart';
-import 'package:Ga_Gold/domain/models/upload_image_model.dart';
+import 'package:ga_gold/app/utils/utils.dart';
+import 'package:ga_gold/data/data.dart';
+import 'package:ga_gold/device/device.dart';
+import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_gold/domain/models/uploadProfile_model.dart';
+import 'package:ga_gold/domain/models/upload_image_model.dart';
 
 /// The main repository which will get the data from [DeviceRepository] or the
 /// [DataRepository].

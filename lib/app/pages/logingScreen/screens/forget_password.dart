@@ -2,8 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/widgets/custom_button.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/widgets/custom_button.dart';
 
 class ForgetPasswordView extends StatelessWidget {
   const ForgetPasswordView({super.key});

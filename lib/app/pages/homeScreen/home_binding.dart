@@ -1,7 +1,7 @@
 // coverage:ignore-file
 import 'package:get/get.dart';
-import 'package:Ga_Gold/app/pages/pages.dart';
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/app/pages/pages.dart';
+import 'package:ga_gold/domain/domain.dart';
 
 class HomeBinding extends Bindings {
   @override

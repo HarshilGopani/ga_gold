@@ -1,6 +1,6 @@
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/routes_management.dart';
-import 'package:Ga_Gold/app/widgets/appbar_widgets.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/routes_management.dart';
+import 'package:ga_gold/app/widgets/appbar_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

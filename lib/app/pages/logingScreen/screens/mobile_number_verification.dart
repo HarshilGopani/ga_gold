@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:Ga_Gold/app/navigators/navigators.dart';
-import 'package:Ga_Gold/app/pages/pages.dart';
-import 'package:Ga_Gold/app/theme/theme.dart';
-import 'package:Ga_Gold/app/utils/utils.dart';
-import 'package:Ga_Gold/app/widgets/custom_button.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/pages/pages.dart';
+import 'package:ga_gold/app/theme/theme.dart';
+import 'package:ga_gold/app/utils/utils.dart';
+import 'package:ga_gold/app/widgets/custom_button.dart';
 import 'package:get/get.dart';
 
 class MobileNumberVerification extends StatelessWidget {

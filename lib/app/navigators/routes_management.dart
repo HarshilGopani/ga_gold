@@ -1,6 +1,6 @@
 // coverage:ignore-file
 
-import 'package:Ga_Gold/app/navigators/navigators.dart';
+import 'package:ga_gold/app/navigators/navigators.dart';
 import 'package:get/get.dart';
 
 /// A chunk of routes taken in the application.

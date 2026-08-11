@@ -1,10 +1,10 @@
 // coverage:ignore-file
 import 'dart:io';
 
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/data/data.dart';
-import 'package:Ga_Gold/data/helpers/end_points.dart';
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/data/data.dart';
+import 'package:ga_gold/data/helpers/end_points.dart';
+import 'package:ga_gold/domain/domain.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';

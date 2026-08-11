@@ -1,4 +1,4 @@
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/domain/domain.dart';
 
 class CommonUsecases {
   CommonUsecases(this.repository);
@@ -13,7 +13,6 @@ class CommonUsecases {
     required String category,
     required int min,
     required int max,
-
     required String sortField,
     required var sortOption,
   }) async =>
@@ -24,7 +23,6 @@ class CommonUsecases {
         category: category,
         min: min,
         max: max,
-
         sortField: sortField,
         sortOption: sortOption,
         isLoading: isLoading,

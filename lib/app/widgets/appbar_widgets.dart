@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:Ga_Gold/app/app.dart';
+import 'package:ga_gold/app/app.dart';
 
 // ignore: must_be_immutable
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -40,7 +40,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       bottom: PreferredSize(
         preferredSize: Size.fromHeight(1.0),
         child: Container(
-          color: isBottomVisible ? ColorsValue.lightE2E8F0 : ColorsValue.transparent,
+          color: isBottomVisible
+              ? ColorsValue.lightE2E8F0
+              : ColorsValue.transparent,
           // Change this to your preferred border color
           height: 1.0,
         ),

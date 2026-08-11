@@ -1,7 +1,7 @@
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/widgets/custom_button.dart';
-import 'package:Ga_Gold/app/widgets/custom_international_textformfield.dart';
-import 'package:Ga_Gold/app/widgets/upload_image.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/widgets/custom_button.dart';
+import 'package:ga_gold/app/widgets/custom_international_textformfield.dart';
+import 'package:ga_gold/app/widgets/upload_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

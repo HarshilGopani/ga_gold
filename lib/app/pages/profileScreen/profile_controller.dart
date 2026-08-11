@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';

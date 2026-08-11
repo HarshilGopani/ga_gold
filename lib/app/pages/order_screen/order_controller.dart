@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/domain/domain.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -74,8 +74,7 @@ class OrderController extends GetxController {
     getOrderHistoryDoc = null;
     if (getOrderHistoryModel.status == 200) {
       getOrderHistoryDoc = getOrderHistoryModel.data?.docs![0];
-      allOrderListModel
-          .addAll(getOrderHistoryModel.data?.docs ?? []);
+      allOrderListModel.addAll(getOrderHistoryModel.data?.docs ?? []);
       isLoading = false;
     } else {
       Utility.showMessage(getOrderHistoryModel.message.toString(),

@@ -1,6 +1,6 @@
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/routes_management.dart';
-import 'package:Ga_Gold/app/widgets/custom_order_dilog.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/routes_management.dart';
+import 'package:ga_gold/app/widgets/custom_order_dilog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

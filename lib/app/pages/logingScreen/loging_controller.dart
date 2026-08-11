@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/routes_management.dart';
-import 'package:Ga_Gold/domain/domain.dart';
-import 'package:Ga_Gold/domain/models/upload_image_model.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/routes_management.dart';
+import 'package:ga_gold/domain/domain.dart';
+import 'package:ga_gold/domain/models/upload_image_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

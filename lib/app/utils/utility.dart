@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'dart:io' show Directory, File, FileMode, InternetAddress, Platform;
 import 'dart:math';
 
-import 'package:Ga_Gold/app/app.dart';
-import 'package:Ga_Gold/app/navigators/routes_management.dart';
-import 'package:Ga_Gold/domain/domain.dart';
 import 'package:connectivity_plus/connectivity_plus.dart'
     show Connectivity, ConnectivityResult;
 import 'package:device_info_plus/device_info_plus.dart';
@@ -15,8 +12,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_in_store_app_version_checker/flutter_in_store_app_version_checker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ga_gold/app/app.dart';
+import 'package:ga_gold/app/navigators/routes_management.dart';
+import 'package:ga_gold/domain/domain.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -33,19 +32,13 @@ abstract class Utility {
   static String? profilePic;
   static GetProfileData? profileData;
 
-  static InStoreAppVersionChecker checker = InStoreAppVersionChecker(
-    appId: 'com.ga.gagold',
-  );
-
   /// common header for All api
   static Map<String, String> commonHeader({
     Map<String, String>? otherHeader,
     bool isDefaultAuthorizationKeyAdd = true,
   }) {
     // var token = await _authRepository.getRefreshToken(isLoading: false);
-    var header = <String, String>{
-      'Content-Type': 'application/json',
-    };
+    var header = <String, String>{'Content-Type': 'application/json'};
     if (isDefaultAuthorizationKeyAdd) {
       header.addAll({
         'Authorization':
@@ -59,8 +52,12 @@ abstract class Utility {
     return header;
   }
 
-  static void showMessage(String? message, MessageType messageType,
-      Function()? onTap, String actionName) {
+  static void showMessage(
+    String? message,
+    MessageType messageType,
+    Function()? onTap,
+    String actionName,
+  ) {
     if (message == null || message.isEmpty) return;
     closeSnackbar();
     var backgroundColor = Colors.black;
@@ -78,29 +75,20 @@ abstract class Utility {
         backgroundColor = Colors.black;
         break;
     }
-    Future.delayed(
-      const Duration(seconds: 0),
-      () {
-        Get.rawSnackbar(
-          snackPosition: SnackPosition.TOP,
-          messageText: Text(
-            message,
-            style: const TextStyle(color: Colors.white),
-          ),
-          mainButton: TextButton(
-            onPressed: onTap ?? Get.back,
-            child: Text(
-              actionName,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-          backgroundColor: backgroundColor,
-          margin: const EdgeInsets.all(15.0),
-          borderRadius: 15,
-          snackStyle: SnackStyle.FLOATING,
-        );
-      },
-    );
+    Future.delayed(const Duration(seconds: 0), () {
+      Get.rawSnackbar(
+        snackPosition: SnackPosition.TOP,
+        messageText: Text(message, style: const TextStyle(color: Colors.white)),
+        mainButton: TextButton(
+          onPressed: onTap ?? Get.back,
+          child: Text(actionName, style: const TextStyle(color: Colors.white)),
+        ),
+        backgroundColor: backgroundColor,
+        margin: const EdgeInsets.all(15.0),
+        borderRadius: 15,
+        snackStyle: SnackStyle.FLOATING,
+      );
+    });
   }
 
   static double getImageSizeMB(String filePath) {
@@ -117,12 +105,10 @@ abstract class Utility {
   }
 
   static void launchLinkURL(String url) async {
-    await launchUrl(Uri.parse(url)).onError(
-      (error, stackTrace) {
-        print("Url is not valid!");
-        return false;
-      },
-    );
+    await launchUrl(Uri.parse(url)).onError((error, stackTrace) {
+      print("Url is not valid!");
+      return false;
+    });
   }
 
   static Future<void> downloadPdf({
@@ -184,15 +170,18 @@ abstract class Utility {
       AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
       if (androidInfo.version.sdkInt < 33) {
         status = await Permission.storage.request().isDenied;
-        permanentlyDenied =
-            await Permission.storage.request().isPermanentlyDenied;
+        permanentlyDenied = await Permission.storage
+            .request()
+            .isPermanentlyDenied;
       } else {
         status = await Permission.photos.request().isDenied;
-        permanentlyDenied =
-            await Permission.photos.request().isPermanentlyDenied;
+        permanentlyDenied = await Permission.photos
+            .request()
+            .isPermanentlyDenied;
         statusVideos = await Permission.videos.request().isDenied;
-        permanentlyVideoDenied =
-            await Permission.videos.request().isPermanentlyDenied;
+        permanentlyVideoDenied = await Permission.videos
+            .request()
+            .isPermanentlyDenied;
       }
     } else {
       status = await Permission.photos.request().isDenied;
@@ -200,38 +189,30 @@ abstract class Utility {
     }
     if (status || permanentlyDenied || statusVideos || permanentlyVideoDenied) {
       Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
+        barrierDismissible: false,
+        AlertDialog(
+          title: Text("Permission Needed!", style: Styles.blackColorW50018),
+          content: Text(
+            "Please give the Photos Permission for uploading the image.",
+            style: Styles.redcolor50014,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Allow", style: Styles.redcolor50014),
+              onPressed: () async {
+                Get.back();
+                await openAppSettings();
+              },
             ),
-            content: Text(
-              "Please give the Photos Permission for uploading the image.",
-              style: Styles.redcolor50014,
+            TextButton(
+              child: Text("Deny", style: Styles.black50014),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redcolor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.black50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
+          ],
+        ),
+      );
       return false;
     } else {
       return true;
@@ -245,38 +226,30 @@ abstract class Utility {
     permanentlyDenied = await Permission.camera.request().isPermanentlyDenied;
     if (status || permanentlyDenied) {
       Get.dialog(
-          barrierDismissible: false,
-          AlertDialog(
-            title: Text(
-              "Permission Needed!",
-              style: Styles.blackColorW50018,
+        barrierDismissible: false,
+        AlertDialog(
+          title: Text("Permission Needed!", style: Styles.blackColorW50018),
+          content: Text(
+            "Please give the Camera Permission for capture image.",
+            style: Styles.redcolor50014,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Allow", style: Styles.redcolor50014),
+              onPressed: () async {
+                Get.back();
+                await openAppSettings();
+              },
             ),
-            content: Text(
-              "Please give the Camera Permission for capture image.",
-              style: Styles.redcolor50014,
+            TextButton(
+              child: Text("Deny", style: Styles.black50014),
+              onPressed: () {
+                Get.back();
+              },
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Allow",
-                  style: Styles.redcolor50014,
-                ),
-                onPressed: () async {
-                  Get.back();
-                  await openAppSettings();
-                },
-              ),
-              TextButton(
-                child: Text(
-                  "Deny",
-                  style: Styles.black50014,
-                ),
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            ],
-          ));
+          ],
+        ),
+      );
       return false;
     } else {
       return true;
@@ -395,10 +368,12 @@ abstract class Utility {
       var query = response.request?.url.queryParameters ?? '';
       if (isOkay) {
         printILog(
-            'Path: $path, Method: $method, Status Text: $statusText, Status Code: $statusCode, Query $query');
+          'Path: $path, Method: $method, Status Text: $statusText, Status Code: $statusCode, Query $query',
+        );
       } else {
         printELog(
-            'Path: $path, Method: $method, Status Text: $statusText, Status Code: $statusCode, Query $query');
+          'Path: $path, Method: $method, Status Text: $statusText, Status Code: $statusCode, Query $query',
+        );
       }
     }
   }
@@ -448,18 +423,14 @@ abstract class Utility {
       Get.back<void>();
     }
     await Get.dialog<dynamic>(
-      const Center(
-        child: CircularProgressIndicator(),
-      
-      ),
+      const Center(child: CircularProgressIndicator()),
       barrierDismissible: false,
       barrierColor: Colors.black.withOpacity(.7),
     );
   }
 
-  static Widget loaderWidget() => const Center(
-        child: CircularProgressIndicator(),
-      );
+  static Widget loaderWidget() =>
+      const Center(child: CircularProgressIndicator());
 
   /// Close loader
   static void closeLoader() {
@@ -480,9 +451,7 @@ abstract class Utility {
     await Get.dialog<void>(
       CupertinoAlertDialog(
         title: const Text('Info'),
-        content: Text(
-          message,
-        ),
+        content: Text(message),
         actions: [
           CupertinoButton(
             onPressed: onPress ?? Get.back,
@@ -517,7 +486,7 @@ abstract class Utility {
             isDestructiveAction: true,
             onPressed: closeDialog,
             child: Text('No'),
-          )
+          ),
         ],
       ),
     );
@@ -604,8 +573,8 @@ abstract class Utility {
     var value = kIsWeb
         ? 3
         : GetPlatform.isAndroid
-            ? 1
-            : 2;
+        ? 1
+        : 2;
     return value.toString();
   }
 
@@ -635,21 +604,19 @@ abstract class Utility {
   }
 
   /// Show error dialog from response model
-  static void showInfoDialog(ResponseModel data,
-      [bool isSuccess = false]) async {
+  static void showInfoDialog(
+    ResponseModel data, [
+    bool isSuccess = false,
+  ]) async {
     await Get.dialog<dynamic>(
       CupertinoAlertDialog(
         title: Text(isSuccess ? 'SUCCESS' : 'ERROR'),
-        content: Text(
-          jsonDecode(data.data)['Message'] as String,
-        ),
+        content: Text(jsonDecode(data.data)['Message'] as String),
         actions: [
           CupertinoDialogAction(
             onPressed: Get.back,
             isDefaultAction: true,
-            child: Text(
-              'okay'.tr,
-            ),
+            child: Text('okay'.tr),
           ),
         ],
       ),
@@ -671,61 +638,50 @@ abstract class Utility {
     Axis direction = Axis.vertical,
     double? fontSize,
     bool defaultSpaceBetweenColoredText = false,
-  }) =>
-      Get.bottomSheet<void>(
-        Container(
-          padding: Dimens.edgeInsets16,
-          decoration: BoxDecoration(
-            color: Theme.of(Get.context!).canvasColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                Dimens.fourteen,
-              ),
-              topRight: Radius.circular(
-                Dimens.fourteen,
-              ),
-            ),
-          ),
-          child: Container(
-            margin: Dimens.edgeInsets0_20_0_0,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                if (subTitle != null)
-                  Text(
-                    subTitle,
-                    style: Styles.blackBold16,
-                  ),
-                if (description != null)
-                  Text(
-                    description,
-                    style: Styles.black12.copyWith(
-                      color: Theme.of(Get.context!).hintColor,
-                    ),
-                  ),
-                if (actions == null) Dimens.boxHeight40,
-                if (actions != null) actions,
-                if (actions == null)
-                  // CustomMaterialButton(
-                  //   text: 'ok'.tr,
-                  //   onTap: onPress,
-                  // ),
-                  // else
-                  //   actions,
-                  Dimens.boxHeight10,
-              ],
-            ),
-          ),
+  }) => Get.bottomSheet<void>(
+    Container(
+      padding: Dimens.edgeInsets16,
+      decoration: BoxDecoration(
+        color: Theme.of(Get.context!).canvasColor,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(Dimens.fourteen),
+          topRight: Radius.circular(Dimens.fourteen),
         ),
-        isScrollControlled: true,
-        backgroundColor: Theme.of(Get.context!).canvasColor,
-        isDismissible: isdismissible,
-        enableDrag: isdismissible,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14.0),
+      ),
+      child: Container(
+        margin: Dimens.edgeInsets0_20_0_0,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (subTitle != null) Text(subTitle, style: Styles.blackBold16),
+            if (description != null)
+              Text(
+                description,
+                style: Styles.black12.copyWith(
+                  color: Theme.of(Get.context!).hintColor,
+                ),
+              ),
+            if (actions == null) Dimens.boxHeight40,
+            if (actions != null) actions,
+            if (actions == null)
+              // CustomMaterialButton(
+              //   text: 'ok'.tr,
+              //   onTap: onPress,
+              // ),
+              // else
+              //   actions,
+              Dimens.boxHeight10,
+          ],
         ),
-      );
+      ),
+    ),
+    isScrollControlled: true,
+    backgroundColor: Theme.of(Get.context!).canvasColor,
+    isDismissible: isdismissible,
+    enableDrag: isdismissible,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+  );
 
   // /// Bottomsheet to show only alerts to user.
   // static void showAlertBottomSheet({
@@ -929,17 +885,12 @@ abstract class Utility {
                         onTap: () {
                           Get.back<void>();
                         },
-                        child: const Icon(
-                          Icons.cancel,
-                        ),
+                        child: const Icon(Icons.cancel),
                       ),
                     ],
                   ),
                   Dimens.boxHeight30,
-                  Text(
-                    text!,
-                    style: Styles.white14,
-                  ),
+                  Text(text!, style: Styles.white14),
                   Dimens.boxHeight10,
                 ],
               ),
@@ -1018,31 +969,26 @@ abstract class Utility {
       backgroundColor: const Color.fromRGBO(255, 206, 206, 1),
       isScrollControlled: true,
       isDismissible: isDismissible,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14.0),
-      ),
-    ).timeout(const Duration(seconds: 4), onTimeout: () {
-      if (autoDismiss) {
-        if (Get.isBottomSheetOpen!) {
-          Get.back<void>();
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14.0)),
+    ).timeout(
+      const Duration(seconds: 4),
+      onTimeout: () {
+        if (autoDismiss) {
+          if (Get.isBottomSheetOpen!) {
+            Get.back<void>();
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   /// Method For Get Floated Snack Bar
-  static void getRawSnackBar(
-    String message,
-    Color backgroundColor,
-  ) async {
+  static void getRawSnackBar(String message, Color backgroundColor) async {
     Get.rawSnackbar(
       message: message,
       mainButton: TextButton(
         onPressed: Get.back,
-        child: Text(
-          'okay'.tr,
-          style: const TextStyle(color: Colors.white),
-        ),
+        child: Text('okay'.tr, style: const TextStyle(color: Colors.white)),
       ),
       backgroundColor: backgroundColor,
       margin: const EdgeInsets.all(15.0),
@@ -1051,28 +997,27 @@ abstract class Utility {
     );
   }
 
-  static void snacBar(
-    String message,
-    Color backgroundColor,
-  ) async {
+  static void snacBar(String message, Color backgroundColor) async {
     Get.rawSnackbar(
-        message: message ?? "Internal Server error",
-        backgroundColor: backgroundColor,
-        margin: const EdgeInsets.all(15.0),
-        borderRadius: 15,
-        snackStyle: SnackStyle.FLOATING,
-        snackPosition: SnackPosition.TOP);
+      message: message ?? "Internal Server error",
+      backgroundColor: backgroundColor,
+      margin: const EdgeInsets.all(15.0),
+      borderRadius: 15,
+      snackStyle: SnackStyle.FLOATING,
+      snackPosition: SnackPosition.TOP,
+    );
   }
 
   static errorMessage(String message) async {
     return Get.rawSnackbar(
-        title: "Error",
-        message: message,
-        backgroundColor: Colors.red.shade400,
-        snackPosition: SnackPosition.TOP,
-        icon: const Icon(Icons.error, color: Colors.white70),
-        shouldIconPulse: true,
-        instantInit: true);
+      title: "Error",
+      message: message,
+      backgroundColor: Colors.red.shade400,
+      snackPosition: SnackPosition.TOP,
+      icon: const Icon(Icons.error, color: Colors.white70),
+      shouldIconPulse: true,
+      instantInit: true,
+    );
   }
 
   static bool isLoginOrNot() {
@@ -1126,14 +1071,9 @@ abstract class Utility {
                   width: Dimens.hundred,
                   decoration: BoxDecoration(
                     color: ColorsValue.lightYellow,
-                    borderRadius: BorderRadius.circular(
-                      Dimens.sixteen,
-                    ),
+                    borderRadius: BorderRadius.circular(Dimens.sixteen),
                   ),
-                  child: Text(
-                    'sign_in'.tr,
-                    style: Styles.whiteColorW80016,
-                  ),
+                  child: Text('sign_in'.tr, style: Styles.whiteColorW80016),
                 ),
               ),
             ],
@@ -1317,7 +1257,7 @@ abstract class Utility {
     'sid',
     'ras',
     'sun',
-    'tga'
+    'tga',
   ];
 
   /// Method For Convert URL to local path and save in local
@@ -1547,7 +1487,8 @@ abstract class Utility {
 }
 
 String? validateEmail(String value) {
-  const pattern = r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
+  const pattern =
+      r"(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'"
       r'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-'
       r'\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*'
       r'[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4]'
@@ -1563,21 +1504,18 @@ String? validateEmail(String value) {
 
 Widget Loader() {
   return Center(
-      child: Lottie.asset(
-    AssetConstants.loader,
-    height: 100,
-    width: 100,
-  ));
+    child: Lottie.asset(AssetConstants.loader, height: 100, width: 100),
+  );
 }
 
 extension StringCasingExtension on String {
   String get toCapitalized =>
       length > 0 ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : '';
 
-  String get toTitleCase => replaceAll(RegExp(' +'), ' ')
-      .split(' ')
-      .map((str) => str.toCapitalized)
-      .join(' ');
+  String get toTitleCase => replaceAll(
+    RegExp(' +'),
+    ' ',
+  ).split(' ').map((str) => str.toCapitalized).join(' ');
 }
 
 extension DateTimex on DateTime {
